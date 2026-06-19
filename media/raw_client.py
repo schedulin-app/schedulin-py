@@ -10,7 +10,6 @@ from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..core.serialization import convert_and_respect_annotation_metadata
 from ..errors.internal_server_error import InternalServerError
 from ..errors.unauthorized_error import UnauthorizedError
 from ..types.error_response import ErrorResponse
@@ -18,9 +17,9 @@ from ..types.media import Media
 from ..types.presigned_post import PresignedPost
 from .types.count_by_tag_media_response import CountByTagMediaResponse
 from .types.create_presigned_post_intent import CreatePresignedPostIntent
-from .types.list_media_request_cursor import ListMediaRequestCursor
 from .types.list_media_request_tag_mode import ListMediaRequestTagMode
 from .types.list_media_request_type import ListMediaRequestType
+from .types.list_media_response import ListMediaResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -197,20 +196,20 @@ class RawMediaClient:
     def list(
         self,
         *,
-        cursor: typing.Optional[ListMediaRequestCursor] = None,
+        page: typing.Optional[int] = None,
         limit: typing.Optional[float] = None,
         q: typing.Optional[str] = None,
         type: typing.Optional[ListMediaRequestType] = None,
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tag_mode: typing.Optional[ListMediaRequestTagMode] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[typing.Any]:
+    ) -> HttpResponse[ListMediaResponse]:
         """
-        List media for the organization with cursor pagination, search, type and tag filters
+        List media for the organization with page pagination, search, type and tag filters
 
         Parameters
         ----------
-        cursor : typing.Optional[ListMediaRequestCursor]
+        page : typing.Optional[int]
 
         limit : typing.Optional[float]
 
@@ -227,16 +226,14 @@ class RawMediaClient:
 
         Returns
         -------
-        HttpResponse[typing.Any]
+        HttpResponse[ListMediaResponse]
             OK
         """
         _response = self._client_wrapper.httpx_client.request(
             "v0/media",
             method="GET",
             params={
-                "cursor": convert_and_respect_annotation_metadata(
-                    object_=cursor, annotation=typing.Optional[ListMediaRequestCursor], direction="write"
-                ),
+                "page": page,
                 "limit": limit,
                 "q": q,
                 "type": type,
@@ -246,13 +243,11 @@ class RawMediaClient:
             request_options=request_options,
         )
         try:
-            if _response is None or not _response.text.strip():
-                return HttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.Any,
+                    ListMediaResponse,
                     parse_obj_as(
-                        type_=typing.Any,  # type: ignore
+                        type_=ListMediaResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -682,20 +677,20 @@ class AsyncRawMediaClient:
     async def list(
         self,
         *,
-        cursor: typing.Optional[ListMediaRequestCursor] = None,
+        page: typing.Optional[int] = None,
         limit: typing.Optional[float] = None,
         q: typing.Optional[str] = None,
         type: typing.Optional[ListMediaRequestType] = None,
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tag_mode: typing.Optional[ListMediaRequestTagMode] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[typing.Any]:
+    ) -> AsyncHttpResponse[ListMediaResponse]:
         """
-        List media for the organization with cursor pagination, search, type and tag filters
+        List media for the organization with page pagination, search, type and tag filters
 
         Parameters
         ----------
-        cursor : typing.Optional[ListMediaRequestCursor]
+        page : typing.Optional[int]
 
         limit : typing.Optional[float]
 
@@ -712,16 +707,14 @@ class AsyncRawMediaClient:
 
         Returns
         -------
-        AsyncHttpResponse[typing.Any]
+        AsyncHttpResponse[ListMediaResponse]
             OK
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v0/media",
             method="GET",
             params={
-                "cursor": convert_and_respect_annotation_metadata(
-                    object_=cursor, annotation=typing.Optional[ListMediaRequestCursor], direction="write"
-                ),
+                "page": page,
                 "limit": limit,
                 "q": q,
                 "type": type,
@@ -731,13 +724,11 @@ class AsyncRawMediaClient:
             request_options=request_options,
         )
         try:
-            if _response is None or not _response.text.strip():
-                return AsyncHttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.Any,
+                    ListMediaResponse,
                     parse_obj_as(
-                        type_=typing.Any,  # type: ignore
+                        type_=ListMediaResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

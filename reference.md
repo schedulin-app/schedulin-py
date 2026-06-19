@@ -1961,7 +1961,7 @@ client.media.update(
 </dl>
 </details>
 
-<details><summary><code>client.media.<a href="src/schedulin/media/client.py">list</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.media.<a href="src/schedulin/media/client.py">list</a>(...) -> ListMediaResponse</code></summary>
 <dl>
 <dd>
 
@@ -1973,7 +1973,7 @@ client.media.update(
 <dl>
 <dd>
 
-List media for the organization with cursor pagination, search, type and tag filters
+List media for the organization with page pagination, search, type and tag filters
 </dd>
 </dl>
 </dd>
@@ -2012,7 +2012,7 @@ client.media.list()
 <dl>
 <dd>
 
-**cursor:** `typing.Optional[ListMediaRequestCursor]` 
+**page:** `typing.Optional[int]` 
     
 </dd>
 </dl>

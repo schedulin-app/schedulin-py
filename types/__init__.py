@@ -12,7 +12,6 @@ if typing.TYPE_CHECKING:
     from .list_posts_request_scheduled_at import ListPostsRequestScheduledAt
     from .media import Media
     from .media_search import MediaSearch
-    from .media_search_cursor import MediaSearchCursor
     from .media_search_tag_mode import MediaSearchTagMode
     from .media_search_type import MediaSearchType
     from .media_set_tags import MediaSetTags
@@ -52,7 +51,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListPostsRequestScheduledAt": ".list_posts_request_scheduled_at",
     "Media": ".media",
     "MediaSearch": ".media_search",
-    "MediaSearchCursor": ".media_search_cursor",
     "MediaSearchTagMode": ".media_search_tag_mode",
     "MediaSearchType": ".media_search_type",
     "MediaSetTags": ".media_set_tags",
@@ -116,7 +114,6 @@ __all__ = [
     "ListPostsRequestScheduledAt",
     "Media",
     "MediaSearch",
-    "MediaSearchCursor",
     "MediaSearchTagMode",
     "MediaSearchType",
     "MediaSetTags",

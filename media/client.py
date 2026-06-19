@@ -9,9 +9,9 @@ from ..types.presigned_post import PresignedPost
 from .raw_client import AsyncRawMediaClient, RawMediaClient
 from .types.count_by_tag_media_response import CountByTagMediaResponse
 from .types.create_presigned_post_intent import CreatePresignedPostIntent
-from .types.list_media_request_cursor import ListMediaRequestCursor
 from .types.list_media_request_tag_mode import ListMediaRequestTagMode
 from .types.list_media_request_type import ListMediaRequestType
+from .types.list_media_response import ListMediaResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -128,20 +128,20 @@ class MediaClient:
     def list(
         self,
         *,
-        cursor: typing.Optional[ListMediaRequestCursor] = None,
+        page: typing.Optional[int] = None,
         limit: typing.Optional[float] = None,
         q: typing.Optional[str] = None,
         type: typing.Optional[ListMediaRequestType] = None,
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tag_mode: typing.Optional[ListMediaRequestTagMode] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> ListMediaResponse:
         """
-        List media for the organization with cursor pagination, search, type and tag filters
+        List media for the organization with page pagination, search, type and tag filters
 
         Parameters
         ----------
-        cursor : typing.Optional[ListMediaRequestCursor]
+        page : typing.Optional[int]
 
         limit : typing.Optional[float]
 
@@ -158,7 +158,7 @@ class MediaClient:
 
         Returns
         -------
-        typing.Any
+        ListMediaResponse
             OK
 
         Examples
@@ -171,13 +171,7 @@ class MediaClient:
         client.media.list()
         """
         _response = self._raw_client.list(
-            cursor=cursor,
-            limit=limit,
-            q=q,
-            type=type,
-            tag_ids=tag_ids,
-            tag_mode=tag_mode,
-            request_options=request_options,
+            page=page, limit=limit, q=q, type=type, tag_ids=tag_ids, tag_mode=tag_mode, request_options=request_options
         )
         return _response.data
 
@@ -419,20 +413,20 @@ class AsyncMediaClient:
     async def list(
         self,
         *,
-        cursor: typing.Optional[ListMediaRequestCursor] = None,
+        page: typing.Optional[int] = None,
         limit: typing.Optional[float] = None,
         q: typing.Optional[str] = None,
         type: typing.Optional[ListMediaRequestType] = None,
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tag_mode: typing.Optional[ListMediaRequestTagMode] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> ListMediaResponse:
         """
-        List media for the organization with cursor pagination, search, type and tag filters
+        List media for the organization with page pagination, search, type and tag filters
 
         Parameters
         ----------
-        cursor : typing.Optional[ListMediaRequestCursor]
+        page : typing.Optional[int]
 
         limit : typing.Optional[float]
 
@@ -449,7 +443,7 @@ class AsyncMediaClient:
 
         Returns
         -------
-        typing.Any
+        ListMediaResponse
             OK
 
         Examples
@@ -470,13 +464,7 @@ class AsyncMediaClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
-            cursor=cursor,
-            limit=limit,
-            q=q,
-            type=type,
-            tag_ids=tag_ids,
-            tag_mode=tag_mode,
-            request_options=request_options,
+            page=page, limit=limit, q=q, type=type, tag_ids=tag_ids, tag_mode=tag_mode, request_options=request_options
         )
         return _response.data
 

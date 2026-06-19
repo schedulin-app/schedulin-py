@@ -6,13 +6,12 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
-from .media_search_cursor import MediaSearchCursor
 from .media_search_tag_mode import MediaSearchTagMode
 from .media_search_type import MediaSearchType
 
 
 class MediaSearch(UniversalBaseModel):
-    cursor: typing.Optional[MediaSearchCursor] = None
+    page: typing.Optional[int] = None
     limit: typing.Optional[float] = None
     q: typing.Optional[str] = None
     type: typing.Optional[MediaSearchType] = None
