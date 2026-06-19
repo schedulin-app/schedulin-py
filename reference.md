@@ -265,7 +265,7 @@ client.posts.create(
 </dl>
 </details>
 
-<details><summary><code>client.posts.<a href="src/schedulin/posts/client.py">v0post_count_by_tab</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.posts.<a href="src/schedulin/posts/client.py">count_by_tab</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -300,7 +300,7 @@ client = Schedulin(
     environment=SchedulinEnvironment.DEFAULT,
 )
 
-client.posts.v0post_count_by_tab()
+client.posts.count_by_tab()
 
 ```
 </dd>
@@ -1640,8 +1640,6 @@ client = Schedulin(
 
 client.tags.update(
     id="id",
-    name="name",
-    color="color",
 )
 
 ```
@@ -1666,7 +1664,7 @@ client.tags.update(
 <dl>
 <dd>
 
-**name:** `str` 
+**name:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -1674,7 +1672,7 @@ client.tags.update(
 <dl>
 <dd>
 
-**color:** `str` 
+**color:** `typing.Optional[str]` 
     
 </dd>
 </dl>

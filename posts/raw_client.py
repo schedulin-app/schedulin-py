@@ -253,7 +253,7 @@ class RawPostsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def v0post_count_by_tab(
+    def count_by_tab(
         self,
         *,
         social_account_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -1121,7 +1121,7 @@ class AsyncRawPostsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def v0post_count_by_tab(
+    async def count_by_tab(
         self,
         *,
         social_account_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,

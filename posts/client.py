@@ -177,7 +177,7 @@ class PostsClient:
         )
         return _response.data
 
-    def v0post_count_by_tab(
+    def count_by_tab(
         self,
         *,
         social_account_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -205,9 +205,9 @@ class PostsClient:
         client = Schedulin(
             api_key="YOUR_API_KEY",
         )
-        client.posts.v0post_count_by_tab()
+        client.posts.count_by_tab()
         """
-        _response = self._raw_client.v0post_count_by_tab(
+        _response = self._raw_client.count_by_tab(
             social_account_ids=social_account_ids, request_options=request_options
         )
         return _response.data
@@ -672,7 +672,7 @@ class AsyncPostsClient:
         )
         return _response.data
 
-    async def v0post_count_by_tab(
+    async def count_by_tab(
         self,
         *,
         social_account_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -705,12 +705,12 @@ class AsyncPostsClient:
 
 
         async def main() -> None:
-            await client.posts.v0post_count_by_tab()
+            await client.posts.count_by_tab()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.v0post_count_by_tab(
+        _response = await self._raw_client.count_by_tab(
             social_account_ids=social_account_ids, request_options=request_options
         )
         return _response.data

@@ -174,7 +174,12 @@ class RawTagsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
-        self, id: str, *, name: str, color: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        color: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Tag]:
         """
         Update an existing tag by its ID. Only the tag owner can update their tags.
@@ -183,9 +188,9 @@ class RawTagsClient:
         ----------
         id : str
 
-        name : str
+        name : typing.Optional[str]
 
-        color : str
+        color : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -470,7 +475,12 @@ class AsyncRawTagsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
-        self, id: str, *, name: str, color: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        color: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Tag]:
         """
         Update an existing tag by its ID. Only the tag owner can update their tags.
@@ -479,9 +489,9 @@ class AsyncRawTagsClient:
         ----------
         id : str
 
-        name : str
+        name : typing.Optional[str]
 
-        color : str
+        color : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

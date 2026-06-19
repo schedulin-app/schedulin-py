@@ -96,7 +96,14 @@ class TagsClient:
         _response = self._raw_client.create(name=name, color=color, request_options=request_options)
         return _response.data
 
-    def update(self, id: str, *, name: str, color: str, request_options: typing.Optional[RequestOptions] = None) -> Tag:
+    def update(
+        self,
+        id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        color: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Tag:
         """
         Update an existing tag by its ID. Only the tag owner can update their tags.
 
@@ -104,9 +111,9 @@ class TagsClient:
         ----------
         id : str
 
-        name : str
+        name : typing.Optional[str]
 
-        color : str
+        color : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -125,8 +132,6 @@ class TagsClient:
         )
         client.tags.update(
             id="id",
-            name="name",
-            color="color",
         )
         """
         _response = self._raw_client.update(id, name=name, color=color, request_options=request_options)
@@ -264,7 +269,12 @@ class AsyncTagsClient:
         return _response.data
 
     async def update(
-        self, id: str, *, name: str, color: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        color: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Tag:
         """
         Update an existing tag by its ID. Only the tag owner can update their tags.
@@ -273,9 +283,9 @@ class AsyncTagsClient:
         ----------
         id : str
 
-        name : str
+        name : typing.Optional[str]
 
-        color : str
+        color : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -299,8 +309,6 @@ class AsyncTagsClient:
         async def main() -> None:
             await client.tags.update(
                 id="id",
-                name="name",
-                color="color",
             )
 
 
