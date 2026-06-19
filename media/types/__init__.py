@@ -6,13 +6,17 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .count_by_tag_media_response import CountByTagMediaResponse
+    from .count_by_tag_media_response_data_item import CountByTagMediaResponseDataItem
+    from .create_presigned_post_intent import CreatePresignedPostIntent
     from .list_media_request_cursor import ListMediaRequestCursor
-    from .list_media_request_cursor_updated_at import ListMediaRequestCursorUpdatedAt
     from .list_media_request_tag_mode import ListMediaRequestTagMode
     from .list_media_request_type import ListMediaRequestType
 _dynamic_imports: typing.Dict[str, str] = {
+    "CountByTagMediaResponse": ".count_by_tag_media_response",
+    "CountByTagMediaResponseDataItem": ".count_by_tag_media_response_data_item",
+    "CreatePresignedPostIntent": ".create_presigned_post_intent",
     "ListMediaRequestCursor": ".list_media_request_cursor",
-    "ListMediaRequestCursorUpdatedAt": ".list_media_request_cursor_updated_at",
     "ListMediaRequestTagMode": ".list_media_request_tag_mode",
     "ListMediaRequestType": ".list_media_request_type",
 }
@@ -40,8 +44,10 @@ def __dir__():
 
 
 __all__ = [
+    "CountByTagMediaResponse",
+    "CountByTagMediaResponseDataItem",
+    "CreatePresignedPostIntent",
     "ListMediaRequestCursor",
-    "ListMediaRequestCursorUpdatedAt",
     "ListMediaRequestTagMode",
     "ListMediaRequestType",
 ]

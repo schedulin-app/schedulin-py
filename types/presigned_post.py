@@ -4,11 +4,13 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .presigned_post_method import PresignedPostMethod
 
 
 class PresignedPost(UniversalBaseModel):
     url: str
-    fields: typing.Dict[str, str]
+    key: str
+    method: PresignedPostMethod
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

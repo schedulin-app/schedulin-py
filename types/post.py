@@ -8,7 +8,6 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .post_approval_status import PostApprovalStatus
-from .post_platform_configuration import PostPlatformConfiguration
 from .post_status import PostStatus
 
 
@@ -43,7 +42,7 @@ class Post(UniversalBaseModel):
         typing.Optional[dt.datetime], FieldMetadata(alias="scheduledAt"), pydantic.Field(alias="scheduledAt")
     ] = None
     platform_configuration: typing_extensions.Annotated[
-        typing.Optional[PostPlatformConfiguration],
+        typing.Optional[typing.Dict[str, typing.Any]],
         FieldMetadata(alias="platformConfiguration"),
         pydantic.Field(alias="platformConfiguration"),
     ] = None

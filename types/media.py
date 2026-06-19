@@ -23,7 +23,6 @@ class Media(UniversalBaseModel):
     updated_at: typing_extensions.Annotated[
         dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
     ]
-    user_id: typing_extensions.Annotated[str, FieldMetadata(alias="userId"), pydantic.Field(alias="userId")]
     bucket: str
     key: str
     size: typing.Optional[float] = None

@@ -6,16 +6,20 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
-from .post_search_cursor import PostSearchCursor
+from .post_search_approval_status import PostSearchApprovalStatus
 from .post_search_scheduled_at import PostSearchScheduledAt
 from .post_search_status import PostSearchStatus
 from .post_search_tag_mode import PostSearchTagMode
 
 
 class PostSearch(UniversalBaseModel):
-    cursor: typing.Optional[PostSearchCursor] = None
     page: typing.Optional[int] = None
     status: typing.Optional[PostSearchStatus] = None
+    approval_status: typing_extensions.Annotated[
+        typing.Optional[PostSearchApprovalStatus],
+        FieldMetadata(alias="approvalStatus"),
+        pydantic.Field(alias="approvalStatus"),
+    ] = None
     scheduled_at: typing_extensions.Annotated[
         typing.Optional[PostSearchScheduledAt], FieldMetadata(alias="scheduledAt"), pydantic.Field(alias="scheduledAt")
     ] = None

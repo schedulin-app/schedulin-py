@@ -16,8 +16,6 @@ from .social_platform import SocialPlatform
 class SocialAccount(UniversalBaseModel):
     id: str
     platform: SocialPlatform
-    account_id: typing_extensions.Annotated[str, FieldMetadata(alias="accountId"), pydantic.Field(alias="accountId")]
-    scope: str
     image_url: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="imageUrl"), pydantic.Field(alias="imageUrl")
     ] = None
@@ -27,16 +25,6 @@ class SocialAccount(UniversalBaseModel):
         pydantic.Field(alias="imageProcessingStatus"),
     ]
     username: typing.Optional[str] = None
-    platform_data: typing_extensions.Annotated[
-        typing.Optional[typing.Any], FieldMetadata(alias="platformData"), pydantic.Field(alias="platformData")
-    ] = None
-    token_expires_at: typing_extensions.Annotated[
-        typing.Optional[dt.datetime], FieldMetadata(alias="tokenExpiresAt"), pydantic.Field(alias="tokenExpiresAt")
-    ] = None
-    user_id: typing_extensions.Annotated[str, FieldMetadata(alias="userId"), pydantic.Field(alias="userId")]
-    last_refresh_at: typing_extensions.Annotated[
-        typing.Optional[dt.datetime], FieldMetadata(alias="lastRefreshAt"), pydantic.Field(alias="lastRefreshAt")
-    ] = None
     status: SocialAccountStatus
     disconnected_reason: typing_extensions.Annotated[
         typing.Optional[SocialAccountDisconnectedReason],

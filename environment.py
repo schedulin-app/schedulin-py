@@ -4,4 +4,4 @@ import enum
 
 
 class SchedulinEnvironment(enum.Enum):
-    DEFAULT = ""
+    DEFAULT = "https://api.schedulin.app"

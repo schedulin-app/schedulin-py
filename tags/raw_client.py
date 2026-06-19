@@ -14,6 +14,7 @@ from ..errors.internal_server_error import InternalServerError
 from ..errors.unauthorized_error import UnauthorizedError
 from ..types.error_response import ErrorResponse
 from ..types.tag import Tag
+from .types.list_tags_response import ListTagsResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -30,7 +31,7 @@ class RawTagsClient:
         q: typing.Optional[str] = None,
         limit: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[typing.List[Tag]]:
+    ) -> HttpResponse[ListTagsResponse]:
         """
         Retrieve a list of tags for the authenticated user with optional search filtering
 
@@ -45,7 +46,7 @@ class RawTagsClient:
 
         Returns
         -------
-        HttpResponse[typing.List[Tag]]
+        HttpResponse[ListTagsResponse]
             OK
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -60,9 +61,9 @@ class RawTagsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[Tag],
+                    ListTagsResponse,
                     parse_obj_as(
-                        type_=typing.List[Tag],  # type: ignore
+                        type_=ListTagsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -326,7 +327,7 @@ class AsyncRawTagsClient:
         q: typing.Optional[str] = None,
         limit: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[typing.List[Tag]]:
+    ) -> AsyncHttpResponse[ListTagsResponse]:
         """
         Retrieve a list of tags for the authenticated user with optional search filtering
 
@@ -341,7 +342,7 @@ class AsyncRawTagsClient:
 
         Returns
         -------
-        AsyncHttpResponse[typing.List[Tag]]
+        AsyncHttpResponse[ListTagsResponse]
             OK
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -356,9 +357,9 @@ class AsyncRawTagsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[Tag],
+                    ListTagsResponse,
                     parse_obj_as(
-                        type_=typing.List[Tag],  # type: ignore
+                        type_=ListTagsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

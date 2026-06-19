@@ -6,209 +6,15 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .analytics_series_posts_response_item import AnalyticsSeriesPostsResponseItem
+    from .analytics_series_posts_response import AnalyticsSeriesPostsResponse
+    from .analytics_series_posts_response_data_item import AnalyticsSeriesPostsResponseDataItem
     from .analytics_summary_posts_response import AnalyticsSummaryPostsResponse
     from .create_posts_response import CreatePostsResponse
     from .create_posts_response_media_item import CreatePostsResponseMediaItem
     from .create_posts_response_media_item_tags_item import CreatePostsResponseMediaItemTagsItem
     from .create_posts_response_media_item_tags_item_platform import CreatePostsResponseMediaItemTagsItemPlatform
     from .create_posts_response_media_item_tags_item_type import CreatePostsResponseMediaItemTagsItemType
-    from .create_posts_response_platform_configuration import CreatePostsResponsePlatformConfiguration
-    from .create_posts_response_platform_configuration_allow_comment import (
-        CreatePostsResponsePlatformConfigurationAllowComment,
-    )
-    from .create_posts_response_platform_configuration_allow_comment_media_item import (
-        CreatePostsResponsePlatformConfigurationAllowCommentMediaItem,
-    )
-    from .create_posts_response_platform_configuration_allow_comment_media_item_tags_item import (
-        CreatePostsResponsePlatformConfigurationAllowCommentMediaItemTagsItem,
-    )
-    from .create_posts_response_platform_configuration_allow_comment_media_item_tags_item_platform import (
-        CreatePostsResponsePlatformConfigurationAllowCommentMediaItemTagsItemPlatform,
-    )
-    from .create_posts_response_platform_configuration_allow_comment_media_item_tags_item_type import (
-        CreatePostsResponsePlatformConfigurationAllowCommentMediaItemTagsItemType,
-    )
-    from .create_posts_response_platform_configuration_allow_comment_privacy_status import (
-        CreatePostsResponsePlatformConfigurationAllowCommentPrivacyStatus,
-    )
-    from .create_posts_response_platform_configuration_allow_embedding import (
-        CreatePostsResponsePlatformConfigurationAllowEmbedding,
-    )
-    from .create_posts_response_platform_configuration_allow_embedding_license import (
-        CreatePostsResponsePlatformConfigurationAllowEmbeddingLicense,
-    )
-    from .create_posts_response_platform_configuration_allow_embedding_media_item import (
-        CreatePostsResponsePlatformConfigurationAllowEmbeddingMediaItem,
-    )
-    from .create_posts_response_platform_configuration_allow_embedding_media_item_tags_item import (
-        CreatePostsResponsePlatformConfigurationAllowEmbeddingMediaItemTagsItem,
-    )
-    from .create_posts_response_platform_configuration_allow_embedding_media_item_tags_item_platform import (
-        CreatePostsResponsePlatformConfigurationAllowEmbeddingMediaItemTagsItemPlatform,
-    )
-    from .create_posts_response_platform_configuration_allow_embedding_media_item_tags_item_type import (
-        CreatePostsResponsePlatformConfigurationAllowEmbeddingMediaItemTagsItemType,
-    )
-    from .create_posts_response_platform_configuration_allow_embedding_visibility import (
-        CreatePostsResponsePlatformConfigurationAllowEmbeddingVisibility,
-    )
-    from .create_posts_response_platform_configuration_allowlisted_country_codes import (
-        CreatePostsResponsePlatformConfigurationAllowlistedCountryCodes,
-    )
-    from .create_posts_response_platform_configuration_allowlisted_country_codes_gif import (
-        CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesGif,
-    )
-    from .create_posts_response_platform_configuration_allowlisted_country_codes_gif_gif_provider import (
-        CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesGifGifProvider,
-    )
-    from .create_posts_response_platform_configuration_allowlisted_country_codes_media_item import (
-        CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesMediaItem,
-    )
-    from .create_posts_response_platform_configuration_allowlisted_country_codes_media_item_tags_item import (
-        CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesMediaItemTagsItem,
-    )
-    from .create_posts_response_platform_configuration_allowlisted_country_codes_media_item_tags_item_platform import (
-        CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesMediaItemTagsItemPlatform,
-    )
-    from .create_posts_response_platform_configuration_allowlisted_country_codes_media_item_tags_item_type import (
-        CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesMediaItemTagsItemType,
-    )
-    from .create_posts_response_platform_configuration_allowlisted_country_codes_placement import (
-        CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesPlacement,
-    )
-    from .create_posts_response_platform_configuration_allowlisted_country_codes_poll import (
-        CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesPoll,
-    )
-    from .create_posts_response_platform_configuration_allowlisted_country_codes_post_type import (
-        CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesPostType,
-    )
-    from .create_posts_response_platform_configuration_allowlisted_country_codes_reply_control import (
-        CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesReplyControl,
-    )
-    from .create_posts_response_platform_configuration_article import CreatePostsResponsePlatformConfigurationArticle
-    from .create_posts_response_platform_configuration_article_article import (
-        CreatePostsResponsePlatformConfigurationArticleArticle,
-    )
-    from .create_posts_response_platform_configuration_article_author_kind import (
-        CreatePostsResponsePlatformConfigurationArticleAuthorKind,
-    )
-    from .create_posts_response_platform_configuration_article_media_item import (
-        CreatePostsResponsePlatformConfigurationArticleMediaItem,
-    )
-    from .create_posts_response_platform_configuration_article_media_item_tags_item import (
-        CreatePostsResponsePlatformConfigurationArticleMediaItemTagsItem,
-    )
-    from .create_posts_response_platform_configuration_article_media_item_tags_item_platform import (
-        CreatePostsResponsePlatformConfigurationArticleMediaItemTagsItemPlatform,
-    )
-    from .create_posts_response_platform_configuration_article_media_item_tags_item_type import (
-        CreatePostsResponsePlatformConfigurationArticleMediaItemTagsItemType,
-    )
-    from .create_posts_response_platform_configuration_article_poll import (
-        CreatePostsResponsePlatformConfigurationArticlePoll,
-    )
-    from .create_posts_response_platform_configuration_article_poll_duration import (
-        CreatePostsResponsePlatformConfigurationArticlePollDuration,
-    )
-    from .create_posts_response_platform_configuration_article_target_entities_item import (
-        CreatePostsResponsePlatformConfigurationArticleTargetEntitiesItem,
-    )
-    from .create_posts_response_platform_configuration_article_visibility import (
-        CreatePostsResponsePlatformConfigurationArticleVisibility,
-    )
-    from .create_posts_response_platform_configuration_branded_content_sponsor_ids import (
-        CreatePostsResponsePlatformConfigurationBrandedContentSponsorIds,
-    )
-    from .create_posts_response_platform_configuration_branded_content_sponsor_ids_media_item import (
-        CreatePostsResponsePlatformConfigurationBrandedContentSponsorIdsMediaItem,
-    )
-    from .create_posts_response_platform_configuration_branded_content_sponsor_ids_media_item_tags_item import (
-        CreatePostsResponsePlatformConfigurationBrandedContentSponsorIdsMediaItemTagsItem,
-    )
-    from .create_posts_response_platform_configuration_branded_content_sponsor_ids_media_item_tags_item_platform import (
-        CreatePostsResponsePlatformConfigurationBrandedContentSponsorIdsMediaItemTagsItemPlatform,
-    )
-    from .create_posts_response_platform_configuration_branded_content_sponsor_ids_media_item_tags_item_type import (
-        CreatePostsResponsePlatformConfigurationBrandedContentSponsorIdsMediaItemTagsItemType,
-    )
-    from .create_posts_response_platform_configuration_branded_content_sponsor_ids_placement import (
-        CreatePostsResponsePlatformConfigurationBrandedContentSponsorIdsPlacement,
-    )
-    from .create_posts_response_platform_configuration_branded_content_sponsor_ids_trial_reel_type import (
-        CreatePostsResponsePlatformConfigurationBrandedContentSponsorIdsTrialReelType,
-    )
-    from .create_posts_response_platform_configuration_community_id import (
-        CreatePostsResponsePlatformConfigurationCommunityId,
-    )
-    from .create_posts_response_platform_configuration_community_id_geo import (
-        CreatePostsResponsePlatformConfigurationCommunityIdGeo,
-    )
-    from .create_posts_response_platform_configuration_community_id_media_item import (
-        CreatePostsResponsePlatformConfigurationCommunityIdMediaItem,
-    )
-    from .create_posts_response_platform_configuration_community_id_media_item_tags_item import (
-        CreatePostsResponsePlatformConfigurationCommunityIdMediaItemTagsItem,
-    )
-    from .create_posts_response_platform_configuration_community_id_media_item_tags_item_platform import (
-        CreatePostsResponsePlatformConfigurationCommunityIdMediaItemTagsItemPlatform,
-    )
-    from .create_posts_response_platform_configuration_community_id_media_item_tags_item_type import (
-        CreatePostsResponsePlatformConfigurationCommunityIdMediaItemTagsItemType,
-    )
-    from .create_posts_response_platform_configuration_community_id_poll import (
-        CreatePostsResponsePlatformConfigurationCommunityIdPoll,
-    )
-    from .create_posts_response_platform_configuration_community_id_poll_reply_settings import (
-        CreatePostsResponsePlatformConfigurationCommunityIdPollReplySettings,
-    )
-    from .create_posts_response_platform_configuration_community_id_reply_settings import (
-        CreatePostsResponsePlatformConfigurationCommunityIdReplySettings,
-    )
-    from .create_posts_response_platform_configuration_external import CreatePostsResponsePlatformConfigurationExternal
-    from .create_posts_response_platform_configuration_external_external import (
-        CreatePostsResponsePlatformConfigurationExternalExternal,
-    )
-    from .create_posts_response_platform_configuration_external_media_item import (
-        CreatePostsResponsePlatformConfigurationExternalMediaItem,
-    )
-    from .create_posts_response_platform_configuration_external_media_item_tags_item import (
-        CreatePostsResponsePlatformConfigurationExternalMediaItemTagsItem,
-    )
-    from .create_posts_response_platform_configuration_external_media_item_tags_item_platform import (
-        CreatePostsResponsePlatformConfigurationExternalMediaItemTagsItemPlatform,
-    )
-    from .create_posts_response_platform_configuration_external_media_item_tags_item_type import (
-        CreatePostsResponsePlatformConfigurationExternalMediaItemTagsItemType,
-    )
-    from .create_posts_response_platform_configuration_external_postgate import (
-        CreatePostsResponsePlatformConfigurationExternalPostgate,
-    )
-    from .create_posts_response_platform_configuration_external_reply_to import (
-        CreatePostsResponsePlatformConfigurationExternalReplyTo,
-    )
-    from .create_posts_response_platform_configuration_external_threadgate import (
-        CreatePostsResponsePlatformConfigurationExternalThreadgate,
-    )
-    from .create_posts_response_platform_configuration_feed_targeting import (
-        CreatePostsResponsePlatformConfigurationFeedTargeting,
-    )
-    from .create_posts_response_platform_configuration_feed_targeting_media_item import (
-        CreatePostsResponsePlatformConfigurationFeedTargetingMediaItem,
-    )
-    from .create_posts_response_platform_configuration_feed_targeting_media_item_tags_item import (
-        CreatePostsResponsePlatformConfigurationFeedTargetingMediaItemTagsItem,
-    )
-    from .create_posts_response_platform_configuration_feed_targeting_media_item_tags_item_platform import (
-        CreatePostsResponsePlatformConfigurationFeedTargetingMediaItemTagsItemPlatform,
-    )
-    from .create_posts_response_platform_configuration_feed_targeting_media_item_tags_item_type import (
-        CreatePostsResponsePlatformConfigurationFeedTargetingMediaItemTagsItemType,
-    )
-    from .create_posts_response_platform_configuration_feed_targeting_placement import (
-        CreatePostsResponsePlatformConfigurationFeedTargetingPlacement,
-    )
-    from .list_posts_request_cursor import ListPostsRequestCursor
+    from .list_posts_request_approval_status import ListPostsRequestApprovalStatus
     from .list_posts_request_status import ListPostsRequestStatus
     from .list_posts_request_tag_mode import ListPostsRequestTagMode
     from .list_posts_response import ListPostsResponse
@@ -229,81 +35,15 @@ if typing.TYPE_CHECKING:
     from .update_posts_request_media_item import UpdatePostsRequestMediaItem
     from .update_posts_request_status import UpdatePostsRequestStatus
 _dynamic_imports: typing.Dict[str, str] = {
-    "AnalyticsSeriesPostsResponseItem": ".analytics_series_posts_response_item",
+    "AnalyticsSeriesPostsResponse": ".analytics_series_posts_response",
+    "AnalyticsSeriesPostsResponseDataItem": ".analytics_series_posts_response_data_item",
     "AnalyticsSummaryPostsResponse": ".analytics_summary_posts_response",
     "CreatePostsResponse": ".create_posts_response",
     "CreatePostsResponseMediaItem": ".create_posts_response_media_item",
     "CreatePostsResponseMediaItemTagsItem": ".create_posts_response_media_item_tags_item",
     "CreatePostsResponseMediaItemTagsItemPlatform": ".create_posts_response_media_item_tags_item_platform",
     "CreatePostsResponseMediaItemTagsItemType": ".create_posts_response_media_item_tags_item_type",
-    "CreatePostsResponsePlatformConfiguration": ".create_posts_response_platform_configuration",
-    "CreatePostsResponsePlatformConfigurationAllowComment": ".create_posts_response_platform_configuration_allow_comment",
-    "CreatePostsResponsePlatformConfigurationAllowCommentMediaItem": ".create_posts_response_platform_configuration_allow_comment_media_item",
-    "CreatePostsResponsePlatformConfigurationAllowCommentMediaItemTagsItem": ".create_posts_response_platform_configuration_allow_comment_media_item_tags_item",
-    "CreatePostsResponsePlatformConfigurationAllowCommentMediaItemTagsItemPlatform": ".create_posts_response_platform_configuration_allow_comment_media_item_tags_item_platform",
-    "CreatePostsResponsePlatformConfigurationAllowCommentMediaItemTagsItemType": ".create_posts_response_platform_configuration_allow_comment_media_item_tags_item_type",
-    "CreatePostsResponsePlatformConfigurationAllowCommentPrivacyStatus": ".create_posts_response_platform_configuration_allow_comment_privacy_status",
-    "CreatePostsResponsePlatformConfigurationAllowEmbedding": ".create_posts_response_platform_configuration_allow_embedding",
-    "CreatePostsResponsePlatformConfigurationAllowEmbeddingLicense": ".create_posts_response_platform_configuration_allow_embedding_license",
-    "CreatePostsResponsePlatformConfigurationAllowEmbeddingMediaItem": ".create_posts_response_platform_configuration_allow_embedding_media_item",
-    "CreatePostsResponsePlatformConfigurationAllowEmbeddingMediaItemTagsItem": ".create_posts_response_platform_configuration_allow_embedding_media_item_tags_item",
-    "CreatePostsResponsePlatformConfigurationAllowEmbeddingMediaItemTagsItemPlatform": ".create_posts_response_platform_configuration_allow_embedding_media_item_tags_item_platform",
-    "CreatePostsResponsePlatformConfigurationAllowEmbeddingMediaItemTagsItemType": ".create_posts_response_platform_configuration_allow_embedding_media_item_tags_item_type",
-    "CreatePostsResponsePlatformConfigurationAllowEmbeddingVisibility": ".create_posts_response_platform_configuration_allow_embedding_visibility",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodes": ".create_posts_response_platform_configuration_allowlisted_country_codes",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesGif": ".create_posts_response_platform_configuration_allowlisted_country_codes_gif",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesGifGifProvider": ".create_posts_response_platform_configuration_allowlisted_country_codes_gif_gif_provider",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesMediaItem": ".create_posts_response_platform_configuration_allowlisted_country_codes_media_item",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesMediaItemTagsItem": ".create_posts_response_platform_configuration_allowlisted_country_codes_media_item_tags_item",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesMediaItemTagsItemPlatform": ".create_posts_response_platform_configuration_allowlisted_country_codes_media_item_tags_item_platform",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesMediaItemTagsItemType": ".create_posts_response_platform_configuration_allowlisted_country_codes_media_item_tags_item_type",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesPlacement": ".create_posts_response_platform_configuration_allowlisted_country_codes_placement",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesPoll": ".create_posts_response_platform_configuration_allowlisted_country_codes_poll",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesPostType": ".create_posts_response_platform_configuration_allowlisted_country_codes_post_type",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesReplyControl": ".create_posts_response_platform_configuration_allowlisted_country_codes_reply_control",
-    "CreatePostsResponsePlatformConfigurationArticle": ".create_posts_response_platform_configuration_article",
-    "CreatePostsResponsePlatformConfigurationArticleArticle": ".create_posts_response_platform_configuration_article_article",
-    "CreatePostsResponsePlatformConfigurationArticleAuthorKind": ".create_posts_response_platform_configuration_article_author_kind",
-    "CreatePostsResponsePlatformConfigurationArticleMediaItem": ".create_posts_response_platform_configuration_article_media_item",
-    "CreatePostsResponsePlatformConfigurationArticleMediaItemTagsItem": ".create_posts_response_platform_configuration_article_media_item_tags_item",
-    "CreatePostsResponsePlatformConfigurationArticleMediaItemTagsItemPlatform": ".create_posts_response_platform_configuration_article_media_item_tags_item_platform",
-    "CreatePostsResponsePlatformConfigurationArticleMediaItemTagsItemType": ".create_posts_response_platform_configuration_article_media_item_tags_item_type",
-    "CreatePostsResponsePlatformConfigurationArticlePoll": ".create_posts_response_platform_configuration_article_poll",
-    "CreatePostsResponsePlatformConfigurationArticlePollDuration": ".create_posts_response_platform_configuration_article_poll_duration",
-    "CreatePostsResponsePlatformConfigurationArticleTargetEntitiesItem": ".create_posts_response_platform_configuration_article_target_entities_item",
-    "CreatePostsResponsePlatformConfigurationArticleVisibility": ".create_posts_response_platform_configuration_article_visibility",
-    "CreatePostsResponsePlatformConfigurationBrandedContentSponsorIds": ".create_posts_response_platform_configuration_branded_content_sponsor_ids",
-    "CreatePostsResponsePlatformConfigurationBrandedContentSponsorIdsMediaItem": ".create_posts_response_platform_configuration_branded_content_sponsor_ids_media_item",
-    "CreatePostsResponsePlatformConfigurationBrandedContentSponsorIdsMediaItemTagsItem": ".create_posts_response_platform_configuration_branded_content_sponsor_ids_media_item_tags_item",
-    "CreatePostsResponsePlatformConfigurationBrandedContentSponsorIdsMediaItemTagsItemPlatform": ".create_posts_response_platform_configuration_branded_content_sponsor_ids_media_item_tags_item_platform",
-    "CreatePostsResponsePlatformConfigurationBrandedContentSponsorIdsMediaItemTagsItemType": ".create_posts_response_platform_configuration_branded_content_sponsor_ids_media_item_tags_item_type",
-    "CreatePostsResponsePlatformConfigurationBrandedContentSponsorIdsPlacement": ".create_posts_response_platform_configuration_branded_content_sponsor_ids_placement",
-    "CreatePostsResponsePlatformConfigurationBrandedContentSponsorIdsTrialReelType": ".create_posts_response_platform_configuration_branded_content_sponsor_ids_trial_reel_type",
-    "CreatePostsResponsePlatformConfigurationCommunityId": ".create_posts_response_platform_configuration_community_id",
-    "CreatePostsResponsePlatformConfigurationCommunityIdGeo": ".create_posts_response_platform_configuration_community_id_geo",
-    "CreatePostsResponsePlatformConfigurationCommunityIdMediaItem": ".create_posts_response_platform_configuration_community_id_media_item",
-    "CreatePostsResponsePlatformConfigurationCommunityIdMediaItemTagsItem": ".create_posts_response_platform_configuration_community_id_media_item_tags_item",
-    "CreatePostsResponsePlatformConfigurationCommunityIdMediaItemTagsItemPlatform": ".create_posts_response_platform_configuration_community_id_media_item_tags_item_platform",
-    "CreatePostsResponsePlatformConfigurationCommunityIdMediaItemTagsItemType": ".create_posts_response_platform_configuration_community_id_media_item_tags_item_type",
-    "CreatePostsResponsePlatformConfigurationCommunityIdPoll": ".create_posts_response_platform_configuration_community_id_poll",
-    "CreatePostsResponsePlatformConfigurationCommunityIdPollReplySettings": ".create_posts_response_platform_configuration_community_id_poll_reply_settings",
-    "CreatePostsResponsePlatformConfigurationCommunityIdReplySettings": ".create_posts_response_platform_configuration_community_id_reply_settings",
-    "CreatePostsResponsePlatformConfigurationExternal": ".create_posts_response_platform_configuration_external",
-    "CreatePostsResponsePlatformConfigurationExternalExternal": ".create_posts_response_platform_configuration_external_external",
-    "CreatePostsResponsePlatformConfigurationExternalMediaItem": ".create_posts_response_platform_configuration_external_media_item",
-    "CreatePostsResponsePlatformConfigurationExternalMediaItemTagsItem": ".create_posts_response_platform_configuration_external_media_item_tags_item",
-    "CreatePostsResponsePlatformConfigurationExternalMediaItemTagsItemPlatform": ".create_posts_response_platform_configuration_external_media_item_tags_item_platform",
-    "CreatePostsResponsePlatformConfigurationExternalMediaItemTagsItemType": ".create_posts_response_platform_configuration_external_media_item_tags_item_type",
-    "CreatePostsResponsePlatformConfigurationExternalPostgate": ".create_posts_response_platform_configuration_external_postgate",
-    "CreatePostsResponsePlatformConfigurationExternalReplyTo": ".create_posts_response_platform_configuration_external_reply_to",
-    "CreatePostsResponsePlatformConfigurationExternalThreadgate": ".create_posts_response_platform_configuration_external_threadgate",
-    "CreatePostsResponsePlatformConfigurationFeedTargeting": ".create_posts_response_platform_configuration_feed_targeting",
-    "CreatePostsResponsePlatformConfigurationFeedTargetingMediaItem": ".create_posts_response_platform_configuration_feed_targeting_media_item",
-    "CreatePostsResponsePlatformConfigurationFeedTargetingMediaItemTagsItem": ".create_posts_response_platform_configuration_feed_targeting_media_item_tags_item",
-    "CreatePostsResponsePlatformConfigurationFeedTargetingMediaItemTagsItemPlatform": ".create_posts_response_platform_configuration_feed_targeting_media_item_tags_item_platform",
-    "CreatePostsResponsePlatformConfigurationFeedTargetingMediaItemTagsItemType": ".create_posts_response_platform_configuration_feed_targeting_media_item_tags_item_type",
-    "CreatePostsResponsePlatformConfigurationFeedTargetingPlacement": ".create_posts_response_platform_configuration_feed_targeting_placement",
-    "ListPostsRequestCursor": ".list_posts_request_cursor",
+    "ListPostsRequestApprovalStatus": ".list_posts_request_approval_status",
     "ListPostsRequestStatus": ".list_posts_request_status",
     "ListPostsRequestTagMode": ".list_posts_request_tag_mode",
     "ListPostsResponse": ".list_posts_response",
@@ -348,81 +88,15 @@ def __dir__():
 
 
 __all__ = [
-    "AnalyticsSeriesPostsResponseItem",
+    "AnalyticsSeriesPostsResponse",
+    "AnalyticsSeriesPostsResponseDataItem",
     "AnalyticsSummaryPostsResponse",
     "CreatePostsResponse",
     "CreatePostsResponseMediaItem",
     "CreatePostsResponseMediaItemTagsItem",
     "CreatePostsResponseMediaItemTagsItemPlatform",
     "CreatePostsResponseMediaItemTagsItemType",
-    "CreatePostsResponsePlatformConfiguration",
-    "CreatePostsResponsePlatformConfigurationAllowComment",
-    "CreatePostsResponsePlatformConfigurationAllowCommentMediaItem",
-    "CreatePostsResponsePlatformConfigurationAllowCommentMediaItemTagsItem",
-    "CreatePostsResponsePlatformConfigurationAllowCommentMediaItemTagsItemPlatform",
-    "CreatePostsResponsePlatformConfigurationAllowCommentMediaItemTagsItemType",
-    "CreatePostsResponsePlatformConfigurationAllowCommentPrivacyStatus",
-    "CreatePostsResponsePlatformConfigurationAllowEmbedding",
-    "CreatePostsResponsePlatformConfigurationAllowEmbeddingLicense",
-    "CreatePostsResponsePlatformConfigurationAllowEmbeddingMediaItem",
-    "CreatePostsResponsePlatformConfigurationAllowEmbeddingMediaItemTagsItem",
-    "CreatePostsResponsePlatformConfigurationAllowEmbeddingMediaItemTagsItemPlatform",
-    "CreatePostsResponsePlatformConfigurationAllowEmbeddingMediaItemTagsItemType",
-    "CreatePostsResponsePlatformConfigurationAllowEmbeddingVisibility",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodes",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesGif",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesGifGifProvider",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesMediaItem",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesMediaItemTagsItem",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesMediaItemTagsItemPlatform",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesMediaItemTagsItemType",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesPlacement",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesPoll",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesPostType",
-    "CreatePostsResponsePlatformConfigurationAllowlistedCountryCodesReplyControl",
-    "CreatePostsResponsePlatformConfigurationArticle",
-    "CreatePostsResponsePlatformConfigurationArticleArticle",
-    "CreatePostsResponsePlatformConfigurationArticleAuthorKind",
-    "CreatePostsResponsePlatformConfigurationArticleMediaItem",
-    "CreatePostsResponsePlatformConfigurationArticleMediaItemTagsItem",
-    "CreatePostsResponsePlatformConfigurationArticleMediaItemTagsItemPlatform",
-    "CreatePostsResponsePlatformConfigurationArticleMediaItemTagsItemType",
-    "CreatePostsResponsePlatformConfigurationArticlePoll",
-    "CreatePostsResponsePlatformConfigurationArticlePollDuration",
-    "CreatePostsResponsePlatformConfigurationArticleTargetEntitiesItem",
-    "CreatePostsResponsePlatformConfigurationArticleVisibility",
-    "CreatePostsResponsePlatformConfigurationBrandedContentSponsorIds",
-    "CreatePostsResponsePlatformConfigurationBrandedContentSponsorIdsMediaItem",
-    "CreatePostsResponsePlatformConfigurationBrandedContentSponsorIdsMediaItemTagsItem",
-    "CreatePostsResponsePlatformConfigurationBrandedContentSponsorIdsMediaItemTagsItemPlatform",
-    "CreatePostsResponsePlatformConfigurationBrandedContentSponsorIdsMediaItemTagsItemType",
-    "CreatePostsResponsePlatformConfigurationBrandedContentSponsorIdsPlacement",
-    "CreatePostsResponsePlatformConfigurationBrandedContentSponsorIdsTrialReelType",
-    "CreatePostsResponsePlatformConfigurationCommunityId",
-    "CreatePostsResponsePlatformConfigurationCommunityIdGeo",
-    "CreatePostsResponsePlatformConfigurationCommunityIdMediaItem",
-    "CreatePostsResponsePlatformConfigurationCommunityIdMediaItemTagsItem",
-    "CreatePostsResponsePlatformConfigurationCommunityIdMediaItemTagsItemPlatform",
-    "CreatePostsResponsePlatformConfigurationCommunityIdMediaItemTagsItemType",
-    "CreatePostsResponsePlatformConfigurationCommunityIdPoll",
-    "CreatePostsResponsePlatformConfigurationCommunityIdPollReplySettings",
-    "CreatePostsResponsePlatformConfigurationCommunityIdReplySettings",
-    "CreatePostsResponsePlatformConfigurationExternal",
-    "CreatePostsResponsePlatformConfigurationExternalExternal",
-    "CreatePostsResponsePlatformConfigurationExternalMediaItem",
-    "CreatePostsResponsePlatformConfigurationExternalMediaItemTagsItem",
-    "CreatePostsResponsePlatformConfigurationExternalMediaItemTagsItemPlatform",
-    "CreatePostsResponsePlatformConfigurationExternalMediaItemTagsItemType",
-    "CreatePostsResponsePlatformConfigurationExternalPostgate",
-    "CreatePostsResponsePlatformConfigurationExternalReplyTo",
-    "CreatePostsResponsePlatformConfigurationExternalThreadgate",
-    "CreatePostsResponsePlatformConfigurationFeedTargeting",
-    "CreatePostsResponsePlatformConfigurationFeedTargetingMediaItem",
-    "CreatePostsResponsePlatformConfigurationFeedTargetingMediaItemTagsItem",
-    "CreatePostsResponsePlatformConfigurationFeedTargetingMediaItemTagsItemPlatform",
-    "CreatePostsResponsePlatformConfigurationFeedTargetingMediaItemTagsItemType",
-    "CreatePostsResponsePlatformConfigurationFeedTargetingPlacement",
-    "ListPostsRequestCursor",
+    "ListPostsRequestApprovalStatus",
     "ListPostsRequestStatus",
     "ListPostsRequestTagMode",
     "ListPostsResponse",

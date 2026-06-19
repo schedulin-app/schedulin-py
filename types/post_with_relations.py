@@ -10,8 +10,7 @@ from ..core.serialization import FieldMetadata
 from .post_approval_status import PostApprovalStatus
 from .post_status import PostStatus
 from .post_with_relations_media_item import PostWithRelationsMediaItem
-from .post_with_relations_platform_configuration import PostWithRelationsPlatformConfiguration
-from .post_with_relations_social_account import PostWithRelationsSocialAccount
+from .social_account import SocialAccount
 from .tag import Tag
 
 
@@ -46,7 +45,7 @@ class PostWithRelations(UniversalBaseModel):
         typing.Optional[dt.datetime], FieldMetadata(alias="scheduledAt"), pydantic.Field(alias="scheduledAt")
     ] = None
     platform_configuration: typing_extensions.Annotated[
-        typing.Optional[PostWithRelationsPlatformConfiguration],
+        typing.Optional[typing.Dict[str, typing.Any]],
         FieldMetadata(alias="platformConfiguration"),
         pydantic.Field(alias="platformConfiguration"),
     ] = None
@@ -61,7 +60,7 @@ class PostWithRelations(UniversalBaseModel):
         dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
     ]
     social_account: typing_extensions.Annotated[
-        PostWithRelationsSocialAccount, FieldMetadata(alias="socialAccount"), pydantic.Field(alias="socialAccount")
+        SocialAccount, FieldMetadata(alias="socialAccount"), pydantic.Field(alias="socialAccount")
     ]
     media: typing.List[PostWithRelationsMediaItem]
     tags: typing.List[Tag]

@@ -36,7 +36,6 @@ Instantiate and use the client with the following:
 
 ```python
 from schedulin import Schedulin
-from schedulin.posts import PostCreateMediaItem
 
 client = Schedulin(
     api_key="<value>",
@@ -45,11 +44,6 @@ client = Schedulin(
 client.posts.create(
     caption="caption",
     social_account_id="socialAccountId",
-    media=[
-        PostCreateMediaItem(
-            url="url",
-        )
-    ],
 )
 ```
 
@@ -72,7 +66,6 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
-from schedulin.posts import PostCreateMediaItem
 
 from schedulin import AsyncSchedulin
 
@@ -85,11 +78,6 @@ async def main() -> None:
     await client.posts.create(
         caption="caption",
         social_account_id="socialAccountId",
-        media=[
-            PostCreateMediaItem(
-                url="url",
-            )
-        ],
     )
 
 

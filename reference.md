@@ -51,14 +51,6 @@ client.posts.list()
 <dl>
 <dd>
 
-**cursor:** `typing.Optional[ListPostsRequestCursor]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **page:** `typing.Optional[int]` 
     
 </dd>
@@ -68,6 +60,14 @@ client.posts.list()
 <dd>
 
 **status:** `typing.Optional[ListPostsRequestStatus]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**approval_status:** `typing.Optional[ListPostsRequestApprovalStatus]` 
     
 </dd>
 </dl>
@@ -156,7 +156,6 @@ Create a new post with media, tags, and scheduling options
 ```python
 from schedulin import Schedulin
 from schedulin.environment import SchedulinEnvironment
-from schedulin.posts import PostCreateMediaItem
 
 client = Schedulin(
     api_key="<value>",
@@ -166,11 +165,6 @@ client = Schedulin(
 client.posts.create(
     caption="caption",
     social_account_id="socialAccountId",
-    media=[
-        PostCreateMediaItem(
-            url="url",
-        )
-    ],
 )
 
 ```
@@ -203,7 +197,7 @@ client.posts.create(
 <dl>
 <dd>
 
-**media:** `typing.List[PostCreateMediaItem]` 
+**scheduled_at:** `typing.Optional[datetime.datetime]` 
     
 </dd>
 </dl>
@@ -211,7 +205,7 @@ client.posts.create(
 <dl>
 <dd>
 
-**scheduled_at:** `typing.Optional[datetime.datetime]` 
+**media:** `typing.Optional[typing.List[PostCreateMediaItem]]` 
     
 </dd>
 </dl>
@@ -252,6 +246,77 @@ client.posts.create(
 <dd>
 
 **parts:** `typing.Optional[typing.List[PostCreatePartsItem]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.posts.<a href="src/schedulin/posts/client.py">v0post_count_by_tab</a>(...) -> typing.Any</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns counts of posts for the Queue, Drafts, Approvals, and Sent tabs
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from schedulin import Schedulin
+from schedulin.environment import SchedulinEnvironment
+
+client = Schedulin(
+    api_key="<value>",
+    environment=SchedulinEnvironment.DEFAULT,
+)
+
+client.posts.v0post_count_by_tab()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**social_account_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
     
 </dd>
 </dl>
@@ -611,7 +676,7 @@ client.posts.analytics_summary(
 </dl>
 </details>
 
-<details><summary><code>client.posts.<a href="src/schedulin/posts/client.py">analytics_series</a>(...) -> typing.List[AnalyticsSeriesPostsResponseItem]</code></summary>
+<details><summary><code>client.posts.<a href="src/schedulin/posts/client.py">analytics_series</a>(...) -> AnalyticsSeriesPostsResponse</code></summary>
 <dl>
 <dd>
 
@@ -931,7 +996,7 @@ client.posts.get_job_status(
 </details>
 
 ## SocialAccounts
-<details><summary><code>client.social_accounts.<a href="src/schedulin/social_accounts/client.py">list</a>() -> typing.List[ListSocialAccountsResponseItem]</code></summary>
+<details><summary><code>client.social_accounts.<a href="src/schedulin/social_accounts/client.py">list</a>() -> ListSocialAccountsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1048,86 +1113,6 @@ client.social_accounts.update(
 <dd>
 
 **id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**platform:** `typing.Optional[UpdateSocialAccountsRequestPlatform]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**access_token:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**secret_access_token:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**refresh_token:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**refresh_token_valid:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**token_expires_at:** `typing.Optional[datetime.datetime]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**image_url:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**image_processing_status:** `typing.Optional[UpdateSocialAccountsRequestImageProcessingStatus]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**platform_data:** `typing.Optional[typing.Dict[str, typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_refresh_at:** `typing.Optional[datetime.datetime]` 
     
 </dd>
 </dl>
@@ -1310,7 +1295,7 @@ client.social_accounts.update_timezone(
 </dl>
 </details>
 
-<details><summary><code>client.social_accounts.<a href="src/schedulin/social_accounts/client.py">refresh_profile</a>(...) -> RefreshProfileSocialAccountsResponse</code></summary>
+<details><summary><code>client.social_accounts.<a href="src/schedulin/social_accounts/client.py">pinterest_boards</a>(...) -> PinterestBoardsSocialAccountsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1322,7 +1307,7 @@ client.social_accounts.update_timezone(
 <dl>
 <dd>
 
-Fetch the latest profile information from the connected platform and update the social account
+List the boards for a connected Pinterest account. Use a board id in `platformConfiguration.board_ids` when creating a Pinterest post.
 </dd>
 </dl>
 </dd>
@@ -1345,7 +1330,80 @@ client = Schedulin(
     environment=SchedulinEnvironment.DEFAULT,
 )
 
-client.social_accounts.refresh_profile(
+client.social_accounts.pinterest_boards(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.social_accounts.<a href="src/schedulin/social_accounts/client.py">tiktok_creator_info</a>(...) -> TiktokCreatorInfoSocialAccountsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Fetch the privacy-level options, duration limits, and interaction settings for a connected TikTok account — required to build a valid `platformConfiguration` when creating a TikTok post.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from schedulin import Schedulin
+from schedulin.environment import SchedulinEnvironment
+
+client = Schedulin(
+    api_key="<value>",
+    environment=SchedulinEnvironment.DEFAULT,
+)
+
+client.social_accounts.tiktok_creator_info(
     id="id",
 )
 
@@ -1384,7 +1442,7 @@ client.social_accounts.refresh_profile(
 </details>
 
 ## Tags
-<details><summary><code>client.tags.<a href="src/schedulin/tags/client.py">list</a>(...) -> typing.List[Tag]</code></summary>
+<details><summary><code>client.tags.<a href="src/schedulin/tags/client.py">list</a>(...) -> ListTagsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2100,7 +2158,7 @@ client.media.set_tags(
 </dl>
 </details>
 
-<details><summary><code>client.media.<a href="src/schedulin/media/client.py">count_by_tag</a>() -> typing.Any</code></summary>
+<details><summary><code>client.media.<a href="src/schedulin/media/client.py">count_by_tag</a>() -> CountByTagMediaResponse</code></summary>
 <dl>
 <dd>
 
@@ -2175,7 +2233,7 @@ client.media.count_by_tag()
 <dl>
 <dd>
 
-Generate AWS S3 presigned post for secure file uploads
+Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type` header matching `contentType`, then reference the returned `key` when creating a post.
 </dd>
 </dl>
 </dd>
@@ -2234,6 +2292,14 @@ client.media.create_presigned_post(
 <dd>
 
 **size:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**intent:** `typing.Optional[CreatePresignedPostIntent]` 
     
 </dd>
 </dl>

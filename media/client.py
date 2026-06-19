@@ -7,6 +7,8 @@ from ..core.request_options import RequestOptions
 from ..types.media import Media
 from ..types.presigned_post import PresignedPost
 from .raw_client import AsyncRawMediaClient, RawMediaClient
+from .types.count_by_tag_media_response import CountByTagMediaResponse
+from .types.create_presigned_post_intent import CreatePresignedPostIntent
 from .types.list_media_request_cursor import ListMediaRequestCursor
 from .types.list_media_request_tag_mode import ListMediaRequestTagMode
 from .types.list_media_request_type import ListMediaRequestType
@@ -214,7 +216,7 @@ class MediaClient:
         _response = self._raw_client.set_tags(media_id, tag_ids=tag_ids, request_options=request_options)
         return _response.data
 
-    def count_by_tag(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    def count_by_tag(self, *, request_options: typing.Optional[RequestOptions] = None) -> CountByTagMediaResponse:
         """
         Return media counts grouped by tag for the organization
 
@@ -225,7 +227,7 @@ class MediaClient:
 
         Returns
         -------
-        typing.Any
+        CountByTagMediaResponse
             OK
 
         Examples
@@ -246,10 +248,11 @@ class MediaClient:
         content_type: str,
         key: str,
         size: typing.Optional[int] = OMIT,
+        intent: typing.Optional[CreatePresignedPostIntent] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PresignedPost:
         """
-        Generate AWS S3 presigned post for secure file uploads
+        Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type` header matching `contentType`, then reference the returned `key` when creating a post.
 
         Parameters
         ----------
@@ -258,6 +261,8 @@ class MediaClient:
         key : str
 
         size : typing.Optional[int]
+
+        intent : typing.Optional[CreatePresignedPostIntent]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -280,7 +285,7 @@ class MediaClient:
         )
         """
         _response = self._raw_client.create_presigned_post(
-            content_type=content_type, key=key, size=size, request_options=request_options
+            content_type=content_type, key=key, size=size, intent=intent, request_options=request_options
         )
         return _response.data
 
@@ -518,7 +523,7 @@ class AsyncMediaClient:
         _response = await self._raw_client.set_tags(media_id, tag_ids=tag_ids, request_options=request_options)
         return _response.data
 
-    async def count_by_tag(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    async def count_by_tag(self, *, request_options: typing.Optional[RequestOptions] = None) -> CountByTagMediaResponse:
         """
         Return media counts grouped by tag for the organization
 
@@ -529,7 +534,7 @@ class AsyncMediaClient:
 
         Returns
         -------
-        typing.Any
+        CountByTagMediaResponse
             OK
 
         Examples
@@ -558,10 +563,11 @@ class AsyncMediaClient:
         content_type: str,
         key: str,
         size: typing.Optional[int] = OMIT,
+        intent: typing.Optional[CreatePresignedPostIntent] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PresignedPost:
         """
-        Generate AWS S3 presigned post for secure file uploads
+        Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type` header matching `contentType`, then reference the returned `key` when creating a post.
 
         Parameters
         ----------
@@ -570,6 +576,8 @@ class AsyncMediaClient:
         key : str
 
         size : typing.Optional[int]
+
+        intent : typing.Optional[CreatePresignedPostIntent]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -600,6 +608,6 @@ class AsyncMediaClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create_presigned_post(
-            content_type=content_type, key=key, size=size, request_options=request_options
+            content_type=content_type, key=key, size=size, intent=intent, request_options=request_options
         )
         return _response.data

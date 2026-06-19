@@ -6,6 +6,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.tag import Tag
 from .raw_client import AsyncRawTagsClient, RawTagsClient
+from .types.list_tags_response import ListTagsResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -32,7 +33,7 @@ class TagsClient:
         q: typing.Optional[str] = None,
         limit: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[Tag]:
+    ) -> ListTagsResponse:
         """
         Retrieve a list of tags for the authenticated user with optional search filtering
 
@@ -47,7 +48,7 @@ class TagsClient:
 
         Returns
         -------
-        typing.List[Tag]
+        ListTagsResponse
             OK
 
         Examples
@@ -183,7 +184,7 @@ class AsyncTagsClient:
         q: typing.Optional[str] = None,
         limit: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[Tag]:
+    ) -> ListTagsResponse:
         """
         Retrieve a list of tags for the authenticated user with optional search filtering
 
@@ -198,7 +199,7 @@ class AsyncTagsClient:
 
         Returns
         -------
-        typing.List[Tag]
+        ListTagsResponse
             OK
 
         Examples

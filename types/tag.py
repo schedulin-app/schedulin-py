@@ -11,7 +11,6 @@ from ..core.serialization import FieldMetadata
 
 class Tag(UniversalBaseModel):
     id: str
-    user_id: typing_extensions.Annotated[str, FieldMetadata(alias="userId"), pydantic.Field(alias="userId")]
     name: str
     color: str
     created_at: typing_extensions.Annotated[

@@ -3,7 +3,9 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
 from .social_account_public_status import SocialAccountPublicStatus
 from .social_platform import SocialPlatform
 
@@ -12,10 +14,14 @@ class SocialAccountPublic(UniversalBaseModel):
     id: str
     platform: SocialPlatform
     username: typing.Optional[str] = None
-    user_id: str
-    profile_photo_url: typing.Optional[str] = None
+    user_id: typing_extensions.Annotated[str, FieldMetadata(alias="userId"), pydantic.Field(alias="userId")]
+    profile_photo_url: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="profilePhotoUrl"), pydantic.Field(alias="profilePhotoUrl")
+    ] = None
     status: SocialAccountPublicStatus
-    external_id: typing.Optional[str] = None
+    external_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="externalId"), pydantic.Field(alias="externalId")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

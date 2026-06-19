@@ -7,14 +7,18 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        CountByTagMediaResponse,
+        CountByTagMediaResponseDataItem,
+        CreatePresignedPostIntent,
         ListMediaRequestCursor,
-        ListMediaRequestCursorUpdatedAt,
         ListMediaRequestTagMode,
         ListMediaRequestType,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "CountByTagMediaResponse": ".types",
+    "CountByTagMediaResponseDataItem": ".types",
+    "CreatePresignedPostIntent": ".types",
     "ListMediaRequestCursor": ".types",
-    "ListMediaRequestCursorUpdatedAt": ".types",
     "ListMediaRequestTagMode": ".types",
     "ListMediaRequestType": ".types",
 }
@@ -42,8 +46,10 @@ def __dir__():
 
 
 __all__ = [
+    "CountByTagMediaResponse",
+    "CountByTagMediaResponseDataItem",
+    "CreatePresignedPostIntent",
     "ListMediaRequestCursor",
-    "ListMediaRequestCursorUpdatedAt",
     "ListMediaRequestTagMode",
     "ListMediaRequestType",
 ]

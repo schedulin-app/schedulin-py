@@ -4,7 +4,17 @@ import typing
 
 PostCreatePartsItemMediaItemTagsItemPlatform = typing.Union[
     typing.Literal[
-        "bluesky", "facebook", "instagram", "linkedin", "pinterest", "threads", "tiktok", "twitter", "youtube"
+        "bluesky",
+        "facebook",
+        "google_business_profile",
+        "instagram",
+        "linkedin",
+        "pinterest",
+        "reddit",
+        "threads",
+        "tiktok",
+        "twitter",
+        "youtube",
     ],
     typing.Any,
 ]

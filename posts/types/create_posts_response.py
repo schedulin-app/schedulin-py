@@ -4,24 +4,39 @@ import datetime as dt
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.serialization import FieldMetadata
 from ...types.post_status import PostStatus
 from ...types.social_account_public import SocialAccountPublic
 from .create_posts_response_media_item import CreatePostsResponseMediaItem
-from .create_posts_response_platform_configuration import CreatePostsResponsePlatformConfiguration
 
 
 class CreatePostsResponse(UniversalBaseModel):
     id: str
-    external_id: typing.Optional[str] = None
+    external_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="externalId"), pydantic.Field(alias="externalId")
+    ] = None
     caption: str
     status: PostStatus
-    scheduled_at: typing.Optional[dt.datetime] = None
-    platform_configuration: typing.Optional[CreatePostsResponsePlatformConfiguration] = None
+    scheduled_at: typing_extensions.Annotated[
+        typing.Optional[dt.datetime], FieldMetadata(alias="scheduledAt"), pydantic.Field(alias="scheduledAt")
+    ] = None
+    platform_configuration: typing_extensions.Annotated[
+        typing.Optional[typing.Dict[str, typing.Any]],
+        FieldMetadata(alias="platformConfiguration"),
+        pydantic.Field(alias="platformConfiguration"),
+    ] = None
     media: typing.List[CreatePostsResponseMediaItem]
-    social_accounts: typing.List[SocialAccountPublic]
-    created_at: dt.datetime
-    updated_at: dt.datetime
+    social_accounts: typing_extensions.Annotated[
+        typing.List[SocialAccountPublic], FieldMetadata(alias="socialAccounts"), pydantic.Field(alias="socialAccounts")
+    ]
+    created_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

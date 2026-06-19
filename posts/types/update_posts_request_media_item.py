@@ -13,7 +13,7 @@ class UpdatePostsRequestMediaItem(UniversalBaseModel):
     name: str
     url: str
     mime_type: typing_extensions.Annotated[str, FieldMetadata(alias="mimeType"), pydantic.Field(alias="mimeType")]
-    bucket: str
+    bucket: typing.Optional[str] = None
     key: str
 
     if IS_PYDANTIC_V2:

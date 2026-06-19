@@ -9,10 +9,10 @@ from ..types.list_posts_request_scheduled_at import ListPostsRequestScheduledAt
 from ..types.post import Post
 from ..types.post_with_relations import PostWithRelations
 from .raw_client import AsyncRawPostsClient, RawPostsClient
-from .types.analytics_series_posts_response_item import AnalyticsSeriesPostsResponseItem
+from .types.analytics_series_posts_response import AnalyticsSeriesPostsResponse
 from .types.analytics_summary_posts_response import AnalyticsSummaryPostsResponse
 from .types.create_posts_response import CreatePostsResponse
-from .types.list_posts_request_cursor import ListPostsRequestCursor
+from .types.list_posts_request_approval_status import ListPostsRequestApprovalStatus
 from .types.list_posts_request_status import ListPostsRequestStatus
 from .types.list_posts_request_tag_mode import ListPostsRequestTagMode
 from .types.list_posts_response import ListPostsResponse
@@ -45,9 +45,9 @@ class PostsClient:
     def list(
         self,
         *,
-        cursor: typing.Optional[ListPostsRequestCursor] = None,
         page: typing.Optional[int] = None,
         status: typing.Optional[ListPostsRequestStatus] = None,
+        approval_status: typing.Optional[ListPostsRequestApprovalStatus] = None,
         scheduled_at: typing.Optional[ListPostsRequestScheduledAt] = None,
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tag_mode: typing.Optional[ListPostsRequestTagMode] = None,
@@ -60,11 +60,11 @@ class PostsClient:
 
         Parameters
         ----------
-        cursor : typing.Optional[ListPostsRequestCursor]
-
         page : typing.Optional[int]
 
         status : typing.Optional[ListPostsRequestStatus]
+
+        approval_status : typing.Optional[ListPostsRequestApprovalStatus]
 
         scheduled_at : typing.Optional[ListPostsRequestScheduledAt]
 
@@ -94,9 +94,9 @@ class PostsClient:
         client.posts.list()
         """
         _response = self._raw_client.list(
-            cursor=cursor,
             page=page,
             status=status,
+            approval_status=approval_status,
             scheduled_at=scheduled_at,
             tag_ids=tag_ids,
             tag_mode=tag_mode,
@@ -111,8 +111,8 @@ class PostsClient:
         *,
         caption: str,
         social_account_id: str,
-        media: typing.Sequence[PostCreateMediaItem],
         scheduled_at: typing.Optional[dt.datetime] = OMIT,
+        media: typing.Optional[typing.Sequence[PostCreateMediaItem]] = OMIT,
         thumbnail: typing.Optional[PostCreateThumbnail] = OMIT,
         platform_configuration: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         tag_ids: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -129,9 +129,9 @@ class PostsClient:
 
         social_account_id : str
 
-        media : typing.Sequence[PostCreateMediaItem]
-
         scheduled_at : typing.Optional[dt.datetime]
+
+        media : typing.Optional[typing.Sequence[PostCreateMediaItem]]
 
         thumbnail : typing.Optional[PostCreateThumbnail]
 
@@ -154,7 +154,6 @@ class PostsClient:
         Examples
         --------
         from schedulin import Schedulin
-        from schedulin.posts import PostCreateMediaItem
 
         client = Schedulin(
             api_key="YOUR_API_KEY",
@@ -162,24 +161,54 @@ class PostsClient:
         client.posts.create(
             caption="caption",
             social_account_id="socialAccountId",
-            media=[
-                PostCreateMediaItem(
-                    url="url",
-                )
-            ],
         )
         """
         _response = self._raw_client.create(
             caption=caption,
             social_account_id=social_account_id,
-            media=media,
             scheduled_at=scheduled_at,
+            media=media,
             thumbnail=thumbnail,
             platform_configuration=platform_configuration,
             tag_ids=tag_ids,
             action=action,
             parts=parts,
             request_options=request_options,
+        )
+        return _response.data
+
+    def v0post_count_by_tab(
+        self,
+        *,
+        social_account_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Any:
+        """
+        Returns counts of posts for the Queue, Drafts, Approvals, and Sent tabs
+
+        Parameters
+        ----------
+        social_account_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            OK
+
+        Examples
+        --------
+        from schedulin import Schedulin
+
+        client = Schedulin(
+            api_key="YOUR_API_KEY",
+        )
+        client.posts.v0post_count_by_tab()
+        """
+        _response = self._raw_client.v0post_count_by_tab(
+            social_account_ids=social_account_ids, request_options=request_options
         )
         return _response.data
 
@@ -339,7 +368,7 @@ class PostsClient:
 
     def analytics_series(
         self, id: str, *, limit: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[AnalyticsSeriesPostsResponseItem]:
+    ) -> AnalyticsSeriesPostsResponse:
         """
         Retrieve time series analytics metrics for a post
 
@@ -354,7 +383,7 @@ class PostsClient:
 
         Returns
         -------
-        typing.List[AnalyticsSeriesPostsResponseItem]
+        AnalyticsSeriesPostsResponse
             OK
 
         Examples
@@ -495,9 +524,9 @@ class AsyncPostsClient:
     async def list(
         self,
         *,
-        cursor: typing.Optional[ListPostsRequestCursor] = None,
         page: typing.Optional[int] = None,
         status: typing.Optional[ListPostsRequestStatus] = None,
+        approval_status: typing.Optional[ListPostsRequestApprovalStatus] = None,
         scheduled_at: typing.Optional[ListPostsRequestScheduledAt] = None,
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tag_mode: typing.Optional[ListPostsRequestTagMode] = None,
@@ -510,11 +539,11 @@ class AsyncPostsClient:
 
         Parameters
         ----------
-        cursor : typing.Optional[ListPostsRequestCursor]
-
         page : typing.Optional[int]
 
         status : typing.Optional[ListPostsRequestStatus]
+
+        approval_status : typing.Optional[ListPostsRequestApprovalStatus]
 
         scheduled_at : typing.Optional[ListPostsRequestScheduledAt]
 
@@ -552,9 +581,9 @@ class AsyncPostsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
-            cursor=cursor,
             page=page,
             status=status,
+            approval_status=approval_status,
             scheduled_at=scheduled_at,
             tag_ids=tag_ids,
             tag_mode=tag_mode,
@@ -569,8 +598,8 @@ class AsyncPostsClient:
         *,
         caption: str,
         social_account_id: str,
-        media: typing.Sequence[PostCreateMediaItem],
         scheduled_at: typing.Optional[dt.datetime] = OMIT,
+        media: typing.Optional[typing.Sequence[PostCreateMediaItem]] = OMIT,
         thumbnail: typing.Optional[PostCreateThumbnail] = OMIT,
         platform_configuration: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         tag_ids: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -587,9 +616,9 @@ class AsyncPostsClient:
 
         social_account_id : str
 
-        media : typing.Sequence[PostCreateMediaItem]
-
         scheduled_at : typing.Optional[dt.datetime]
+
+        media : typing.Optional[typing.Sequence[PostCreateMediaItem]]
 
         thumbnail : typing.Optional[PostCreateThumbnail]
 
@@ -614,7 +643,6 @@ class AsyncPostsClient:
         import asyncio
 
         from schedulin import AsyncSchedulin
-        from schedulin.posts import PostCreateMediaItem
 
         client = AsyncSchedulin(
             api_key="YOUR_API_KEY",
@@ -625,11 +653,6 @@ class AsyncPostsClient:
             await client.posts.create(
                 caption="caption",
                 social_account_id="socialAccountId",
-                media=[
-                    PostCreateMediaItem(
-                        url="url",
-                    )
-                ],
             )
 
 
@@ -638,14 +661,57 @@ class AsyncPostsClient:
         _response = await self._raw_client.create(
             caption=caption,
             social_account_id=social_account_id,
-            media=media,
             scheduled_at=scheduled_at,
+            media=media,
             thumbnail=thumbnail,
             platform_configuration=platform_configuration,
             tag_ids=tag_ids,
             action=action,
             parts=parts,
             request_options=request_options,
+        )
+        return _response.data
+
+    async def v0post_count_by_tab(
+        self,
+        *,
+        social_account_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Any:
+        """
+        Returns counts of posts for the Queue, Drafts, Approvals, and Sent tabs
+
+        Parameters
+        ----------
+        social_account_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            OK
+
+        Examples
+        --------
+        import asyncio
+
+        from schedulin import AsyncSchedulin
+
+        client = AsyncSchedulin(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.posts.v0post_count_by_tab()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.v0post_count_by_tab(
+            social_account_ids=social_account_ids, request_options=request_options
         )
         return _response.data
 
@@ -837,7 +903,7 @@ class AsyncPostsClient:
 
     async def analytics_series(
         self, id: str, *, limit: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[AnalyticsSeriesPostsResponseItem]:
+    ) -> AnalyticsSeriesPostsResponse:
         """
         Retrieve time series analytics metrics for a post
 
@@ -852,7 +918,7 @@ class AsyncPostsClient:
 
         Returns
         -------
-        typing.List[AnalyticsSeriesPostsResponseItem]
+        AnalyticsSeriesPostsResponse
             OK
 
         Examples

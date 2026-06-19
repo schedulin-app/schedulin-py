@@ -18,10 +18,10 @@ from ..types.error_response import ErrorResponse
 from ..types.list_posts_request_scheduled_at import ListPostsRequestScheduledAt
 from ..types.post import Post
 from ..types.post_with_relations import PostWithRelations
-from .types.analytics_series_posts_response_item import AnalyticsSeriesPostsResponseItem
+from .types.analytics_series_posts_response import AnalyticsSeriesPostsResponse
 from .types.analytics_summary_posts_response import AnalyticsSummaryPostsResponse
 from .types.create_posts_response import CreatePostsResponse
-from .types.list_posts_request_cursor import ListPostsRequestCursor
+from .types.list_posts_request_approval_status import ListPostsRequestApprovalStatus
 from .types.list_posts_request_status import ListPostsRequestStatus
 from .types.list_posts_request_tag_mode import ListPostsRequestTagMode
 from .types.list_posts_response import ListPostsResponse
@@ -44,9 +44,9 @@ class RawPostsClient:
     def list(
         self,
         *,
-        cursor: typing.Optional[ListPostsRequestCursor] = None,
         page: typing.Optional[int] = None,
         status: typing.Optional[ListPostsRequestStatus] = None,
+        approval_status: typing.Optional[ListPostsRequestApprovalStatus] = None,
         scheduled_at: typing.Optional[ListPostsRequestScheduledAt] = None,
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tag_mode: typing.Optional[ListPostsRequestTagMode] = None,
@@ -59,11 +59,11 @@ class RawPostsClient:
 
         Parameters
         ----------
-        cursor : typing.Optional[ListPostsRequestCursor]
-
         page : typing.Optional[int]
 
         status : typing.Optional[ListPostsRequestStatus]
+
+        approval_status : typing.Optional[ListPostsRequestApprovalStatus]
 
         scheduled_at : typing.Optional[ListPostsRequestScheduledAt]
 
@@ -87,11 +87,9 @@ class RawPostsClient:
             "v0/posts",
             method="GET",
             params={
-                "cursor": convert_and_respect_annotation_metadata(
-                    object_=cursor, annotation=typing.Optional[ListPostsRequestCursor], direction="write"
-                ),
                 "page": page,
                 "status": status,
+                "approvalStatus": approval_status,
                 "scheduledAt": convert_and_respect_annotation_metadata(
                     object_=scheduled_at, annotation=ListPostsRequestScheduledAt, direction="write"
                 ),
@@ -148,8 +146,8 @@ class RawPostsClient:
         *,
         caption: str,
         social_account_id: str,
-        media: typing.Sequence[PostCreateMediaItem],
         scheduled_at: typing.Optional[dt.datetime] = OMIT,
+        media: typing.Optional[typing.Sequence[PostCreateMediaItem]] = OMIT,
         thumbnail: typing.Optional[PostCreateThumbnail] = OMIT,
         platform_configuration: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         tag_ids: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -166,9 +164,9 @@ class RawPostsClient:
 
         social_account_id : str
 
-        media : typing.Sequence[PostCreateMediaItem]
-
         scheduled_at : typing.Optional[dt.datetime]
+
+        media : typing.Optional[typing.Sequence[PostCreateMediaItem]]
 
         thumbnail : typing.Optional[PostCreateThumbnail]
 
@@ -220,6 +218,78 @@ class RawPostsClient:
                     CreatePostsResponse,
                     parse_obj_as(
                         type_=CreatePostsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def v0post_count_by_tab(
+        self,
+        *,
+        social_account_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[typing.Any]:
+        """
+        Returns counts of posts for the Queue, Drafts, Approvals, and Sent tabs
+
+        Parameters
+        ----------
+        social_account_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[typing.Any]
+            OK
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v0/posts/counts/by-tab",
+            method="GET",
+            params={
+                "socialAccountIds": social_account_ids,
+            },
+            request_options=request_options,
+        )
+        try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Any,
+                    parse_obj_as(
+                        type_=typing.Any,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -551,7 +621,7 @@ class RawPostsClient:
 
     def analytics_series(
         self, id: str, *, limit: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[typing.List[AnalyticsSeriesPostsResponseItem]]:
+    ) -> HttpResponse[AnalyticsSeriesPostsResponse]:
         """
         Retrieve time series analytics metrics for a post
 
@@ -566,7 +636,7 @@ class RawPostsClient:
 
         Returns
         -------
-        HttpResponse[typing.List[AnalyticsSeriesPostsResponseItem]]
+        HttpResponse[AnalyticsSeriesPostsResponse]
             OK
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -580,9 +650,9 @@ class RawPostsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[AnalyticsSeriesPostsResponseItem],
+                    AnalyticsSeriesPostsResponse,
                     parse_obj_as(
-                        type_=typing.List[AnalyticsSeriesPostsResponseItem],  # type: ignore
+                        type_=AnalyticsSeriesPostsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -842,9 +912,9 @@ class AsyncRawPostsClient:
     async def list(
         self,
         *,
-        cursor: typing.Optional[ListPostsRequestCursor] = None,
         page: typing.Optional[int] = None,
         status: typing.Optional[ListPostsRequestStatus] = None,
+        approval_status: typing.Optional[ListPostsRequestApprovalStatus] = None,
         scheduled_at: typing.Optional[ListPostsRequestScheduledAt] = None,
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tag_mode: typing.Optional[ListPostsRequestTagMode] = None,
@@ -857,11 +927,11 @@ class AsyncRawPostsClient:
 
         Parameters
         ----------
-        cursor : typing.Optional[ListPostsRequestCursor]
-
         page : typing.Optional[int]
 
         status : typing.Optional[ListPostsRequestStatus]
+
+        approval_status : typing.Optional[ListPostsRequestApprovalStatus]
 
         scheduled_at : typing.Optional[ListPostsRequestScheduledAt]
 
@@ -885,11 +955,9 @@ class AsyncRawPostsClient:
             "v0/posts",
             method="GET",
             params={
-                "cursor": convert_and_respect_annotation_metadata(
-                    object_=cursor, annotation=typing.Optional[ListPostsRequestCursor], direction="write"
-                ),
                 "page": page,
                 "status": status,
+                "approvalStatus": approval_status,
                 "scheduledAt": convert_and_respect_annotation_metadata(
                     object_=scheduled_at, annotation=ListPostsRequestScheduledAt, direction="write"
                 ),
@@ -946,8 +1014,8 @@ class AsyncRawPostsClient:
         *,
         caption: str,
         social_account_id: str,
-        media: typing.Sequence[PostCreateMediaItem],
         scheduled_at: typing.Optional[dt.datetime] = OMIT,
+        media: typing.Optional[typing.Sequence[PostCreateMediaItem]] = OMIT,
         thumbnail: typing.Optional[PostCreateThumbnail] = OMIT,
         platform_configuration: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         tag_ids: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -964,9 +1032,9 @@ class AsyncRawPostsClient:
 
         social_account_id : str
 
-        media : typing.Sequence[PostCreateMediaItem]
-
         scheduled_at : typing.Optional[dt.datetime]
+
+        media : typing.Optional[typing.Sequence[PostCreateMediaItem]]
 
         thumbnail : typing.Optional[PostCreateThumbnail]
 
@@ -1018,6 +1086,78 @@ class AsyncRawPostsClient:
                     CreatePostsResponse,
                     parse_obj_as(
                         type_=CreatePostsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def v0post_count_by_tab(
+        self,
+        *,
+        social_account_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[typing.Any]:
+        """
+        Returns counts of posts for the Queue, Drafts, Approvals, and Sent tabs
+
+        Parameters
+        ----------
+        social_account_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[typing.Any]
+            OK
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v0/posts/counts/by-tab",
+            method="GET",
+            params={
+                "socialAccountIds": social_account_ids,
+            },
+            request_options=request_options,
+        )
+        try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Any,
+                    parse_obj_as(
+                        type_=typing.Any,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1351,7 +1491,7 @@ class AsyncRawPostsClient:
 
     async def analytics_series(
         self, id: str, *, limit: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[typing.List[AnalyticsSeriesPostsResponseItem]]:
+    ) -> AsyncHttpResponse[AnalyticsSeriesPostsResponse]:
         """
         Retrieve time series analytics metrics for a post
 
@@ -1366,7 +1506,7 @@ class AsyncRawPostsClient:
 
         Returns
         -------
-        AsyncHttpResponse[typing.List[AnalyticsSeriesPostsResponseItem]]
+        AsyncHttpResponse[AnalyticsSeriesPostsResponse]
             OK
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -1380,9 +1520,9 @@ class AsyncRawPostsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[AnalyticsSeriesPostsResponseItem],
+                    AnalyticsSeriesPostsResponse,
                     parse_obj_as(
-                        type_=typing.List[AnalyticsSeriesPostsResponseItem],  # type: ignore
+                        type_=AnalyticsSeriesPostsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -7,8 +7,18 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class ErrorResponse(UniversalBaseModel):
-    error: str
-    code: int
+    """
+    Error envelope. The machine-readable `code` and HTTP `status` are always present; the human-readable reason is in `data.message` (or `data.fieldErrors` for 422 validation errors).
+    """
+
+    code: str = pydantic.Field()
+    """
+    e.g. "BAD_REQUEST", "UNAUTHORIZED", "NOT_FOUND".
+    """
+
+    status: int
+    message: typing.Optional[str] = None
+    data: typing.Optional[typing.Dict[str, typing.Any]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

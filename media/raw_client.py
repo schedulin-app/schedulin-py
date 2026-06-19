@@ -16,6 +16,8 @@ from ..errors.unauthorized_error import UnauthorizedError
 from ..types.error_response import ErrorResponse
 from ..types.media import Media
 from ..types.presigned_post import PresignedPost
+from .types.count_by_tag_media_response import CountByTagMediaResponse
+from .types.create_presigned_post_intent import CreatePresignedPostIntent
 from .types.list_media_request_cursor import ListMediaRequestCursor
 from .types.list_media_request_tag_mode import ListMediaRequestTagMode
 from .types.list_media_request_type import ListMediaRequestType
@@ -361,7 +363,9 @@ class RawMediaClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def count_by_tag(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[typing.Any]:
+    def count_by_tag(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[CountByTagMediaResponse]:
         """
         Return media counts grouped by tag for the organization
 
@@ -372,7 +376,7 @@ class RawMediaClient:
 
         Returns
         -------
-        HttpResponse[typing.Any]
+        HttpResponse[CountByTagMediaResponse]
             OK
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -381,13 +385,11 @@ class RawMediaClient:
             request_options=request_options,
         )
         try:
-            if _response is None or not _response.text.strip():
-                return HttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.Any,
+                    CountByTagMediaResponse,
                     parse_obj_as(
-                        type_=typing.Any,  # type: ignore
+                        type_=CountByTagMediaResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -429,10 +431,11 @@ class RawMediaClient:
         content_type: str,
         key: str,
         size: typing.Optional[int] = OMIT,
+        intent: typing.Optional[CreatePresignedPostIntent] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PresignedPost]:
         """
-        Generate AWS S3 presigned post for secure file uploads
+        Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type` header matching `contentType`, then reference the returned `key` when creating a post.
 
         Parameters
         ----------
@@ -441,6 +444,8 @@ class RawMediaClient:
         key : str
 
         size : typing.Optional[int]
+
+        intent : typing.Optional[CreatePresignedPostIntent]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -457,6 +462,7 @@ class RawMediaClient:
                 "contentType": content_type,
                 "key": key,
                 "size": size,
+                "intent": intent,
             },
             headers={
                 "content-type": "application/json",
@@ -844,7 +850,7 @@ class AsyncRawMediaClient:
 
     async def count_by_tag(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[typing.Any]:
+    ) -> AsyncHttpResponse[CountByTagMediaResponse]:
         """
         Return media counts grouped by tag for the organization
 
@@ -855,7 +861,7 @@ class AsyncRawMediaClient:
 
         Returns
         -------
-        AsyncHttpResponse[typing.Any]
+        AsyncHttpResponse[CountByTagMediaResponse]
             OK
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -864,13 +870,11 @@ class AsyncRawMediaClient:
             request_options=request_options,
         )
         try:
-            if _response is None or not _response.text.strip():
-                return AsyncHttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.Any,
+                    CountByTagMediaResponse,
                     parse_obj_as(
-                        type_=typing.Any,  # type: ignore
+                        type_=CountByTagMediaResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -912,10 +916,11 @@ class AsyncRawMediaClient:
         content_type: str,
         key: str,
         size: typing.Optional[int] = OMIT,
+        intent: typing.Optional[CreatePresignedPostIntent] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PresignedPost]:
         """
-        Generate AWS S3 presigned post for secure file uploads
+        Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type` header matching `contentType`, then reference the returned `key` when creating a post.
 
         Parameters
         ----------
@@ -924,6 +929,8 @@ class AsyncRawMediaClient:
         key : str
 
         size : typing.Optional[int]
+
+        intent : typing.Optional[CreatePresignedPostIntent]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -940,6 +947,7 @@ class AsyncRawMediaClient:
                 "contentType": content_type,
                 "key": key,
                 "size": size,
+                "intent": intent,
             },
             headers={
                 "content-type": "application/json",

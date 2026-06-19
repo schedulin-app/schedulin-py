@@ -2,4 +2,4 @@
 
 import typing
 
-PostCreateAction = typing.Union[typing.Literal["schedule", "queue", "draft"], typing.Any]
+PostCreateAction = typing.Union[typing.Literal["schedule", "queue", "draft", "now"], typing.Any]
