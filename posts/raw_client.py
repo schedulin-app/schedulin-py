@@ -23,6 +23,7 @@ from .types.analytics_summary_posts_response import AnalyticsSummaryPostsRespons
 from .types.create_posts_response import CreatePostsResponse
 from .types.list_posts_request_approval_status import ListPostsRequestApprovalStatus
 from .types.list_posts_request_status import ListPostsRequestStatus
+from .types.list_posts_request_statuses_item import ListPostsRequestStatusesItem
 from .types.list_posts_request_tag_mode import ListPostsRequestTagMode
 from .types.list_posts_response import ListPostsResponse
 from .types.post_create_action import PostCreateAction
@@ -46,6 +47,9 @@ class RawPostsClient:
         *,
         page: typing.Optional[int] = None,
         status: typing.Optional[ListPostsRequestStatus] = None,
+        statuses: typing.Optional[
+            typing.Union[ListPostsRequestStatusesItem, typing.Sequence[ListPostsRequestStatusesItem]]
+        ] = None,
         approval_status: typing.Optional[ListPostsRequestApprovalStatus] = None,
         scheduled_at: typing.Optional[ListPostsRequestScheduledAt] = None,
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -62,6 +66,8 @@ class RawPostsClient:
         page : typing.Optional[int]
 
         status : typing.Optional[ListPostsRequestStatus]
+
+        statuses : typing.Optional[typing.Union[ListPostsRequestStatusesItem, typing.Sequence[ListPostsRequestStatusesItem]]]
 
         approval_status : typing.Optional[ListPostsRequestApprovalStatus]
 
@@ -89,6 +95,7 @@ class RawPostsClient:
             params={
                 "page": page,
                 "status": status,
+                "statuses": statuses,
                 "approvalStatus": approval_status,
                 "scheduledAt": convert_and_respect_annotation_metadata(
                     object_=scheduled_at, annotation=ListPostsRequestScheduledAt, direction="write"
@@ -914,6 +921,9 @@ class AsyncRawPostsClient:
         *,
         page: typing.Optional[int] = None,
         status: typing.Optional[ListPostsRequestStatus] = None,
+        statuses: typing.Optional[
+            typing.Union[ListPostsRequestStatusesItem, typing.Sequence[ListPostsRequestStatusesItem]]
+        ] = None,
         approval_status: typing.Optional[ListPostsRequestApprovalStatus] = None,
         scheduled_at: typing.Optional[ListPostsRequestScheduledAt] = None,
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -930,6 +940,8 @@ class AsyncRawPostsClient:
         page : typing.Optional[int]
 
         status : typing.Optional[ListPostsRequestStatus]
+
+        statuses : typing.Optional[typing.Union[ListPostsRequestStatusesItem, typing.Sequence[ListPostsRequestStatusesItem]]]
 
         approval_status : typing.Optional[ListPostsRequestApprovalStatus]
 
@@ -957,6 +969,7 @@ class AsyncRawPostsClient:
             params={
                 "page": page,
                 "status": status,
+                "statuses": statuses,
                 "approvalStatus": approval_status,
                 "scheduledAt": convert_and_respect_annotation_metadata(
                     object_=scheduled_at, annotation=ListPostsRequestScheduledAt, direction="write"

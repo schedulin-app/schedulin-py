@@ -67,6 +67,14 @@ client.posts.list()
 <dl>
 <dd>
 
+**statuses:** `typing.Optional[typing.Union[ListPostsRequestStatusesItem, typing.Sequence[ListPostsRequestStatusesItem]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **approval_status:** `typing.Optional[ListPostsRequestApprovalStatus]` 
     
 </dd>

@@ -16,6 +16,7 @@ if typing.TYPE_CHECKING:
     from .create_posts_response_media_item_tags_item_type import CreatePostsResponseMediaItemTagsItemType
     from .list_posts_request_approval_status import ListPostsRequestApprovalStatus
     from .list_posts_request_status import ListPostsRequestStatus
+    from .list_posts_request_statuses_item import ListPostsRequestStatusesItem
     from .list_posts_request_tag_mode import ListPostsRequestTagMode
     from .list_posts_response import ListPostsResponse
     from .post_create_action import PostCreateAction
@@ -45,6 +46,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreatePostsResponseMediaItemTagsItemType": ".create_posts_response_media_item_tags_item_type",
     "ListPostsRequestApprovalStatus": ".list_posts_request_approval_status",
     "ListPostsRequestStatus": ".list_posts_request_status",
+    "ListPostsRequestStatusesItem": ".list_posts_request_statuses_item",
     "ListPostsRequestTagMode": ".list_posts_request_tag_mode",
     "ListPostsResponse": ".list_posts_response",
     "PostCreateAction": ".post_create_action",
@@ -98,6 +100,7 @@ __all__ = [
     "CreatePostsResponseMediaItemTagsItemType",
     "ListPostsRequestApprovalStatus",
     "ListPostsRequestStatus",
+    "ListPostsRequestStatusesItem",
     "ListPostsRequestTagMode",
     "ListPostsResponse",
     "PostCreateAction",

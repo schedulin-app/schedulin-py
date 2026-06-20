@@ -9,12 +9,14 @@ from ..core.serialization import FieldMetadata
 from .post_search_approval_status import PostSearchApprovalStatus
 from .post_search_scheduled_at import PostSearchScheduledAt
 from .post_search_status import PostSearchStatus
+from .post_search_statuses_item import PostSearchStatusesItem
 from .post_search_tag_mode import PostSearchTagMode
 
 
 class PostSearch(UniversalBaseModel):
     page: typing.Optional[int] = None
     status: typing.Optional[PostSearchStatus] = None
+    statuses: typing.Optional[typing.List[PostSearchStatusesItem]] = None
     approval_status: typing_extensions.Annotated[
         typing.Optional[PostSearchApprovalStatus],
         FieldMetadata(alias="approvalStatus"),

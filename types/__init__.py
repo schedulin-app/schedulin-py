@@ -24,6 +24,7 @@ if typing.TYPE_CHECKING:
     from .post_search_approval_status import PostSearchApprovalStatus
     from .post_search_scheduled_at import PostSearchScheduledAt
     from .post_search_status import PostSearchStatus
+    from .post_search_statuses_item import PostSearchStatusesItem
     from .post_search_tag_mode import PostSearchTagMode
     from .post_status import PostStatus
     from .post_with_relations import PostWithRelations
@@ -63,6 +64,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PostSearchApprovalStatus": ".post_search_approval_status",
     "PostSearchScheduledAt": ".post_search_scheduled_at",
     "PostSearchStatus": ".post_search_status",
+    "PostSearchStatusesItem": ".post_search_statuses_item",
     "PostSearchTagMode": ".post_search_tag_mode",
     "PostStatus": ".post_status",
     "PostWithRelations": ".post_with_relations",
@@ -126,6 +128,7 @@ __all__ = [
     "PostSearchApprovalStatus",
     "PostSearchScheduledAt",
     "PostSearchStatus",
+    "PostSearchStatusesItem",
     "PostSearchTagMode",
     "PostStatus",
     "PostWithRelations",
