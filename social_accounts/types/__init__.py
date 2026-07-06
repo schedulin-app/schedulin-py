@@ -11,6 +11,7 @@ if typing.TYPE_CHECKING:
     from .list_social_accounts_response_data_item import ListSocialAccountsResponseDataItem
     from .list_social_accounts_response_data_item_platform import ListSocialAccountsResponseDataItemPlatform
     from .list_social_accounts_response_data_item_status import ListSocialAccountsResponseDataItemStatus
+    from .next_slots_social_accounts_response import NextSlotsSocialAccountsResponse
     from .pinterest_boards_social_accounts_response import PinterestBoardsSocialAccountsResponse
     from .pinterest_boards_social_accounts_response_data_item import PinterestBoardsSocialAccountsResponseDataItem
     from .pinterest_boards_social_accounts_response_data_item_privacy import (
@@ -28,6 +29,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListSocialAccountsResponseDataItem": ".list_social_accounts_response_data_item",
     "ListSocialAccountsResponseDataItemPlatform": ".list_social_accounts_response_data_item_platform",
     "ListSocialAccountsResponseDataItemStatus": ".list_social_accounts_response_data_item_status",
+    "NextSlotsSocialAccountsResponse": ".next_slots_social_accounts_response",
     "PinterestBoardsSocialAccountsResponse": ".pinterest_boards_social_accounts_response",
     "PinterestBoardsSocialAccountsResponseDataItem": ".pinterest_boards_social_accounts_response_data_item",
     "PinterestBoardsSocialAccountsResponseDataItemPrivacy": ".pinterest_boards_social_accounts_response_data_item_privacy",
@@ -67,6 +69,7 @@ __all__ = [
     "ListSocialAccountsResponseDataItem",
     "ListSocialAccountsResponseDataItemPlatform",
     "ListSocialAccountsResponseDataItemStatus",
+    "NextSlotsSocialAccountsResponse",
     "PinterestBoardsSocialAccountsResponse",
     "PinterestBoardsSocialAccountsResponseDataItem",
     "PinterestBoardsSocialAccountsResponseDataItemPrivacy",

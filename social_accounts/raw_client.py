@@ -15,6 +15,7 @@ from ..errors.unauthorized_error import UnauthorizedError
 from ..types.error_response import ErrorResponse
 from .types.delete_social_accounts_response import DeleteSocialAccountsResponse
 from .types.list_social_accounts_response import ListSocialAccountsResponse
+from .types.next_slots_social_accounts_response import NextSlotsSocialAccountsResponse
 from .types.pinterest_boards_social_accounts_response import PinterestBoardsSocialAccountsResponse
 from .types.tiktok_creator_info_social_accounts_response import TiktokCreatorInfoSocialAccountsResponse
 from .types.update_social_accounts_request_status import UpdateSocialAccountsRequestStatus
@@ -276,6 +277,83 @@ class RawSocialAccountsClient:
                     UpdateTimezoneSocialAccountsResponse,
                     parse_obj_as(
                         type_=UpdateTimezoneSocialAccountsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def next_slots(
+        self,
+        id: str,
+        *,
+        limit: typing.Optional[int] = None,
+        after: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[NextSlotsSocialAccountsResponse]:
+        """
+        Return the next available queue slot times (UTC) for a social account, computed from its queue schedule, per-slot capacity, and timezone. Empty when the account has no queue times configured. Use a slot as `scheduledAt`, or pass `action: "queue"` when creating a post to take the next slot automatically.
+
+        Parameters
+        ----------
+        id : str
+
+        limit : typing.Optional[int]
+
+        after : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[NextSlotsSocialAccountsResponse]
+            OK
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/social-accounts/{encode_path_param(id)}/next-slots",
+            method="GET",
+            params={
+                "limit": limit,
+                "after": after,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    NextSlotsSocialAccountsResponse,
+                    parse_obj_as(
+                        type_=NextSlotsSocialAccountsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -690,6 +768,83 @@ class AsyncRawSocialAccountsClient:
                     UpdateTimezoneSocialAccountsResponse,
                     parse_obj_as(
                         type_=UpdateTimezoneSocialAccountsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def next_slots(
+        self,
+        id: str,
+        *,
+        limit: typing.Optional[int] = None,
+        after: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[NextSlotsSocialAccountsResponse]:
+        """
+        Return the next available queue slot times (UTC) for a social account, computed from its queue schedule, per-slot capacity, and timezone. Empty when the account has no queue times configured. Use a slot as `scheduledAt`, or pass `action: "queue"` when creating a post to take the next slot automatically.
+
+        Parameters
+        ----------
+        id : str
+
+        limit : typing.Optional[int]
+
+        after : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[NextSlotsSocialAccountsResponse]
+            OK
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/social-accounts/{encode_path_param(id)}/next-slots",
+            method="GET",
+            params={
+                "limit": limit,
+                "after": after,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    NextSlotsSocialAccountsResponse,
+                    parse_obj_as(
+                        type_=NextSlotsSocialAccountsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

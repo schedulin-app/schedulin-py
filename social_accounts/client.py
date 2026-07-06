@@ -7,6 +7,7 @@ from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawSocialAccountsClient, RawSocialAccountsClient
 from .types.delete_social_accounts_response import DeleteSocialAccountsResponse
 from .types.list_social_accounts_response import ListSocialAccountsResponse
+from .types.next_slots_social_accounts_response import NextSlotsSocialAccountsResponse
 from .types.pinterest_boards_social_accounts_response import PinterestBoardsSocialAccountsResponse
 from .types.tiktok_creator_info_social_accounts_response import TiktokCreatorInfoSocialAccountsResponse
 from .types.update_social_accounts_request_status import UpdateSocialAccountsRequestStatus
@@ -161,6 +162,47 @@ class SocialAccountsClient:
         )
         """
         _response = self._raw_client.update_timezone(id, timezone=timezone, request_options=request_options)
+        return _response.data
+
+    def next_slots(
+        self,
+        id: str,
+        *,
+        limit: typing.Optional[int] = None,
+        after: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> NextSlotsSocialAccountsResponse:
+        """
+        Return the next available queue slot times (UTC) for a social account, computed from its queue schedule, per-slot capacity, and timezone. Empty when the account has no queue times configured. Use a slot as `scheduledAt`, or pass `action: "queue"` when creating a post to take the next slot automatically.
+
+        Parameters
+        ----------
+        id : str
+
+        limit : typing.Optional[int]
+
+        after : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        NextSlotsSocialAccountsResponse
+            OK
+
+        Examples
+        --------
+        from schedulin import Schedulin
+
+        client = Schedulin(
+            api_key="YOUR_API_KEY",
+        )
+        client.social_accounts.next_slots(
+            id="id",
+        )
+        """
+        _response = self._raw_client.next_slots(id, limit=limit, after=after, request_options=request_options)
         return _response.data
 
     def pinterest_boards(
@@ -404,6 +446,55 @@ class AsyncSocialAccountsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update_timezone(id, timezone=timezone, request_options=request_options)
+        return _response.data
+
+    async def next_slots(
+        self,
+        id: str,
+        *,
+        limit: typing.Optional[int] = None,
+        after: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> NextSlotsSocialAccountsResponse:
+        """
+        Return the next available queue slot times (UTC) for a social account, computed from its queue schedule, per-slot capacity, and timezone. Empty when the account has no queue times configured. Use a slot as `scheduledAt`, or pass `action: "queue"` when creating a post to take the next slot automatically.
+
+        Parameters
+        ----------
+        id : str
+
+        limit : typing.Optional[int]
+
+        after : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        NextSlotsSocialAccountsResponse
+            OK
+
+        Examples
+        --------
+        import asyncio
+
+        from schedulin import AsyncSchedulin
+
+        client = AsyncSchedulin(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.social_accounts.next_slots(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.next_slots(id, limit=limit, after=after, request_options=request_options)
         return _response.data
 
     async def pinterest_boards(

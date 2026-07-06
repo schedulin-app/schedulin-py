@@ -1303,6 +1303,95 @@ client.social_accounts.update_timezone(
 </dl>
 </details>
 
+<details><summary><code>client.social_accounts.<a href="src/schedulin/social_accounts/client.py">next_slots</a>(...) -> NextSlotsSocialAccountsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Return the next available queue slot times (UTC) for a social account, computed from its queue schedule, per-slot capacity, and timezone. Empty when the account has no queue times configured. Use a slot as `scheduledAt`, or pass `action: "queue"` when creating a post to take the next slot automatically.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from schedulin import Schedulin
+from schedulin.environment import SchedulinEnvironment
+
+client = Schedulin(
+    api_key="<value>",
+    environment=SchedulinEnvironment.DEFAULT,
+)
+
+client.social_accounts.next_slots(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**after:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.social_accounts.<a href="src/schedulin/social_accounts/client.py">pinterest_boards</a>(...) -> PinterestBoardsSocialAccountsResponse</code></summary>
 <dl>
 <dd>
@@ -2309,6 +2398,70 @@ client.media.create_presigned_post(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Platforms
+<details><summary><code>client.platforms.<a href="src/schedulin/platforms/client.py">list</a>() -> ListPlatformsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Per-platform posting requirements: caption length limits, media count/type rules, whether `platformConfiguration` is required, its JSON Schema when server-validated, and helper endpoints for fetching dynamic values (e.g. Pinterest boards). Platforms marked `comingSoon` cannot be posted to yet.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from schedulin import Schedulin
+from schedulin.environment import SchedulinEnvironment
+
+client = Schedulin(
+    api_key="<value>",
+    environment=SchedulinEnvironment.DEFAULT,
+)
+
+client.platforms.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
 
 <dl>
 <dd>

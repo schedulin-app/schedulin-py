@@ -48,7 +48,7 @@ if typing.TYPE_CHECKING:
         TagUpsert,
     )
     from .errors import InternalServerError, UnauthorizedError
-    from . import media, posts, social_accounts, tags
+    from . import media, platforms, posts, social_accounts, tags
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSchedulin, Schedulin
     from .environment import SchedulinEnvironment
@@ -59,6 +59,14 @@ if typing.TYPE_CHECKING:
         ListMediaRequestTagMode,
         ListMediaRequestType,
         ListMediaResponse,
+    )
+    from .platforms import (
+        ListPlatformsResponse,
+        ListPlatformsResponseDataItem,
+        ListPlatformsResponseDataItemHelperEndpointsItem,
+        ListPlatformsResponseDataItemMediaRules,
+        ListPlatformsResponseDataItemMediaRulesAllowedTypesItem,
+        ListPlatformsResponseDataItemPlatformConfiguration,
     )
     from .posts import (
         AnalyticsSeriesPostsResponse,
@@ -97,6 +105,7 @@ if typing.TYPE_CHECKING:
         ListSocialAccountsResponseDataItem,
         ListSocialAccountsResponseDataItemPlatform,
         ListSocialAccountsResponseDataItemStatus,
+        NextSlotsSocialAccountsResponse,
         PinterestBoardsSocialAccountsResponse,
         PinterestBoardsSocialAccountsResponseDataItem,
         PinterestBoardsSocialAccountsResponseDataItemPrivacy,
@@ -131,6 +140,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListMediaRequestTagMode": ".media",
     "ListMediaRequestType": ".media",
     "ListMediaResponse": ".media",
+    "ListPlatformsResponse": ".platforms",
+    "ListPlatformsResponseDataItem": ".platforms",
+    "ListPlatformsResponseDataItemHelperEndpointsItem": ".platforms",
+    "ListPlatformsResponseDataItemMediaRules": ".platforms",
+    "ListPlatformsResponseDataItemMediaRulesAllowedTypesItem": ".platforms",
+    "ListPlatformsResponseDataItemPlatformConfiguration": ".platforms",
     "ListPostsRequestApprovalStatus": ".posts",
     "ListPostsRequestScheduledAt": ".types",
     "ListPostsRequestStatus": ".posts",
@@ -148,6 +163,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MediaSearchType": ".types",
     "MediaSetTags": ".types",
     "MediaUpdate": ".types",
+    "NextSlotsSocialAccountsResponse": ".social_accounts",
     "OauthScope": ".types",
     "PinterestBoardsSocialAccountsResponse": ".social_accounts",
     "PinterestBoardsSocialAccountsResponseDataItem": ".social_accounts",
@@ -206,6 +222,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateSocialAccountsResponse": ".social_accounts",
     "UpdateTimezoneSocialAccountsResponse": ".social_accounts",
     "media": ".media",
+    "platforms": ".platforms",
     "posts": ".posts",
     "social_accounts": ".social_accounts",
     "tags": ".tags",
@@ -256,6 +273,12 @@ __all__ = [
     "ListMediaRequestTagMode",
     "ListMediaRequestType",
     "ListMediaResponse",
+    "ListPlatformsResponse",
+    "ListPlatformsResponseDataItem",
+    "ListPlatformsResponseDataItemHelperEndpointsItem",
+    "ListPlatformsResponseDataItemMediaRules",
+    "ListPlatformsResponseDataItemMediaRulesAllowedTypesItem",
+    "ListPlatformsResponseDataItemPlatformConfiguration",
     "ListPostsRequestApprovalStatus",
     "ListPostsRequestScheduledAt",
     "ListPostsRequestStatus",
@@ -273,6 +296,7 @@ __all__ = [
     "MediaSearchType",
     "MediaSetTags",
     "MediaUpdate",
+    "NextSlotsSocialAccountsResponse",
     "OauthScope",
     "PinterestBoardsSocialAccountsResponse",
     "PinterestBoardsSocialAccountsResponseDataItem",
@@ -331,6 +355,7 @@ __all__ = [
     "UpdateSocialAccountsResponse",
     "UpdateTimezoneSocialAccountsResponse",
     "media",
+    "platforms",
     "posts",
     "social_accounts",
     "tags",

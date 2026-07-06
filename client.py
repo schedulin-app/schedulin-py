@@ -11,6 +11,7 @@ from .environment import SchedulinEnvironment
 
 if typing.TYPE_CHECKING:
     from .media.client import AsyncMediaClient, MediaClient
+    from .platforms.client import AsyncPlatformsClient, PlatformsClient
     from .posts.client import AsyncPostsClient, PostsClient
     from .social_accounts.client import AsyncSocialAccountsClient, SocialAccountsClient
     from .tags.client import AsyncTagsClient, TagsClient
@@ -104,6 +105,7 @@ class Schedulin:
         self._social_accounts: typing.Optional[SocialAccountsClient] = None
         self._tags: typing.Optional[TagsClient] = None
         self._media: typing.Optional[MediaClient] = None
+        self._platforms: typing.Optional[PlatformsClient] = None
 
     @property
     def posts(self):
@@ -136,6 +138,14 @@ class Schedulin:
 
             self._media = MediaClient(client_wrapper=self._client_wrapper)
         return self._media
+
+    @property
+    def platforms(self):
+        if self._platforms is None:
+            from .platforms.client import PlatformsClient  # noqa: E402
+
+            self._platforms = PlatformsClient(client_wrapper=self._client_wrapper)
+        return self._platforms
 
 
 def _make_default_async_client(
@@ -242,6 +252,7 @@ class AsyncSchedulin:
         self._social_accounts: typing.Optional[AsyncSocialAccountsClient] = None
         self._tags: typing.Optional[AsyncTagsClient] = None
         self._media: typing.Optional[AsyncMediaClient] = None
+        self._platforms: typing.Optional[AsyncPlatformsClient] = None
 
     @property
     def posts(self):
@@ -274,6 +285,14 @@ class AsyncSchedulin:
 
             self._media = AsyncMediaClient(client_wrapper=self._client_wrapper)
         return self._media
+
+    @property
+    def platforms(self):
+        if self._platforms is None:
+            from .platforms.client import AsyncPlatformsClient  # noqa: E402
+
+            self._platforms = AsyncPlatformsClient(client_wrapper=self._client_wrapper)
+        return self._platforms
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: SchedulinEnvironment) -> str:
