@@ -48,8 +48,9 @@ if typing.TYPE_CHECKING:
         TagUpsert,
     )
     from .errors import InternalServerError, UnauthorizedError
-    from . import media, platforms, posts, social_accounts, tags
+    from . import ai, media, platforms, posts, social_accounts, tags, webhooks
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
+    from .ai import GenerateImageAiRequestModelKey
     from .client import AsyncSchedulin, Schedulin
     from .environment import SchedulinEnvironment
     from .media import (
@@ -65,6 +66,7 @@ if typing.TYPE_CHECKING:
         ListPlatformsResponseDataItem,
         ListPlatformsResponseDataItemHelperEndpointsItem,
         ListPlatformsResponseDataItemMediaRules,
+        ListPlatformsResponseDataItemMediaRulesAllowedDimensionsItem,
         ListPlatformsResponseDataItemMediaRulesAllowedTypesItem,
         ListPlatformsResponseDataItemPlatformConfiguration,
     )
@@ -105,6 +107,10 @@ if typing.TYPE_CHECKING:
         ListSocialAccountsResponseDataItem,
         ListSocialAccountsResponseDataItemPlatform,
         ListSocialAccountsResponseDataItemStatus,
+        ListWhopCompaniesSocialAccountsResponse,
+        ListWhopCompaniesSocialAccountsResponseItemsItem,
+        ListWhopForumsSocialAccountsResponse,
+        ListWhopForumsSocialAccountsResponseItemsItem,
         NextSlotsSocialAccountsResponse,
         PinterestBoardsSocialAccountsResponse,
         PinterestBoardsSocialAccountsResponseDataItem,
@@ -117,6 +123,7 @@ if typing.TYPE_CHECKING:
         UpdateTimezoneSocialAccountsResponse,
     )
     from .tags import ListTagsResponse
+    from .webhooks import CreateWebhooksRequestEventsItem, UpdateWebhooksRequestEventsItem
 _dynamic_imports: typing.Dict[str, str] = {
     "AnalyticsSeriesPostsResponse": ".posts",
     "AnalyticsSeriesPostsResponseDataItem": ".posts",
@@ -131,10 +138,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreatePostsResponseMediaItemTagsItemPlatform": ".posts",
     "CreatePostsResponseMediaItemTagsItemType": ".posts",
     "CreatePresignedPostIntent": ".media",
+    "CreateWebhooksRequestEventsItem": ".webhooks",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
     "DeleteSocialAccountsResponse": ".social_accounts",
     "ErrorResponse": ".types",
+    "GenerateImageAiRequestModelKey": ".ai",
     "ImageProcessingStatus": ".types",
     "InternalServerError": ".errors",
     "ListMediaRequestTagMode": ".media",
@@ -144,6 +153,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListPlatformsResponseDataItem": ".platforms",
     "ListPlatformsResponseDataItemHelperEndpointsItem": ".platforms",
     "ListPlatformsResponseDataItemMediaRules": ".platforms",
+    "ListPlatformsResponseDataItemMediaRulesAllowedDimensionsItem": ".platforms",
     "ListPlatformsResponseDataItemMediaRulesAllowedTypesItem": ".platforms",
     "ListPlatformsResponseDataItemPlatformConfiguration": ".platforms",
     "ListPostsRequestApprovalStatus": ".posts",
@@ -157,6 +167,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListSocialAccountsResponseDataItemPlatform": ".social_accounts",
     "ListSocialAccountsResponseDataItemStatus": ".social_accounts",
     "ListTagsResponse": ".tags",
+    "ListWhopCompaniesSocialAccountsResponse": ".social_accounts",
+    "ListWhopCompaniesSocialAccountsResponseItemsItem": ".social_accounts",
+    "ListWhopForumsSocialAccountsResponse": ".social_accounts",
+    "ListWhopForumsSocialAccountsResponseItemsItem": ".social_accounts",
     "Media": ".types",
     "MediaSearch": ".types",
     "MediaSearchTagMode": ".types",
@@ -221,11 +235,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateSocialAccountsRequestStatus": ".social_accounts",
     "UpdateSocialAccountsResponse": ".social_accounts",
     "UpdateTimezoneSocialAccountsResponse": ".social_accounts",
+    "UpdateWebhooksRequestEventsItem": ".webhooks",
+    "ai": ".ai",
     "media": ".media",
     "platforms": ".platforms",
     "posts": ".posts",
     "social_accounts": ".social_accounts",
     "tags": ".tags",
+    "webhooks": ".webhooks",
 }
 
 
@@ -264,10 +281,12 @@ __all__ = [
     "CreatePostsResponseMediaItemTagsItemPlatform",
     "CreatePostsResponseMediaItemTagsItemType",
     "CreatePresignedPostIntent",
+    "CreateWebhooksRequestEventsItem",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "DeleteSocialAccountsResponse",
     "ErrorResponse",
+    "GenerateImageAiRequestModelKey",
     "ImageProcessingStatus",
     "InternalServerError",
     "ListMediaRequestTagMode",
@@ -277,6 +296,7 @@ __all__ = [
     "ListPlatformsResponseDataItem",
     "ListPlatformsResponseDataItemHelperEndpointsItem",
     "ListPlatformsResponseDataItemMediaRules",
+    "ListPlatformsResponseDataItemMediaRulesAllowedDimensionsItem",
     "ListPlatformsResponseDataItemMediaRulesAllowedTypesItem",
     "ListPlatformsResponseDataItemPlatformConfiguration",
     "ListPostsRequestApprovalStatus",
@@ -290,6 +310,10 @@ __all__ = [
     "ListSocialAccountsResponseDataItemPlatform",
     "ListSocialAccountsResponseDataItemStatus",
     "ListTagsResponse",
+    "ListWhopCompaniesSocialAccountsResponse",
+    "ListWhopCompaniesSocialAccountsResponseItemsItem",
+    "ListWhopForumsSocialAccountsResponse",
+    "ListWhopForumsSocialAccountsResponseItemsItem",
     "Media",
     "MediaSearch",
     "MediaSearchTagMode",
@@ -354,9 +378,12 @@ __all__ = [
     "UpdateSocialAccountsRequestStatus",
     "UpdateSocialAccountsResponse",
     "UpdateTimezoneSocialAccountsResponse",
+    "UpdateWebhooksRequestEventsItem",
+    "ai",
     "media",
     "platforms",
     "posts",
     "social_accounts",
     "tags",
+    "webhooks",
 ]

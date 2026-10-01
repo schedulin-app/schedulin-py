@@ -4,7 +4,13 @@ import typing
 
 SocialAccountDisconnectedReason = typing.Union[
     typing.Literal[
-        "TOKEN_EXPIRED", "TOKEN_INVALID", "TOKEN_REVOKED", "REFRESH_FAILED", "ACCOUNT_SUSPENDED", "PERMISSION_DENIED"
+        "TOKEN_EXPIRED",
+        "TOKEN_INVALID",
+        "TOKEN_REVOKED",
+        "REFRESH_FAILED",
+        "ACCOUNT_SUSPENDED",
+        "PERMISSION_DENIED",
+        "EMAIL_UNCONFIRMED",
     ],
     typing.Any,
 ]

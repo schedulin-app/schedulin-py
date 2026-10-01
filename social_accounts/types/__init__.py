@@ -11,6 +11,12 @@ if typing.TYPE_CHECKING:
     from .list_social_accounts_response_data_item import ListSocialAccountsResponseDataItem
     from .list_social_accounts_response_data_item_platform import ListSocialAccountsResponseDataItemPlatform
     from .list_social_accounts_response_data_item_status import ListSocialAccountsResponseDataItemStatus
+    from .list_whop_companies_social_accounts_response import ListWhopCompaniesSocialAccountsResponse
+    from .list_whop_companies_social_accounts_response_items_item import (
+        ListWhopCompaniesSocialAccountsResponseItemsItem,
+    )
+    from .list_whop_forums_social_accounts_response import ListWhopForumsSocialAccountsResponse
+    from .list_whop_forums_social_accounts_response_items_item import ListWhopForumsSocialAccountsResponseItemsItem
     from .next_slots_social_accounts_response import NextSlotsSocialAccountsResponse
     from .pinterest_boards_social_accounts_response import PinterestBoardsSocialAccountsResponse
     from .pinterest_boards_social_accounts_response_data_item import PinterestBoardsSocialAccountsResponseDataItem
@@ -29,6 +35,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListSocialAccountsResponseDataItem": ".list_social_accounts_response_data_item",
     "ListSocialAccountsResponseDataItemPlatform": ".list_social_accounts_response_data_item_platform",
     "ListSocialAccountsResponseDataItemStatus": ".list_social_accounts_response_data_item_status",
+    "ListWhopCompaniesSocialAccountsResponse": ".list_whop_companies_social_accounts_response",
+    "ListWhopCompaniesSocialAccountsResponseItemsItem": ".list_whop_companies_social_accounts_response_items_item",
+    "ListWhopForumsSocialAccountsResponse": ".list_whop_forums_social_accounts_response",
+    "ListWhopForumsSocialAccountsResponseItemsItem": ".list_whop_forums_social_accounts_response_items_item",
     "NextSlotsSocialAccountsResponse": ".next_slots_social_accounts_response",
     "PinterestBoardsSocialAccountsResponse": ".pinterest_boards_social_accounts_response",
     "PinterestBoardsSocialAccountsResponseDataItem": ".pinterest_boards_social_accounts_response_data_item",
@@ -69,6 +79,10 @@ __all__ = [
     "ListSocialAccountsResponseDataItem",
     "ListSocialAccountsResponseDataItemPlatform",
     "ListSocialAccountsResponseDataItemStatus",
+    "ListWhopCompaniesSocialAccountsResponse",
+    "ListWhopCompaniesSocialAccountsResponseItemsItem",
+    "ListWhopForumsSocialAccountsResponse",
+    "ListWhopForumsSocialAccountsResponseItemsItem",
     "NextSlotsSocialAccountsResponse",
     "PinterestBoardsSocialAccountsResponse",
     "PinterestBoardsSocialAccountsResponseDataItem",

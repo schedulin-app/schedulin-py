@@ -32,6 +32,130 @@ class MediaClient:
         """
         return self._raw_client
 
+    def create_from_url(
+        self,
+        *,
+        url: str,
+        name: typing.Optional[str] = OMIT,
+        alt: typing.Optional[str] = OMIT,
+        content_type: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Any:
+        """
+        Downloads a publicly reachable image or video into the media library and returns the media record. Use the returned `url` in `media[].url` when creating a post. Prefer this over the presign flow whenever your client cannot issue a raw HTTP PUT (e.g. an AI agent). The source URL must be public (no auth), http(s), and at most the post upload limit (250 MB); SVG and other active content is rejected.
+
+        Parameters
+        ----------
+        url : str
+
+        name : typing.Optional[str]
+
+        alt : typing.Optional[str]
+
+        content_type : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            OK
+
+        Examples
+        --------
+        from schedulin import Schedulin
+
+        client = Schedulin(
+            api_key="YOUR_API_KEY",
+        )
+        client.media.create_from_url(
+            url="url",
+        )
+        """
+        _response = self._raw_client.create_from_url(
+            url=url, name=name, alt=alt, content_type=content_type, request_options=request_options
+        )
+        return _response.data
+
+    def create_upload_link(
+        self, *, expires_in_hours: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Any:
+        """
+        Returns a short-lived URL to a page where the user uploads files from their device (or a pasted attachment) straight into the media library. Hand the URL to the user; once they've uploaded, call GET /v0/media (list media, newest first) and reference the returned `url` when creating a post. Use this whenever the file isn't already at a public URL.
+
+        Parameters
+        ----------
+        expires_in_hours : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            OK
+
+        Examples
+        --------
+        from schedulin import Schedulin
+
+        client = Schedulin(
+            api_key="YOUR_API_KEY",
+        )
+        client.media.create_upload_link()
+        """
+        _response = self._raw_client.create_upload_link(
+            expires_in_hours=expires_in_hours, request_options=request_options
+        )
+        return _response.data
+
+    def upload(
+        self,
+        *,
+        file: str,
+        name: typing.Optional[str] = OMIT,
+        alt: typing.Optional[str] = OMIT,
+        content_type: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Any:
+        """
+        Upload raw image, video, or audio bytes directly as multipart/form-data. The file is stored in your media library and the record is returned; use its `url` in `media[].url` when creating a post. Max 250 MB; SVG and other active content is rejected. For a file already hosted at a public URL, prefer POST /v0/media/from-url.
+
+        Parameters
+        ----------
+        file : str
+
+        name : typing.Optional[str]
+
+        alt : typing.Optional[str]
+
+        content_type : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            OK
+
+        Examples
+        --------
+        from schedulin import Schedulin
+
+        client = Schedulin(
+            api_key="YOUR_API_KEY",
+        )
+        client.media.upload(
+            file="file",
+        )
+        """
+        _response = self._raw_client.upload(
+            file=file, name=name, alt=alt, content_type=content_type, request_options=request_options
+        )
+        return _response.data
+
     def retrieve(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Optional[Media]:
         """
         Retrieve media information by its ID
@@ -123,6 +247,36 @@ class MediaClient:
             duration=duration,
             request_options=request_options,
         )
+        return _response.data
+
+    def v0media_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+        """
+        Delete a media object and remove its files from storage. Fails with a conflict when the media is attached to any post — remove it from those posts (or delete them) first.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            OK
+
+        Examples
+        --------
+        from schedulin import Schedulin
+
+        client = Schedulin(
+            api_key="YOUR_API_KEY",
+        )
+        client.media.v0media_delete(
+            id="id",
+        )
+        """
+        _response = self._raw_client.v0media_delete(id, request_options=request_options)
         return _response.data
 
     def list(
@@ -299,6 +453,154 @@ class AsyncMediaClient:
         """
         return self._raw_client
 
+    async def create_from_url(
+        self,
+        *,
+        url: str,
+        name: typing.Optional[str] = OMIT,
+        alt: typing.Optional[str] = OMIT,
+        content_type: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Any:
+        """
+        Downloads a publicly reachable image or video into the media library and returns the media record. Use the returned `url` in `media[].url` when creating a post. Prefer this over the presign flow whenever your client cannot issue a raw HTTP PUT (e.g. an AI agent). The source URL must be public (no auth), http(s), and at most the post upload limit (250 MB); SVG and other active content is rejected.
+
+        Parameters
+        ----------
+        url : str
+
+        name : typing.Optional[str]
+
+        alt : typing.Optional[str]
+
+        content_type : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            OK
+
+        Examples
+        --------
+        import asyncio
+
+        from schedulin import AsyncSchedulin
+
+        client = AsyncSchedulin(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.media.create_from_url(
+                url="url",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create_from_url(
+            url=url, name=name, alt=alt, content_type=content_type, request_options=request_options
+        )
+        return _response.data
+
+    async def create_upload_link(
+        self, *, expires_in_hours: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Any:
+        """
+        Returns a short-lived URL to a page where the user uploads files from their device (or a pasted attachment) straight into the media library. Hand the URL to the user; once they've uploaded, call GET /v0/media (list media, newest first) and reference the returned `url` when creating a post. Use this whenever the file isn't already at a public URL.
+
+        Parameters
+        ----------
+        expires_in_hours : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            OK
+
+        Examples
+        --------
+        import asyncio
+
+        from schedulin import AsyncSchedulin
+
+        client = AsyncSchedulin(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.media.create_upload_link()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create_upload_link(
+            expires_in_hours=expires_in_hours, request_options=request_options
+        )
+        return _response.data
+
+    async def upload(
+        self,
+        *,
+        file: str,
+        name: typing.Optional[str] = OMIT,
+        alt: typing.Optional[str] = OMIT,
+        content_type: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Any:
+        """
+        Upload raw image, video, or audio bytes directly as multipart/form-data. The file is stored in your media library and the record is returned; use its `url` in `media[].url` when creating a post. Max 250 MB; SVG and other active content is rejected. For a file already hosted at a public URL, prefer POST /v0/media/from-url.
+
+        Parameters
+        ----------
+        file : str
+
+        name : typing.Optional[str]
+
+        alt : typing.Optional[str]
+
+        content_type : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            OK
+
+        Examples
+        --------
+        import asyncio
+
+        from schedulin import AsyncSchedulin
+
+        client = AsyncSchedulin(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.media.upload(
+                file="file",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.upload(
+            file=file, name=name, alt=alt, content_type=content_type, request_options=request_options
+        )
+        return _response.data
+
     async def retrieve(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Optional[Media]:
@@ -408,6 +710,44 @@ class AsyncMediaClient:
             duration=duration,
             request_options=request_options,
         )
+        return _response.data
+
+    async def v0media_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+        """
+        Delete a media object and remove its files from storage. Fails with a conflict when the media is attached to any post — remove it from those posts (or delete them) first.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            OK
+
+        Examples
+        --------
+        import asyncio
+
+        from schedulin import AsyncSchedulin
+
+        client = AsyncSchedulin(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.media.v0media_delete(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.v0media_delete(id, request_options=request_options)
         return _response.data
 
     async def list(

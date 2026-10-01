@@ -7,6 +7,8 @@ from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawSocialAccountsClient, RawSocialAccountsClient
 from .types.delete_social_accounts_response import DeleteSocialAccountsResponse
 from .types.list_social_accounts_response import ListSocialAccountsResponse
+from .types.list_whop_companies_social_accounts_response import ListWhopCompaniesSocialAccountsResponse
+from .types.list_whop_forums_social_accounts_response import ListWhopForumsSocialAccountsResponse
 from .types.next_slots_social_accounts_response import NextSlotsSocialAccountsResponse
 from .types.pinterest_boards_social_accounts_response import PinterestBoardsSocialAccountsResponse
 from .types.tiktok_creator_info_social_accounts_response import TiktokCreatorInfoSocialAccountsResponse
@@ -57,6 +59,73 @@ class SocialAccountsClient:
         client.social_accounts.list()
         """
         _response = self._raw_client.list(request_options=request_options)
+        return _response.data
+
+    def list_whop_companies(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ListWhopCompaniesSocialAccountsResponse:
+        """
+        List companies available to a connected Whop account. Select one before requesting its forum experiences.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListWhopCompaniesSocialAccountsResponse
+            OK
+
+        Examples
+        --------
+        from schedulin import Schedulin
+
+        client = Schedulin(
+            api_key="YOUR_API_KEY",
+        )
+        client.social_accounts.list_whop_companies(
+            id="id",
+        )
+        """
+        _response = self._raw_client.list_whop_companies(id, request_options=request_options)
+        return _response.data
+
+    def list_whop_forums(
+        self, id: str, *, company_id: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> ListWhopForumsSocialAccountsResponse:
+        """
+        List forum experiences for a Whop company. Use an item id as platformConfiguration.experience.
+
+        Parameters
+        ----------
+        id : str
+
+        company_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListWhopForumsSocialAccountsResponse
+            OK
+
+        Examples
+        --------
+        from schedulin import Schedulin
+
+        client = Schedulin(
+            api_key="YOUR_API_KEY",
+        )
+        client.social_accounts.list_whop_forums(
+            id="id",
+            company_id="companyId",
+        )
+        """
+        _response = self._raw_client.list_whop_forums(id, company_id=company_id, request_options=request_options)
         return _response.data
 
     def update(
@@ -317,6 +386,89 @@ class AsyncSocialAccountsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list(request_options=request_options)
+        return _response.data
+
+    async def list_whop_companies(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ListWhopCompaniesSocialAccountsResponse:
+        """
+        List companies available to a connected Whop account. Select one before requesting its forum experiences.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListWhopCompaniesSocialAccountsResponse
+            OK
+
+        Examples
+        --------
+        import asyncio
+
+        from schedulin import AsyncSchedulin
+
+        client = AsyncSchedulin(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.social_accounts.list_whop_companies(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list_whop_companies(id, request_options=request_options)
+        return _response.data
+
+    async def list_whop_forums(
+        self, id: str, *, company_id: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> ListWhopForumsSocialAccountsResponse:
+        """
+        List forum experiences for a Whop company. Use an item id as platformConfiguration.experience.
+
+        Parameters
+        ----------
+        id : str
+
+        company_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListWhopForumsSocialAccountsResponse
+            OK
+
+        Examples
+        --------
+        import asyncio
+
+        from schedulin import AsyncSchedulin
+
+        client = AsyncSchedulin(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.social_accounts.list_whop_forums(
+                id="id",
+                company_id="companyId",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list_whop_forums(id, company_id=company_id, request_options=request_options)
         return _response.data
 
     async def update(

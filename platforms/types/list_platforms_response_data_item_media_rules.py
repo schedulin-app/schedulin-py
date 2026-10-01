@@ -6,6 +6,9 @@ import pydantic
 import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...core.serialization import FieldMetadata
+from .list_platforms_response_data_item_media_rules_allowed_dimensions_item import (
+    ListPlatformsResponseDataItemMediaRulesAllowedDimensionsItem,
+)
 from .list_platforms_response_data_item_media_rules_allowed_types_item import (
     ListPlatformsResponseDataItemMediaRulesAllowedTypesItem,
 )
@@ -18,6 +21,11 @@ class ListPlatformsResponseDataItemMediaRules(UniversalBaseModel):
         typing.Optional[typing.List[ListPlatformsResponseDataItemMediaRulesAllowedTypesItem]],
         FieldMetadata(alias="allowedTypes"),
         pydantic.Field(alias="allowedTypes"),
+    ] = None
+    allowed_dimensions: typing_extensions.Annotated[
+        typing.Optional[typing.List[ListPlatformsResponseDataItemMediaRulesAllowedDimensionsItem]],
+        FieldMetadata(alias="allowedDimensions"),
+        pydantic.Field(alias="allowedDimensions"),
     ] = None
 
     if IS_PYDANTIC_V2:

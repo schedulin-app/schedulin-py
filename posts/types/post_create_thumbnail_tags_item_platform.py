@@ -11,6 +11,7 @@ PostCreateThumbnailTagsItemPlatform = typing.Union[
         "linkedin",
         "pinterest",
         "reddit",
+        "snapchat",
         "threads",
         "tiktok",
         "twitter",

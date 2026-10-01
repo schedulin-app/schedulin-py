@@ -15,6 +15,10 @@ OauthScope = typing.Union[
         "media:write",
         "analytics:read",
         "org:read",
+        "ai:read",
+        "ai:write",
+        "webhooks:read",
+        "webhooks:write",
     ],
     typing.Any,
 ]

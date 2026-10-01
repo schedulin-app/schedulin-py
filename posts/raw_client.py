@@ -153,6 +153,7 @@ class RawPostsClient:
         *,
         caption: str,
         social_account_id: str,
+        title: typing.Optional[str] = OMIT,
         scheduled_at: typing.Optional[dt.datetime] = OMIT,
         media: typing.Optional[typing.Sequence[PostCreateMediaItem]] = OMIT,
         thumbnail: typing.Optional[PostCreateThumbnail] = OMIT,
@@ -163,13 +164,15 @@ class RawPostsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[CreatePostsResponse]:
         """
-        Create a new post with media, tags, and scheduling options
+        Create a new post with media, tags, and scheduling options. Media items may reference a stored library URL or any publicly reachable image/video URL — external URLs are downloaded into the media library automatically, so clients that cannot issue a raw presigned PUT can attach media in one call.
 
         Parameters
         ----------
         caption : str
 
         social_account_id : str
+
+        title : typing.Optional[str]
 
         scheduled_at : typing.Optional[dt.datetime]
 
@@ -198,6 +201,7 @@ class RawPostsClient:
             method="POST",
             json={
                 "caption": caption,
+                "title": title,
                 "scheduledAt": scheduled_at,
                 "socialAccountId": social_account_id,
                 "media": convert_and_respect_annotation_metadata(
@@ -845,72 +849,6 @@ class RawPostsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get_job_status(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[typing.Optional[typing.Any]]:
-        """
-        Retrieve the processing job status and logs for a post
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[typing.Optional[typing.Any]]
-            OK
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"v0/posts/{encode_path_param(id)}/jobs",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if _response is None or not _response.text.strip():
-                return HttpResponse(response=_response, data=None)
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    typing.Optional[typing.Any],
-                    parse_obj_as(
-                        type_=typing.Optional[typing.Any],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 500:
-                raise InternalServerError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
 
 class AsyncRawPostsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -1027,6 +965,7 @@ class AsyncRawPostsClient:
         *,
         caption: str,
         social_account_id: str,
+        title: typing.Optional[str] = OMIT,
         scheduled_at: typing.Optional[dt.datetime] = OMIT,
         media: typing.Optional[typing.Sequence[PostCreateMediaItem]] = OMIT,
         thumbnail: typing.Optional[PostCreateThumbnail] = OMIT,
@@ -1037,13 +976,15 @@ class AsyncRawPostsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[CreatePostsResponse]:
         """
-        Create a new post with media, tags, and scheduling options
+        Create a new post with media, tags, and scheduling options. Media items may reference a stored library URL or any publicly reachable image/video URL — external URLs are downloaded into the media library automatically, so clients that cannot issue a raw presigned PUT can attach media in one call.
 
         Parameters
         ----------
         caption : str
 
         social_account_id : str
+
+        title : typing.Optional[str]
 
         scheduled_at : typing.Optional[dt.datetime]
 
@@ -1072,6 +1013,7 @@ class AsyncRawPostsClient:
             method="POST",
             json={
                 "caption": caption,
+                "title": title,
                 "scheduledAt": scheduled_at,
                 "socialAccountId": social_account_id,
                 "media": convert_and_respect_annotation_metadata(
@@ -1686,72 +1628,6 @@ class AsyncRawPostsClient:
                     Post,
                     parse_obj_as(
                         type_=Post,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 500:
-                raise InternalServerError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def get_job_status(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[typing.Optional[typing.Any]]:
-        """
-        Retrieve the processing job status and logs for a post
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[typing.Optional[typing.Any]]
-            OK
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"v0/posts/{encode_path_param(id)}/jobs",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if _response is None or not _response.text.strip():
-                return AsyncHttpResponse(response=_response, data=None)
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    typing.Optional[typing.Any],
-                    parse_obj_as(
-                        type_=typing.Optional[typing.Any],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

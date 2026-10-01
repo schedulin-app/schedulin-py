@@ -10,11 +10,13 @@ from .core.logging import LogConfig, Logger
 from .environment import SchedulinEnvironment
 
 if typing.TYPE_CHECKING:
+    from .ai.client import AiClient, AsyncAiClient
     from .media.client import AsyncMediaClient, MediaClient
     from .platforms.client import AsyncPlatformsClient, PlatformsClient
     from .posts.client import AsyncPostsClient, PostsClient
     from .social_accounts.client import AsyncSocialAccountsClient, SocialAccountsClient
     from .tags.client import AsyncTagsClient, TagsClient
+    from .webhooks.client import AsyncWebhooksClient, WebhooksClient
 
 
 class Schedulin:
@@ -106,6 +108,8 @@ class Schedulin:
         self._tags: typing.Optional[TagsClient] = None
         self._media: typing.Optional[MediaClient] = None
         self._platforms: typing.Optional[PlatformsClient] = None
+        self._ai: typing.Optional[AiClient] = None
+        self._webhooks: typing.Optional[WebhooksClient] = None
 
     @property
     def posts(self):
@@ -146,6 +150,22 @@ class Schedulin:
 
             self._platforms = PlatformsClient(client_wrapper=self._client_wrapper)
         return self._platforms
+
+    @property
+    def ai(self):
+        if self._ai is None:
+            from .ai.client import AiClient  # noqa: E402
+
+            self._ai = AiClient(client_wrapper=self._client_wrapper)
+        return self._ai
+
+    @property
+    def webhooks(self):
+        if self._webhooks is None:
+            from .webhooks.client import WebhooksClient  # noqa: E402
+
+            self._webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
+        return self._webhooks
 
 
 def _make_default_async_client(
@@ -253,6 +273,8 @@ class AsyncSchedulin:
         self._tags: typing.Optional[AsyncTagsClient] = None
         self._media: typing.Optional[AsyncMediaClient] = None
         self._platforms: typing.Optional[AsyncPlatformsClient] = None
+        self._ai: typing.Optional[AsyncAiClient] = None
+        self._webhooks: typing.Optional[AsyncWebhooksClient] = None
 
     @property
     def posts(self):
@@ -293,6 +315,22 @@ class AsyncSchedulin:
 
             self._platforms = AsyncPlatformsClient(client_wrapper=self._client_wrapper)
         return self._platforms
+
+    @property
+    def ai(self):
+        if self._ai is None:
+            from .ai.client import AsyncAiClient  # noqa: E402
+
+            self._ai = AsyncAiClient(client_wrapper=self._client_wrapper)
+        return self._ai
+
+    @property
+    def webhooks(self):
+        if self._webhooks is None:
+            from .webhooks.client import AsyncWebhooksClient  # noqa: E402
+
+            self._webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
+        return self._webhooks
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: SchedulinEnvironment) -> str:

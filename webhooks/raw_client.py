@@ -13,31 +13,21 @@ from ..core.request_options import RequestOptions
 from ..errors.internal_server_error import InternalServerError
 from ..errors.unauthorized_error import UnauthorizedError
 from ..types.error_response import ErrorResponse
-from .types.delete_social_accounts_response import DeleteSocialAccountsResponse
-from .types.list_social_accounts_response import ListSocialAccountsResponse
-from .types.list_whop_companies_social_accounts_response import ListWhopCompaniesSocialAccountsResponse
-from .types.list_whop_forums_social_accounts_response import ListWhopForumsSocialAccountsResponse
-from .types.next_slots_social_accounts_response import NextSlotsSocialAccountsResponse
-from .types.pinterest_boards_social_accounts_response import PinterestBoardsSocialAccountsResponse
-from .types.tiktok_creator_info_social_accounts_response import TiktokCreatorInfoSocialAccountsResponse
-from .types.update_social_accounts_request_status import UpdateSocialAccountsRequestStatus
-from .types.update_social_accounts_response import UpdateSocialAccountsResponse
-from .types.update_timezone_social_accounts_response import UpdateTimezoneSocialAccountsResponse
+from .types.create_webhooks_request_events_item import CreateWebhooksRequestEventsItem
+from .types.update_webhooks_request_events_item import UpdateWebhooksRequestEventsItem
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class RawSocialAccountsClient:
+class RawWebhooksClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[ListSocialAccountsResponse]:
+    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[typing.Any]:
         """
-        Retrieve all connected social media accounts for the authenticated user
+        List the organization's webhook endpoints. Signing secrets are masked.
 
         Parameters
         ----------
@@ -46,20 +36,22 @@ class RawSocialAccountsClient:
 
         Returns
         -------
-        HttpResponse[ListSocialAccountsResponse]
+        HttpResponse[typing.Any]
             OK
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v0/social-accounts",
+            "v0/webhooks",
             method="GET",
             request_options=request_options,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ListSocialAccountsResponse,
+                    typing.Any,
                     parse_obj_as(
-                        type_=ListSocialAccountsResponse,  # type: ignore
+                        type_=typing.Any,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -95,104 +87,188 @@ class RawSocialAccountsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def list_whop_companies(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[ListWhopCompaniesSocialAccountsResponse]:
+    def create(
+        self,
+        *,
+        url: str,
+        events: typing.Sequence[CreateWebhooksRequestEventsItem],
+        description: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[typing.Any]:
         """
-        List companies available to a connected Whop account. Select one before requesting its forum experiences.
+        Register an HTTPS endpoint for event deliveries. The response includes the signing secret ONCE — store it; later reads return a masked value.
 
         Parameters
         ----------
-        id : str
+        url : str
+
+        events : typing.Sequence[CreateWebhooksRequestEventsItem]
+
+        description : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[ListWhopCompaniesSocialAccountsResponse]
+        HttpResponse[typing.Any]
             OK
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/social-accounts/{encode_path_param(id)}/whop-companies",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ListWhopCompaniesSocialAccountsResponse,
-                    parse_obj_as(
-                        type_=ListWhopCompaniesSocialAccountsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 500:
-                raise InternalServerError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def list_whop_forums(
-        self, id: str, *, company_id: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[ListWhopForumsSocialAccountsResponse]:
-        """
-        List forum experiences for a Whop company. Use an item id as platformConfiguration.experience.
-
-        Parameters
-        ----------
-        id : str
-
-        company_id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[ListWhopForumsSocialAccountsResponse]
-            OK
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"v0/social-accounts/{encode_path_param(id)}/whop-forums",
-            method="GET",
-            params={
-                "companyId": company_id,
+            "v0/webhooks",
+            method="POST",
+            json={
+                "url": url,
+                "events": events,
+                "description": description,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ListWhopForumsSocialAccountsResponse,
+                    typing.Any,
                     parse_obj_as(
-                        type_=ListWhopForumsSocialAccountsResponse,  # type: ignore
+                        type_=typing.Any,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def retrieve(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[typing.Any]:
+        """
+        Retrieve one webhook endpoint, including failure counters. The signing secret is masked.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[typing.Any]
+            OK
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/webhooks/{encode_path_param(id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Any,
+                    parse_obj_as(
+                        type_=typing.Any,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[typing.Any]:
+        """
+        Delete a webhook endpoint and its delivery history. Deliveries already in flight are dropped.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[typing.Any]
+            OK
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/webhooks/{encode_path_param(id)}",
+            method="DELETE",
+            json={},
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Any,
+                    parse_obj_as(
+                        type_=typing.Any,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -232,31 +308,43 @@ class RawSocialAccountsClient:
         self,
         id: str,
         *,
-        status: typing.Optional[UpdateSocialAccountsRequestStatus] = OMIT,
+        url: typing.Optional[str] = OMIT,
+        events: typing.Optional[typing.Sequence[UpdateWebhooksRequestEventsItem]] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        enabled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[UpdateSocialAccountsResponse]:
+    ) -> HttpResponse[typing.Any]:
         """
-        Update social media account settings and information
+        Update URL, subscribed events, description, or enabled state. Re-enabling resets the failure streak.
 
         Parameters
         ----------
         id : str
 
-        status : typing.Optional[UpdateSocialAccountsRequestStatus]
+        url : typing.Optional[str]
+
+        events : typing.Optional[typing.Sequence[UpdateWebhooksRequestEventsItem]]
+
+        description : typing.Optional[str]
+
+        enabled : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[UpdateSocialAccountsResponse]
+        HttpResponse[typing.Any]
             OK
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/social-accounts/{encode_path_param(id)}",
-            method="PUT",
+            f"v0/webhooks/{encode_path_param(id)}",
+            method="PATCH",
             json={
-                "status": status,
+                "url": url,
+                "events": events,
+                "description": description,
+                "enabled": enabled,
             },
             headers={
                 "content-type": "application/json",
@@ -265,11 +353,13 @@ class RawSocialAccountsClient:
             omit=OMIT,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    UpdateSocialAccountsResponse,
+                    typing.Any,
                     parse_obj_as(
-                        type_=UpdateSocialAccountsResponse,  # type: ignore
+                        type_=typing.Any,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -305,11 +395,11 @@ class RawSocialAccountsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def delete(
+    def rotate_secret(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[DeleteSocialAccountsResponse]:
+    ) -> HttpResponse[typing.Any]:
         """
-        Remove a connected social media account
+        Generate a new signing secret for the endpoint and return it ONCE. The old secret stops signing immediately.
 
         Parameters
         ----------
@@ -320,11 +410,447 @@ class RawSocialAccountsClient:
 
         Returns
         -------
-        HttpResponse[DeleteSocialAccountsResponse]
+        HttpResponse[typing.Any]
             OK
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/social-accounts/{encode_path_param(id)}",
+            f"v0/webhooks/{encode_path_param(id)}/rotate-secret",
+            method="POST",
+            json={},
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Any,
+                    parse_obj_as(
+                        type_=typing.Any,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def test(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[typing.Any]:
+        """
+        Send a signed `ping` event to the endpoint URL and record it in the delivery history.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[typing.Any]
+            OK
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/webhooks/{encode_path_param(id)}/test",
+            method="POST",
+            json={},
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Any,
+                    parse_obj_as(
+                        type_=typing.Any,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def list_deliveries(
+        self,
+        id: str,
+        *,
+        limit: typing.Optional[int] = None,
+        page: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[typing.Any]:
+        """
+        Delivery history for a webhook endpoint: event, status, attempts, last response code, and payload.
+
+        Parameters
+        ----------
+        id : str
+
+        limit : typing.Optional[int]
+
+        page : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[typing.Any]
+            OK
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/webhooks/{encode_path_param(id)}/deliveries",
+            method="GET",
+            params={
+                "limit": limit,
+                "page": page,
+            },
+            request_options=request_options,
+        )
+        try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Any,
+                    parse_obj_as(
+                        type_=typing.Any,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+
+class AsyncRawWebhooksClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
+
+    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[typing.Any]:
+        """
+        List the organization's webhook endpoints. Signing secrets are masked.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[typing.Any]
+            OK
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v0/webhooks",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Any,
+                    parse_obj_as(
+                        type_=typing.Any,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def create(
+        self,
+        *,
+        url: str,
+        events: typing.Sequence[CreateWebhooksRequestEventsItem],
+        description: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[typing.Any]:
+        """
+        Register an HTTPS endpoint for event deliveries. The response includes the signing secret ONCE — store it; later reads return a masked value.
+
+        Parameters
+        ----------
+        url : str
+
+        events : typing.Sequence[CreateWebhooksRequestEventsItem]
+
+        description : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[typing.Any]
+            OK
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v0/webhooks",
+            method="POST",
+            json={
+                "url": url,
+                "events": events,
+                "description": description,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Any,
+                    parse_obj_as(
+                        type_=typing.Any,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def retrieve(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[typing.Any]:
+        """
+        Retrieve one webhook endpoint, including failure counters. The signing secret is masked.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[typing.Any]
+            OK
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/webhooks/{encode_path_param(id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Any,
+                    parse_obj_as(
+                        type_=typing.Any,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def delete(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[typing.Any]:
+        """
+        Delete a webhook endpoint and its delivery history. Deliveries already in flight are dropped.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[typing.Any]
+            OK
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/webhooks/{encode_path_param(id)}",
             method="DELETE",
             json={},
             headers={
@@ -334,489 +860,13 @@ class RawSocialAccountsClient:
             omit=OMIT,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    DeleteSocialAccountsResponse,
+                    typing.Any,
                     parse_obj_as(
-                        type_=DeleteSocialAccountsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 500:
-                raise InternalServerError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def update_timezone(
-        self, id: str, *, timezone: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[UpdateTimezoneSocialAccountsResponse]:
-        """
-        Set the IANA timezone (e.g. 'America/Los_Angeles') used to interpret queue times for this account.
-
-        Parameters
-        ----------
-        id : str
-
-        timezone : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[UpdateTimezoneSocialAccountsResponse]
-            OK
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"v0/social-accounts/{encode_path_param(id)}/timezone",
-            method="PUT",
-            json={
-                "timezone": timezone,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    UpdateTimezoneSocialAccountsResponse,
-                    parse_obj_as(
-                        type_=UpdateTimezoneSocialAccountsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 500:
-                raise InternalServerError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def next_slots(
-        self,
-        id: str,
-        *,
-        limit: typing.Optional[int] = None,
-        after: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[NextSlotsSocialAccountsResponse]:
-        """
-        Return the next available queue slot times (UTC) for a social account, computed from its queue schedule, per-slot capacity, and timezone. Empty when the account has no queue times configured. Use a slot as `scheduledAt`, or pass `action: "queue"` when creating a post to take the next slot automatically.
-
-        Parameters
-        ----------
-        id : str
-
-        limit : typing.Optional[int]
-
-        after : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[NextSlotsSocialAccountsResponse]
-            OK
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"v0/social-accounts/{encode_path_param(id)}/next-slots",
-            method="GET",
-            params={
-                "limit": limit,
-                "after": after,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    NextSlotsSocialAccountsResponse,
-                    parse_obj_as(
-                        type_=NextSlotsSocialAccountsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 500:
-                raise InternalServerError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def pinterest_boards(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[PinterestBoardsSocialAccountsResponse]:
-        """
-        List the boards for a connected Pinterest account. Use a board id in `platformConfiguration.board_ids` when creating a Pinterest post.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[PinterestBoardsSocialAccountsResponse]
-            OK
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"v0/social-accounts/{encode_path_param(id)}/pinterest-boards",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    PinterestBoardsSocialAccountsResponse,
-                    parse_obj_as(
-                        type_=PinterestBoardsSocialAccountsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 500:
-                raise InternalServerError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def tiktok_creator_info(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[TiktokCreatorInfoSocialAccountsResponse]:
-        """
-        Fetch the privacy-level options, duration limits, and interaction settings for a connected TikTok account — required to build a valid `platformConfiguration` when creating a TikTok post.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[TiktokCreatorInfoSocialAccountsResponse]
-            OK
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"v0/social-accounts/{encode_path_param(id)}/tiktok-creator-info",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    TiktokCreatorInfoSocialAccountsResponse,
-                    parse_obj_as(
-                        type_=TiktokCreatorInfoSocialAccountsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 500:
-                raise InternalServerError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-
-class AsyncRawSocialAccountsClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
-
-    async def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[ListSocialAccountsResponse]:
-        """
-        Retrieve all connected social media accounts for the authenticated user
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[ListSocialAccountsResponse]
-            OK
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "v0/social-accounts",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ListSocialAccountsResponse,
-                    parse_obj_as(
-                        type_=ListSocialAccountsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 500:
-                raise InternalServerError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def list_whop_companies(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[ListWhopCompaniesSocialAccountsResponse]:
-        """
-        List companies available to a connected Whop account. Select one before requesting its forum experiences.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[ListWhopCompaniesSocialAccountsResponse]
-            OK
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"v0/social-accounts/{encode_path_param(id)}/whop-companies",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ListWhopCompaniesSocialAccountsResponse,
-                    parse_obj_as(
-                        type_=ListWhopCompaniesSocialAccountsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 500:
-                raise InternalServerError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def list_whop_forums(
-        self, id: str, *, company_id: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[ListWhopForumsSocialAccountsResponse]:
-        """
-        List forum experiences for a Whop company. Use an item id as platformConfiguration.experience.
-
-        Parameters
-        ----------
-        id : str
-
-        company_id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[ListWhopForumsSocialAccountsResponse]
-            OK
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"v0/social-accounts/{encode_path_param(id)}/whop-forums",
-            method="GET",
-            params={
-                "companyId": company_id,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ListWhopForumsSocialAccountsResponse,
-                    parse_obj_as(
-                        type_=ListWhopForumsSocialAccountsResponse,  # type: ignore
+                        type_=typing.Any,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -856,31 +906,43 @@ class AsyncRawSocialAccountsClient:
         self,
         id: str,
         *,
-        status: typing.Optional[UpdateSocialAccountsRequestStatus] = OMIT,
+        url: typing.Optional[str] = OMIT,
+        events: typing.Optional[typing.Sequence[UpdateWebhooksRequestEventsItem]] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        enabled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[UpdateSocialAccountsResponse]:
+    ) -> AsyncHttpResponse[typing.Any]:
         """
-        Update social media account settings and information
+        Update URL, subscribed events, description, or enabled state. Re-enabling resets the failure streak.
 
         Parameters
         ----------
         id : str
 
-        status : typing.Optional[UpdateSocialAccountsRequestStatus]
+        url : typing.Optional[str]
+
+        events : typing.Optional[typing.Sequence[UpdateWebhooksRequestEventsItem]]
+
+        description : typing.Optional[str]
+
+        enabled : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[UpdateSocialAccountsResponse]
+        AsyncHttpResponse[typing.Any]
             OK
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/social-accounts/{encode_path_param(id)}",
-            method="PUT",
+            f"v0/webhooks/{encode_path_param(id)}",
+            method="PATCH",
             json={
-                "status": status,
+                "url": url,
+                "events": events,
+                "description": description,
+                "enabled": enabled,
             },
             headers={
                 "content-type": "application/json",
@@ -889,11 +951,13 @@ class AsyncRawSocialAccountsClient:
             omit=OMIT,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    UpdateSocialAccountsResponse,
+                    typing.Any,
                     parse_obj_as(
-                        type_=UpdateSocialAccountsResponse,  # type: ignore
+                        type_=typing.Any,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -929,11 +993,11 @@ class AsyncRawSocialAccountsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def delete(
+    async def rotate_secret(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[DeleteSocialAccountsResponse]:
+    ) -> AsyncHttpResponse[typing.Any]:
         """
-        Remove a connected social media account
+        Generate a new signing secret for the endpoint and return it ONCE. The old secret stops signing immediately.
 
         Parameters
         ----------
@@ -944,12 +1008,12 @@ class AsyncRawSocialAccountsClient:
 
         Returns
         -------
-        AsyncHttpResponse[DeleteSocialAccountsResponse]
+        AsyncHttpResponse[typing.Any]
             OK
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/social-accounts/{encode_path_param(id)}",
-            method="DELETE",
+            f"v0/webhooks/{encode_path_param(id)}/rotate-secret",
+            method="POST",
             json={},
             headers={
                 "content-type": "application/json",
@@ -958,11 +1022,13 @@ class AsyncRawSocialAccountsClient:
             omit=OMIT,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    DeleteSocialAccountsResponse,
+                    typing.Any,
                     parse_obj_as(
-                        type_=DeleteSocialAccountsResponse,  # type: ignore
+                        type_=typing.Any,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -998,32 +1064,28 @@ class AsyncRawSocialAccountsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def update_timezone(
-        self, id: str, *, timezone: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[UpdateTimezoneSocialAccountsResponse]:
+    async def test(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[typing.Any]:
         """
-        Set the IANA timezone (e.g. 'America/Los_Angeles') used to interpret queue times for this account.
+        Send a signed `ping` event to the endpoint URL and record it in the delivery history.
 
         Parameters
         ----------
         id : str
-
-        timezone : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[UpdateTimezoneSocialAccountsResponse]
+        AsyncHttpResponse[typing.Any]
             OK
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/social-accounts/{encode_path_param(id)}/timezone",
-            method="PUT",
-            json={
-                "timezone": timezone,
-            },
+            f"v0/webhooks/{encode_path_param(id)}/test",
+            method="POST",
+            json={},
             headers={
                 "content-type": "application/json",
             },
@@ -1031,11 +1093,13 @@ class AsyncRawSocialAccountsClient:
             omit=OMIT,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    UpdateTimezoneSocialAccountsResponse,
+                    typing.Any,
                     parse_obj_as(
-                        type_=UpdateTimezoneSocialAccountsResponse,  # type: ignore
+                        type_=typing.Any,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1071,16 +1135,16 @@ class AsyncRawSocialAccountsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def next_slots(
+    async def list_deliveries(
         self,
         id: str,
         *,
         limit: typing.Optional[int] = None,
-        after: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[NextSlotsSocialAccountsResponse]:
+    ) -> AsyncHttpResponse[typing.Any]:
         """
-        Return the next available queue slot times (UTC) for a social account, computed from its queue schedule, per-slot capacity, and timezone. Empty when the account has no queue times configured. Use a slot as `scheduledAt`, or pass `action: "queue"` when creating a post to take the next slot automatically.
+        Delivery history for a webhook endpoint: event, status, attempts, last response code, and payload.
 
         Parameters
         ----------
@@ -1088,159 +1152,33 @@ class AsyncRawSocialAccountsClient:
 
         limit : typing.Optional[int]
 
-        after : typing.Optional[str]
+        page : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[NextSlotsSocialAccountsResponse]
+        AsyncHttpResponse[typing.Any]
             OK
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/social-accounts/{encode_path_param(id)}/next-slots",
+            f"v0/webhooks/{encode_path_param(id)}/deliveries",
             method="GET",
             params={
                 "limit": limit,
-                "after": after,
+                "page": page,
             },
             request_options=request_options,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    NextSlotsSocialAccountsResponse,
+                    typing.Any,
                     parse_obj_as(
-                        type_=NextSlotsSocialAccountsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 500:
-                raise InternalServerError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def pinterest_boards(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[PinterestBoardsSocialAccountsResponse]:
-        """
-        List the boards for a connected Pinterest account. Use a board id in `platformConfiguration.board_ids` when creating a Pinterest post.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[PinterestBoardsSocialAccountsResponse]
-            OK
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"v0/social-accounts/{encode_path_param(id)}/pinterest-boards",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    PinterestBoardsSocialAccountsResponse,
-                    parse_obj_as(
-                        type_=PinterestBoardsSocialAccountsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 401:
-                raise UnauthorizedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 500:
-                raise InternalServerError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def tiktok_creator_info(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[TiktokCreatorInfoSocialAccountsResponse]:
-        """
-        Fetch the privacy-level options, duration limits, and interaction settings for a connected TikTok account — required to build a valid `platformConfiguration` when creating a TikTok post.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[TiktokCreatorInfoSocialAccountsResponse]
-            OK
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"v0/social-accounts/{encode_path_param(id)}/tiktok-creator-info",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    TiktokCreatorInfoSocialAccountsResponse,
-                    parse_obj_as(
-                        type_=TiktokCreatorInfoSocialAccountsResponse,  # type: ignore
+                        type_=typing.Any,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

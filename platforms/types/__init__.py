@@ -12,6 +12,9 @@ if typing.TYPE_CHECKING:
         ListPlatformsResponseDataItemHelperEndpointsItem,
     )
     from .list_platforms_response_data_item_media_rules import ListPlatformsResponseDataItemMediaRules
+    from .list_platforms_response_data_item_media_rules_allowed_dimensions_item import (
+        ListPlatformsResponseDataItemMediaRulesAllowedDimensionsItem,
+    )
     from .list_platforms_response_data_item_media_rules_allowed_types_item import (
         ListPlatformsResponseDataItemMediaRulesAllowedTypesItem,
     )
@@ -23,6 +26,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListPlatformsResponseDataItem": ".list_platforms_response_data_item",
     "ListPlatformsResponseDataItemHelperEndpointsItem": ".list_platforms_response_data_item_helper_endpoints_item",
     "ListPlatformsResponseDataItemMediaRules": ".list_platforms_response_data_item_media_rules",
+    "ListPlatformsResponseDataItemMediaRulesAllowedDimensionsItem": ".list_platforms_response_data_item_media_rules_allowed_dimensions_item",
     "ListPlatformsResponseDataItemMediaRulesAllowedTypesItem": ".list_platforms_response_data_item_media_rules_allowed_types_item",
     "ListPlatformsResponseDataItemPlatformConfiguration": ".list_platforms_response_data_item_platform_configuration",
 }
@@ -54,6 +58,7 @@ __all__ = [
     "ListPlatformsResponseDataItem",
     "ListPlatformsResponseDataItemHelperEndpointsItem",
     "ListPlatformsResponseDataItemMediaRules",
+    "ListPlatformsResponseDataItemMediaRulesAllowedDimensionsItem",
     "ListPlatformsResponseDataItemMediaRulesAllowedTypesItem",
     "ListPlatformsResponseDataItemPlatformConfiguration",
 ]

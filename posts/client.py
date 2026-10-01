@@ -118,6 +118,7 @@ class PostsClient:
         *,
         caption: str,
         social_account_id: str,
+        title: typing.Optional[str] = OMIT,
         scheduled_at: typing.Optional[dt.datetime] = OMIT,
         media: typing.Optional[typing.Sequence[PostCreateMediaItem]] = OMIT,
         thumbnail: typing.Optional[PostCreateThumbnail] = OMIT,
@@ -128,13 +129,15 @@ class PostsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreatePostsResponse:
         """
-        Create a new post with media, tags, and scheduling options
+        Create a new post with media, tags, and scheduling options. Media items may reference a stored library URL or any publicly reachable image/video URL — external URLs are downloaded into the media library automatically, so clients that cannot issue a raw presigned PUT can attach media in one call.
 
         Parameters
         ----------
         caption : str
 
         social_account_id : str
+
+        title : typing.Optional[str]
 
         scheduled_at : typing.Optional[dt.datetime]
 
@@ -173,6 +176,7 @@ class PostsClient:
         _response = self._raw_client.create(
             caption=caption,
             social_account_id=social_account_id,
+            title=title,
             scheduled_at=scheduled_at,
             media=media,
             thumbnail=thumbnail,
@@ -480,38 +484,6 @@ class PostsClient:
         _response = self._raw_client.update_tags(id, tag_ids=tag_ids, request_options=request_options)
         return _response.data
 
-    def get_job_status(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
-        """
-        Retrieve the processing job status and logs for a post
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.Optional[typing.Any]
-            OK
-
-        Examples
-        --------
-        from schedulin import Schedulin
-
-        client = Schedulin(
-            api_key="YOUR_API_KEY",
-        )
-        client.posts.get_job_status(
-            id="id",
-        )
-        """
-        _response = self._raw_client.get_job_status(id, request_options=request_options)
-        return _response.data
-
 
 class AsyncPostsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -611,6 +583,7 @@ class AsyncPostsClient:
         *,
         caption: str,
         social_account_id: str,
+        title: typing.Optional[str] = OMIT,
         scheduled_at: typing.Optional[dt.datetime] = OMIT,
         media: typing.Optional[typing.Sequence[PostCreateMediaItem]] = OMIT,
         thumbnail: typing.Optional[PostCreateThumbnail] = OMIT,
@@ -621,13 +594,15 @@ class AsyncPostsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreatePostsResponse:
         """
-        Create a new post with media, tags, and scheduling options
+        Create a new post with media, tags, and scheduling options. Media items may reference a stored library URL or any publicly reachable image/video URL — external URLs are downloaded into the media library automatically, so clients that cannot issue a raw presigned PUT can attach media in one call.
 
         Parameters
         ----------
         caption : str
 
         social_account_id : str
+
+        title : typing.Optional[str]
 
         scheduled_at : typing.Optional[dt.datetime]
 
@@ -674,6 +649,7 @@ class AsyncPostsClient:
         _response = await self._raw_client.create(
             caption=caption,
             social_account_id=social_account_id,
+            title=title,
             scheduled_at=scheduled_at,
             media=media,
             thumbnail=thumbnail,
@@ -1043,44 +1019,4 @@ class AsyncPostsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update_tags(id, tag_ids=tag_ids, request_options=request_options)
-        return _response.data
-
-    async def get_job_status(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[typing.Any]:
-        """
-        Retrieve the processing job status and logs for a post
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.Optional[typing.Any]
-            OK
-
-        Examples
-        --------
-        import asyncio
-
-        from schedulin import AsyncSchedulin
-
-        client = AsyncSchedulin(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.posts.get_job_status(
-                id="id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.get_job_status(id, request_options=request_options)
         return _response.data
