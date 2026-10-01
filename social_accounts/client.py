@@ -202,7 +202,7 @@ class SocialAccountsClient:
         self, id: str, *, timezone: str, request_options: typing.Optional[RequestOptions] = None
     ) -> UpdateTimezoneSocialAccountsResponse:
         """
-        Set the IANA timezone (e.g. 'America/Los_Angeles') used to interpret queue times for this account.
+        Set the IANA timezone (e.g. 'America/Los_Angeles') used to interpret queue times for this account. Unknown names and UTC-offset strings (e.g. '+05:00') are rejected with 422.
 
         Parameters
         ----------
@@ -561,7 +561,7 @@ class AsyncSocialAccountsClient:
         self, id: str, *, timezone: str, request_options: typing.Optional[RequestOptions] = None
     ) -> UpdateTimezoneSocialAccountsResponse:
         """
-        Set the IANA timezone (e.g. 'America/Los_Angeles') used to interpret queue times for this account.
+        Set the IANA timezone (e.g. 'America/Los_Angeles') used to interpret queue times for this account. Unknown names and UTC-offset strings (e.g. '+05:00') are rejected with 422.
 
         Parameters
         ----------

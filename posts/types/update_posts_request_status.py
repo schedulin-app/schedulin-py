@@ -2,6 +2,4 @@
 
 import typing
 
-UpdatePostsRequestStatus = typing.Union[
-    typing.Literal["DRAFT", "SCHEDULED", "PROCESSING", "COMPLETED", "FAILED"], typing.Any
-]
+UpdatePostsRequestStatus = typing.Union[typing.Literal["DRAFT", "SCHEDULED", "PROCESSING"], typing.Any]
