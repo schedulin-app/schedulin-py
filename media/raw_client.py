@@ -3,6 +3,7 @@
 import typing
 from json.decoder import JSONDecodeError
 
+from .. import core
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
@@ -194,7 +195,7 @@ class RawMediaClient:
     def upload(
         self,
         *,
-        file: str,
+        file: core.File,
         name: typing.Optional[str] = OMIT,
         alt: typing.Optional[str] = OMIT,
         content_type: typing.Optional[str] = OMIT,
@@ -205,7 +206,8 @@ class RawMediaClient:
 
         Parameters
         ----------
-        file : str
+        file : core.File
+            See core.File for more documentation
 
         name : typing.Optional[str]
 
@@ -224,17 +226,17 @@ class RawMediaClient:
         _response = self._client_wrapper.httpx_client.request(
             "v0/media/upload",
             method="POST",
-            json={
-                "file": file,
+            data={
                 "name": name,
                 "alt": alt,
                 "contentType": content_type,
             },
-            headers={
-                "content-type": "application/json",
+            files={
+                "file": file,
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if _response is None or not _response.text.strip():
@@ -442,9 +444,7 @@ class RawMediaClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def v0media_delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[typing.Any]:
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[typing.Any]:
         """
         Delete a media object and remove its files from storage. Fails with a conflict when the media is attached to any post — remove it from those posts (or delete them) first.
 
@@ -995,7 +995,7 @@ class AsyncRawMediaClient:
     async def upload(
         self,
         *,
-        file: str,
+        file: core.File,
         name: typing.Optional[str] = OMIT,
         alt: typing.Optional[str] = OMIT,
         content_type: typing.Optional[str] = OMIT,
@@ -1006,7 +1006,8 @@ class AsyncRawMediaClient:
 
         Parameters
         ----------
-        file : str
+        file : core.File
+            See core.File for more documentation
 
         name : typing.Optional[str]
 
@@ -1025,17 +1026,17 @@ class AsyncRawMediaClient:
         _response = await self._client_wrapper.httpx_client.request(
             "v0/media/upload",
             method="POST",
-            json={
-                "file": file,
+            data={
                 "name": name,
                 "alt": alt,
                 "contentType": content_type,
             },
-            headers={
-                "content-type": "application/json",
+            files={
+                "file": file,
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if _response is None or not _response.text.strip():
@@ -1243,7 +1244,7 @@ class AsyncRawMediaClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def v0media_delete(
+    async def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[typing.Any]:
         """

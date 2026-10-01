@@ -2,6 +2,7 @@
 
 import typing
 
+from .. import core
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.media import Media
@@ -113,7 +114,7 @@ class MediaClient:
     def upload(
         self,
         *,
-        file: str,
+        file: core.File,
         name: typing.Optional[str] = OMIT,
         alt: typing.Optional[str] = OMIT,
         content_type: typing.Optional[str] = OMIT,
@@ -124,7 +125,8 @@ class MediaClient:
 
         Parameters
         ----------
-        file : str
+        file : core.File
+            See core.File for more documentation
 
         name : typing.Optional[str]
 
@@ -147,9 +149,7 @@ class MediaClient:
         client = Schedulin(
             api_key="YOUR_API_KEY",
         )
-        client.media.upload(
-            file="file",
-        )
+        client.media.upload()
         """
         _response = self._raw_client.upload(
             file=file, name=name, alt=alt, content_type=content_type, request_options=request_options
@@ -249,7 +249,7 @@ class MediaClient:
         )
         return _response.data
 
-    def v0media_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
         """
         Delete a media object and remove its files from storage. Fails with a conflict when the media is attached to any post — remove it from those posts (or delete them) first.
 
@@ -272,11 +272,11 @@ class MediaClient:
         client = Schedulin(
             api_key="YOUR_API_KEY",
         )
-        client.media.v0media_delete(
+        client.media.delete(
             id="id",
         )
         """
-        _response = self._raw_client.v0media_delete(id, request_options=request_options)
+        _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
 
     def list(
@@ -550,7 +550,7 @@ class AsyncMediaClient:
     async def upload(
         self,
         *,
-        file: str,
+        file: core.File,
         name: typing.Optional[str] = OMIT,
         alt: typing.Optional[str] = OMIT,
         content_type: typing.Optional[str] = OMIT,
@@ -561,7 +561,8 @@ class AsyncMediaClient:
 
         Parameters
         ----------
-        file : str
+        file : core.File
+            See core.File for more documentation
 
         name : typing.Optional[str]
 
@@ -589,9 +590,7 @@ class AsyncMediaClient:
 
 
         async def main() -> None:
-            await client.media.upload(
-                file="file",
-            )
+            await client.media.upload()
 
 
         asyncio.run(main())
@@ -712,7 +711,7 @@ class AsyncMediaClient:
         )
         return _response.data
 
-    async def v0media_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
         """
         Delete a media object and remove its files from storage. Fails with a conflict when the media is attached to any post — remove it from those posts (or delete them) first.
 
@@ -740,14 +739,14 @@ class AsyncMediaClient:
 
 
         async def main() -> None:
-            await client.media.v0media_delete(
+            await client.media.delete(
                 id="id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.v0media_delete(id, request_options=request_options)
+        _response = await self._raw_client.delete(id, request_options=request_options)
         return _response.data
 
     async def list(

@@ -2157,7 +2157,7 @@ client = Schedulin(
 )
 
 client.media.upload(
-    file="file",
+    file="example_file",
 )
 
 ```
@@ -2174,7 +2174,7 @@ client.media.upload(
 <dl>
 <dd>
 
-**file:** `str` 
+**file:** `core.File` 
     
 </dd>
 </dl>
@@ -2413,7 +2413,7 @@ client.media.update(
 </dl>
 </details>
 
-<details><summary><code>client.media.<a href="src/schedulin/media/client.py">v0media_delete</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.media.<a href="src/schedulin/media/client.py">delete</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -2448,7 +2448,7 @@ client = Schedulin(
     environment=SchedulinEnvironment.DEFAULT,
 )
 
-client.media.v0media_delete(
+client.media.delete(
     id="id",
 )
 
