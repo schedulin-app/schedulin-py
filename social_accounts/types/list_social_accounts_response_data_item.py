@@ -7,6 +7,7 @@ import pydantic
 import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...core.serialization import FieldMetadata
+from ...types.social_account_disconnected_reason import SocialAccountDisconnectedReason
 from .list_social_accounts_response_data_item_platform import ListSocialAccountsResponseDataItemPlatform
 from .list_social_accounts_response_data_item_status import ListSocialAccountsResponseDataItemStatus
 
@@ -15,6 +16,11 @@ class ListSocialAccountsResponseDataItem(UniversalBaseModel):
     id: str
     platform: ListSocialAccountsResponseDataItemPlatform
     status: ListSocialAccountsResponseDataItemStatus
+    disconnected_reason: typing_extensions.Annotated[
+        typing.Optional[SocialAccountDisconnectedReason],
+        FieldMetadata(alias="disconnectedReason"),
+        pydantic.Field(alias="disconnectedReason"),
+    ] = None
     username: typing.Optional[str] = None
     display_name: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="displayName"), pydantic.Field(alias="displayName")

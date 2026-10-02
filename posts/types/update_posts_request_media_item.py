@@ -9,12 +9,19 @@ from ...core.serialization import FieldMetadata
 
 
 class UpdatePostsRequestMediaItem(UniversalBaseModel):
-    id: str
-    name: str
-    url: str
-    mime_type: typing_extensions.Annotated[str, FieldMetadata(alias="mimeType"), pydantic.Field(alias="mimeType")]
+    id: typing.Optional[str] = None
+    url: typing.Optional[str] = None
+    name: typing.Optional[str] = None
+    mime_type: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="mimeType"), pydantic.Field(alias="mimeType")
+    ] = None
+    width: typing.Optional[float] = None
+    height: typing.Optional[float] = None
+    size: typing.Optional[float] = None
+    duration: typing.Optional[float] = None
+    alt: typing.Optional[str] = None
     bucket: typing.Optional[str] = None
-    key: str
+    key: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

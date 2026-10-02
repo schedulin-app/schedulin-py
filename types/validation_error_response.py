@@ -9,12 +9,12 @@ from .validation_error_response_data import ValidationErrorResponseData
 
 class ValidationErrorResponse(UniversalBaseModel):
     """
-    422 input validation error. `data.fieldErrors` maps each invalid field to its messages; `data.formErrors` holds errors not tied to one field.
+    422 error. `data.fieldErrors` maps each invalid field to its messages; `data.formErrors` holds errors not tied to one field. `code` is "INPUT_VALIDATION_FAILED" for schema validation and "UNPROCESSABLE_CONTENT" for business-rule rejections, whose reason is also in `data.message`.
     """
 
     code: str = pydantic.Field()
     """
-    "INPUT_VALIDATION_FAILED"
+    "INPUT_VALIDATION_FAILED" or "UNPROCESSABLE_CONTENT"
     """
 
     status: int

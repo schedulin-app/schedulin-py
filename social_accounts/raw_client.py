@@ -396,7 +396,7 @@ class RawSocialAccountsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[ListDiscordChannelsSocialAccountsResponse]:
         """
-        List the text and announcement channels the Schedulin bot can post into for a connected Discord server. Use an item id as `platformConfiguration.channel` when creating a Discord post.
+        List the text and announcement channels the Schedulin bot can post into for a connected Discord server — only channels where the bot's effective permissions (its roles plus the channel's permission overwrites) include View Channel and Send Messages; channels it can't post in are omitted. Use an item id as `platformConfiguration.channel` when creating a Discord post.
 
         Parameters
         ----------
@@ -774,14 +774,20 @@ class RawSocialAccountsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        permanent: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DeleteSocialAccountsResponse]:
         """
-        Remove a connected social media account. This permanently deletes ALL of the account's posts (scheduled, drafts and published history) and cannot be undone. To keep history, reconnect the account instead of deleting it.
+        Disconnect a social account. By default this is a soft disconnect: the stored credentials are wiped, the account stops counting toward your plan's account limit, and it stays in `GET /v0/social-accounts` with `status: "disconnected"` and `disconnectedReason: "TOKEN_REVOKED"` until it is reconnected from the dashboard. All of its posts, analytics, and history are kept; scheduled posts that come due while it is disconnected fail with a "reconnect" error instead of publishing. Pass `permanent=true` to delete the account instead — this **permanently deletes every post** (scheduled, draft, and published history) of the account and cannot be undone.
 
         Parameters
         ----------
         id : str
+
+        permanent : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -794,6 +800,9 @@ class RawSocialAccountsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v0/social-accounts/{encode_path_param(id)}",
             method="DELETE",
+            params={
+                "permanent": permanent,
+            },
             json={},
             headers={
                 "content-type": "application/json",
@@ -1775,7 +1784,7 @@ class AsyncRawSocialAccountsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[ListDiscordChannelsSocialAccountsResponse]:
         """
-        List the text and announcement channels the Schedulin bot can post into for a connected Discord server. Use an item id as `platformConfiguration.channel` when creating a Discord post.
+        List the text and announcement channels the Schedulin bot can post into for a connected Discord server — only channels where the bot's effective permissions (its roles plus the channel's permission overwrites) include View Channel and Send Messages; channels it can't post in are omitted. Use an item id as `platformConfiguration.channel` when creating a Discord post.
 
         Parameters
         ----------
@@ -2153,14 +2162,20 @@ class AsyncRawSocialAccountsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        permanent: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DeleteSocialAccountsResponse]:
         """
-        Remove a connected social media account. This permanently deletes ALL of the account's posts (scheduled, drafts and published history) and cannot be undone. To keep history, reconnect the account instead of deleting it.
+        Disconnect a social account. By default this is a soft disconnect: the stored credentials are wiped, the account stops counting toward your plan's account limit, and it stays in `GET /v0/social-accounts` with `status: "disconnected"` and `disconnectedReason: "TOKEN_REVOKED"` until it is reconnected from the dashboard. All of its posts, analytics, and history are kept; scheduled posts that come due while it is disconnected fail with a "reconnect" error instead of publishing. Pass `permanent=true` to delete the account instead — this **permanently deletes every post** (scheduled, draft, and published history) of the account and cannot be undone.
 
         Parameters
         ----------
         id : str
+
+        permanent : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -2173,6 +2188,9 @@ class AsyncRawSocialAccountsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v0/social-accounts/{encode_path_param(id)}",
             method="DELETE",
+            params={
+                "permanent": permanent,
+            },
             json={},
             headers={
                 "content-type": "application/json",
