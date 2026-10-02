@@ -8,6 +8,10 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import (
         DeleteSocialAccountsResponse,
+        ListDiscordChannelsSocialAccountsResponse,
+        ListDiscordChannelsSocialAccountsResponseItemsItem,
+        ListSlackChannelsSocialAccountsResponse,
+        ListSlackChannelsSocialAccountsResponseItemsItem,
         ListSocialAccountsResponse,
         ListSocialAccountsResponseDataItem,
         ListSocialAccountsResponseDataItemPlatform,
@@ -29,6 +33,10 @@ if typing.TYPE_CHECKING:
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "DeleteSocialAccountsResponse": ".types",
+    "ListDiscordChannelsSocialAccountsResponse": ".types",
+    "ListDiscordChannelsSocialAccountsResponseItemsItem": ".types",
+    "ListSlackChannelsSocialAccountsResponse": ".types",
+    "ListSlackChannelsSocialAccountsResponseItemsItem": ".types",
     "ListSocialAccountsResponse": ".types",
     "ListSocialAccountsResponseDataItem": ".types",
     "ListSocialAccountsResponseDataItemPlatform": ".types",
@@ -73,6 +81,10 @@ def __dir__():
 
 __all__ = [
     "DeleteSocialAccountsResponse",
+    "ListDiscordChannelsSocialAccountsResponse",
+    "ListDiscordChannelsSocialAccountsResponseItemsItem",
+    "ListSlackChannelsSocialAccountsResponse",
+    "ListSlackChannelsSocialAccountsResponseItemsItem",
     "ListSocialAccountsResponse",
     "ListSocialAccountsResponseDataItem",
     "ListSocialAccountsResponseDataItemPlatform",

@@ -6,6 +6,8 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawSocialAccountsClient, RawSocialAccountsClient
 from .types.delete_social_accounts_response import DeleteSocialAccountsResponse
+from .types.list_discord_channels_social_accounts_response import ListDiscordChannelsSocialAccountsResponse
+from .types.list_slack_channels_social_accounts_response import ListSlackChannelsSocialAccountsResponse
 from .types.list_social_accounts_response import ListSocialAccountsResponse
 from .types.list_whop_companies_social_accounts_response import ListWhopCompaniesSocialAccountsResponse
 from .types.list_whop_forums_social_accounts_response import ListWhopForumsSocialAccountsResponse
@@ -126,6 +128,70 @@ class SocialAccountsClient:
         )
         """
         _response = self._raw_client.list_whop_forums(id, company_id=company_id, request_options=request_options)
+        return _response.data
+
+    def list_discord_channels(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ListDiscordChannelsSocialAccountsResponse:
+        """
+        List the text and announcement channels the Schedulin bot can post into for a connected Discord server. Use an item id as `platformConfiguration.channel` when creating a Discord post.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListDiscordChannelsSocialAccountsResponse
+            OK
+
+        Examples
+        --------
+        from schedulin import Schedulin
+
+        client = Schedulin(
+            api_key="YOUR_API_KEY",
+        )
+        client.social_accounts.list_discord_channels(
+            id="id",
+        )
+        """
+        _response = self._raw_client.list_discord_channels(id, request_options=request_options)
+        return _response.data
+
+    def list_slack_channels(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ListSlackChannelsSocialAccountsResponse:
+        """
+        List the channels in a connected Slack workspace that the Schedulin bot can post into (public channels, plus private channels it was invited to). Use an item id as `platformConfiguration.channel` when creating a Slack post.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListSlackChannelsSocialAccountsResponse
+            OK
+
+        Examples
+        --------
+        from schedulin import Schedulin
+
+        client = Schedulin(
+            api_key="YOUR_API_KEY",
+        )
+        client.social_accounts.list_slack_channels(
+            id="id",
+        )
+        """
+        _response = self._raw_client.list_slack_channels(id, request_options=request_options)
         return _response.data
 
     def update(
@@ -469,6 +535,86 @@ class AsyncSocialAccountsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list_whop_forums(id, company_id=company_id, request_options=request_options)
+        return _response.data
+
+    async def list_discord_channels(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ListDiscordChannelsSocialAccountsResponse:
+        """
+        List the text and announcement channels the Schedulin bot can post into for a connected Discord server. Use an item id as `platformConfiguration.channel` when creating a Discord post.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListDiscordChannelsSocialAccountsResponse
+            OK
+
+        Examples
+        --------
+        import asyncio
+
+        from schedulin import AsyncSchedulin
+
+        client = AsyncSchedulin(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.social_accounts.list_discord_channels(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list_discord_channels(id, request_options=request_options)
+        return _response.data
+
+    async def list_slack_channels(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ListSlackChannelsSocialAccountsResponse:
+        """
+        List the channels in a connected Slack workspace that the Schedulin bot can post into (public channels, plus private channels it was invited to). Use an item id as `platformConfiguration.channel` when creating a Slack post.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListSlackChannelsSocialAccountsResponse
+            OK
+
+        Examples
+        --------
+        import asyncio
+
+        from schedulin import AsyncSchedulin
+
+        client = AsyncSchedulin(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.social_accounts.list_slack_channels(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list_slack_channels(id, request_options=request_options)
         return _response.data
 
     async def update(

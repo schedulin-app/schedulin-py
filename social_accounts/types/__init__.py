@@ -7,6 +7,14 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .delete_social_accounts_response import DeleteSocialAccountsResponse
+    from .list_discord_channels_social_accounts_response import ListDiscordChannelsSocialAccountsResponse
+    from .list_discord_channels_social_accounts_response_items_item import (
+        ListDiscordChannelsSocialAccountsResponseItemsItem,
+    )
+    from .list_slack_channels_social_accounts_response import ListSlackChannelsSocialAccountsResponse
+    from .list_slack_channels_social_accounts_response_items_item import (
+        ListSlackChannelsSocialAccountsResponseItemsItem,
+    )
     from .list_social_accounts_response import ListSocialAccountsResponse
     from .list_social_accounts_response_data_item import ListSocialAccountsResponseDataItem
     from .list_social_accounts_response_data_item_platform import ListSocialAccountsResponseDataItemPlatform
@@ -31,6 +39,10 @@ if typing.TYPE_CHECKING:
     from .update_timezone_social_accounts_response import UpdateTimezoneSocialAccountsResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "DeleteSocialAccountsResponse": ".delete_social_accounts_response",
+    "ListDiscordChannelsSocialAccountsResponse": ".list_discord_channels_social_accounts_response",
+    "ListDiscordChannelsSocialAccountsResponseItemsItem": ".list_discord_channels_social_accounts_response_items_item",
+    "ListSlackChannelsSocialAccountsResponse": ".list_slack_channels_social_accounts_response",
+    "ListSlackChannelsSocialAccountsResponseItemsItem": ".list_slack_channels_social_accounts_response_items_item",
     "ListSocialAccountsResponse": ".list_social_accounts_response",
     "ListSocialAccountsResponseDataItem": ".list_social_accounts_response_data_item",
     "ListSocialAccountsResponseDataItemPlatform": ".list_social_accounts_response_data_item_platform",
@@ -75,6 +87,10 @@ def __dir__():
 
 __all__ = [
     "DeleteSocialAccountsResponse",
+    "ListDiscordChannelsSocialAccountsResponse",
+    "ListDiscordChannelsSocialAccountsResponseItemsItem",
+    "ListSlackChannelsSocialAccountsResponse",
+    "ListSlackChannelsSocialAccountsResponseItemsItem",
     "ListSocialAccountsResponse",
     "ListSocialAccountsResponseDataItem",
     "ListSocialAccountsResponseDataItemPlatform",

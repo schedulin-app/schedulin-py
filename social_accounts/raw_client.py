@@ -14,6 +14,8 @@ from ..errors.internal_server_error import InternalServerError
 from ..errors.unauthorized_error import UnauthorizedError
 from ..types.error_response import ErrorResponse
 from .types.delete_social_accounts_response import DeleteSocialAccountsResponse
+from .types.list_discord_channels_social_accounts_response import ListDiscordChannelsSocialAccountsResponse
+from .types.list_slack_channels_social_accounts_response import ListSlackChannelsSocialAccountsResponse
 from .types.list_social_accounts_response import ListSocialAccountsResponse
 from .types.list_whop_companies_social_accounts_response import ListWhopCompaniesSocialAccountsResponse
 from .types.list_whop_forums_social_accounts_response import ListWhopForumsSocialAccountsResponse
@@ -193,6 +195,134 @@ class RawSocialAccountsClient:
                     ListWhopForumsSocialAccountsResponse,
                     parse_obj_as(
                         type_=ListWhopForumsSocialAccountsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def list_discord_channels(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[ListDiscordChannelsSocialAccountsResponse]:
+        """
+        List the text and announcement channels the Schedulin bot can post into for a connected Discord server. Use an item id as `platformConfiguration.channel` when creating a Discord post.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ListDiscordChannelsSocialAccountsResponse]
+            OK
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/social-accounts/{encode_path_param(id)}/discord-channels",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ListDiscordChannelsSocialAccountsResponse,
+                    parse_obj_as(
+                        type_=ListDiscordChannelsSocialAccountsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def list_slack_channels(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[ListSlackChannelsSocialAccountsResponse]:
+        """
+        List the channels in a connected Slack workspace that the Schedulin bot can post into (public channels, plus private channels it was invited to). Use an item id as `platformConfiguration.channel` when creating a Slack post.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ListSlackChannelsSocialAccountsResponse]
+            OK
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/social-accounts/{encode_path_param(id)}/slack-channels",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ListSlackChannelsSocialAccountsResponse,
+                    parse_obj_as(
+                        type_=ListSlackChannelsSocialAccountsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -817,6 +947,134 @@ class AsyncRawSocialAccountsClient:
                     ListWhopForumsSocialAccountsResponse,
                     parse_obj_as(
                         type_=ListWhopForumsSocialAccountsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def list_discord_channels(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[ListDiscordChannelsSocialAccountsResponse]:
+        """
+        List the text and announcement channels the Schedulin bot can post into for a connected Discord server. Use an item id as `platformConfiguration.channel` when creating a Discord post.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ListDiscordChannelsSocialAccountsResponse]
+            OK
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/social-accounts/{encode_path_param(id)}/discord-channels",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ListDiscordChannelsSocialAccountsResponse,
+                    parse_obj_as(
+                        type_=ListDiscordChannelsSocialAccountsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def list_slack_channels(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[ListSlackChannelsSocialAccountsResponse]:
+        """
+        List the channels in a connected Slack workspace that the Schedulin bot can post into (public channels, plus private channels it was invited to). Use an item id as `platformConfiguration.channel` when creating a Slack post.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ListSlackChannelsSocialAccountsResponse]
+            OK
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/social-accounts/{encode_path_param(id)}/slack-channels",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ListSlackChannelsSocialAccountsResponse,
+                    parse_obj_as(
+                        type_=ListSlackChannelsSocialAccountsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
