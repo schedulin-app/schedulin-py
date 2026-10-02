@@ -12,7 +12,7 @@ from .media_search_type import MediaSearchType
 
 class MediaSearch(UniversalBaseModel):
     page: typing.Optional[int] = None
-    limit: typing.Optional[float] = None
+    limit: typing.Optional[int] = None
     q: typing.Optional[str] = None
     type: typing.Optional[MediaSearchType] = None
     tag_ids: typing_extensions.Annotated[

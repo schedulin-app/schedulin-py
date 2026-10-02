@@ -10,9 +10,12 @@ from ..types.presigned_post import PresignedPost
 from .raw_client import AsyncRawMediaClient, RawMediaClient
 from .types.count_by_tag_media_response import CountByTagMediaResponse
 from .types.create_presigned_post_intent import CreatePresignedPostIntent
+from .types.create_upload_link_media_response import CreateUploadLinkMediaResponse
+from .types.delete_media_response import DeleteMediaResponse
 from .types.list_media_request_tag_mode import ListMediaRequestTagMode
 from .types.list_media_request_type import ListMediaRequestType
 from .types.list_media_response import ListMediaResponse
+from .types.set_tags_media_response import SetTagsMediaResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -41,7 +44,7 @@ class MediaClient:
         alt: typing.Optional[str] = OMIT,
         content_type: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> Media:
         """
         Downloads a publicly reachable image or video into the media library and returns the media record. Use the returned `url` in `media[].url` when creating a post. Prefer this over the presign flow whenever your client cannot issue a raw HTTP PUT (e.g. an AI agent). The source URL must be public (no auth), http(s), and at most the post upload limit (250 MB); SVG and other active content is rejected.
 
@@ -60,7 +63,7 @@ class MediaClient:
 
         Returns
         -------
-        typing.Any
+        Media
             OK
 
         Examples
@@ -81,7 +84,7 @@ class MediaClient:
 
     def create_upload_link(
         self, *, expires_in_hours: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Any:
+    ) -> CreateUploadLinkMediaResponse:
         """
         Returns a short-lived URL to a page where the user uploads files from their device (or a pasted attachment) straight into the media library. Hand the URL to the user; once they've uploaded, call GET /v0/media (list media, newest first) and reference the returned `url` when creating a post. Use this whenever the file isn't already at a public URL.
 
@@ -94,7 +97,7 @@ class MediaClient:
 
         Returns
         -------
-        typing.Any
+        CreateUploadLinkMediaResponse
             OK
 
         Examples
@@ -119,7 +122,7 @@ class MediaClient:
         alt: typing.Optional[str] = OMIT,
         content_type: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> Media:
         """
         Upload raw image, video, or audio bytes directly as multipart/form-data. The file is stored in your media library and the record is returned; use its `url` in `media[].url` when creating a post. When the file part's type is missing or generic (`application/octet-stream`, `text/plain`), the type is detected from the file's bytes, then its filename extension. Max 250 MB; SVG and other active content is rejected. For a file already hosted at a public URL, prefer POST /v0/media/from-url.
 
@@ -139,7 +142,7 @@ class MediaClient:
 
         Returns
         -------
-        typing.Any
+        Media
             OK
 
         Examples
@@ -156,7 +159,7 @@ class MediaClient:
         )
         return _response.data
 
-    def retrieve(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Optional[Media]:
+    def retrieve(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Media:
         """
         Retrieve media information by its ID
 
@@ -169,7 +172,7 @@ class MediaClient:
 
         Returns
         -------
-        typing.Optional[Media]
+        Media
             OK
 
         Examples
@@ -190,7 +193,7 @@ class MediaClient:
         self,
         id: str,
         *,
-        url: str,
+        url: typing.Optional[str] = OMIT,
         mime_type: typing.Optional[str] = OMIT,
         width: typing.Optional[int] = OMIT,
         height: typing.Optional[int] = OMIT,
@@ -205,7 +208,7 @@ class MediaClient:
         ----------
         id : str
 
-        url : str
+        url : typing.Optional[str]
 
         mime_type : typing.Optional[str]
 
@@ -234,7 +237,6 @@ class MediaClient:
         )
         client.media.update(
             id="id",
-            url="url",
         )
         """
         _response = self._raw_client.update(
@@ -249,7 +251,7 @@ class MediaClient:
         )
         return _response.data
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteMediaResponse:
         """
         Delete a media object and remove its files from storage. Fails with a conflict when the media is attached to any post — remove it from those posts (or delete them) first.
 
@@ -262,7 +264,7 @@ class MediaClient:
 
         Returns
         -------
-        typing.Any
+        DeleteMediaResponse
             OK
 
         Examples
@@ -283,7 +285,7 @@ class MediaClient:
         self,
         *,
         page: typing.Optional[int] = None,
-        limit: typing.Optional[float] = None,
+        limit: typing.Optional[int] = None,
         q: typing.Optional[str] = None,
         type: typing.Optional[ListMediaRequestType] = None,
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -297,7 +299,7 @@ class MediaClient:
         ----------
         page : typing.Optional[int]
 
-        limit : typing.Optional[float]
+        limit : typing.Optional[int]
 
         q : typing.Optional[str]
 
@@ -331,7 +333,7 @@ class MediaClient:
 
     def set_tags(
         self, media_id: str, *, tag_ids: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Any:
+    ) -> SetTagsMediaResponse:
         """
         Replace the set of tags attached to a media item with the provided tag IDs
 
@@ -346,7 +348,7 @@ class MediaClient:
 
         Returns
         -------
-        typing.Any
+        SetTagsMediaResponse
             OK
 
         Examples
@@ -461,7 +463,7 @@ class AsyncMediaClient:
         alt: typing.Optional[str] = OMIT,
         content_type: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> Media:
         """
         Downloads a publicly reachable image or video into the media library and returns the media record. Use the returned `url` in `media[].url` when creating a post. Prefer this over the presign flow whenever your client cannot issue a raw HTTP PUT (e.g. an AI agent). The source URL must be public (no auth), http(s), and at most the post upload limit (250 MB); SVG and other active content is rejected.
 
@@ -480,7 +482,7 @@ class AsyncMediaClient:
 
         Returns
         -------
-        typing.Any
+        Media
             OK
 
         Examples
@@ -509,7 +511,7 @@ class AsyncMediaClient:
 
     async def create_upload_link(
         self, *, expires_in_hours: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Any:
+    ) -> CreateUploadLinkMediaResponse:
         """
         Returns a short-lived URL to a page where the user uploads files from their device (or a pasted attachment) straight into the media library. Hand the URL to the user; once they've uploaded, call GET /v0/media (list media, newest first) and reference the returned `url` when creating a post. Use this whenever the file isn't already at a public URL.
 
@@ -522,7 +524,7 @@ class AsyncMediaClient:
 
         Returns
         -------
-        typing.Any
+        CreateUploadLinkMediaResponse
             OK
 
         Examples
@@ -555,7 +557,7 @@ class AsyncMediaClient:
         alt: typing.Optional[str] = OMIT,
         content_type: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> Media:
         """
         Upload raw image, video, or audio bytes directly as multipart/form-data. The file is stored in your media library and the record is returned; use its `url` in `media[].url` when creating a post. When the file part's type is missing or generic (`application/octet-stream`, `text/plain`), the type is detected from the file's bytes, then its filename extension. Max 250 MB; SVG and other active content is rejected. For a file already hosted at a public URL, prefer POST /v0/media/from-url.
 
@@ -575,7 +577,7 @@ class AsyncMediaClient:
 
         Returns
         -------
-        typing.Any
+        Media
             OK
 
         Examples
@@ -600,9 +602,7 @@ class AsyncMediaClient:
         )
         return _response.data
 
-    async def retrieve(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Optional[Media]:
+    async def retrieve(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Media:
         """
         Retrieve media information by its ID
 
@@ -615,7 +615,7 @@ class AsyncMediaClient:
 
         Returns
         -------
-        typing.Optional[Media]
+        Media
             OK
 
         Examples
@@ -644,7 +644,7 @@ class AsyncMediaClient:
         self,
         id: str,
         *,
-        url: str,
+        url: typing.Optional[str] = OMIT,
         mime_type: typing.Optional[str] = OMIT,
         width: typing.Optional[int] = OMIT,
         height: typing.Optional[int] = OMIT,
@@ -659,7 +659,7 @@ class AsyncMediaClient:
         ----------
         id : str
 
-        url : str
+        url : typing.Optional[str]
 
         mime_type : typing.Optional[str]
 
@@ -693,7 +693,6 @@ class AsyncMediaClient:
         async def main() -> None:
             await client.media.update(
                 id="id",
-                url="url",
             )
 
 
@@ -711,7 +710,7 @@ class AsyncMediaClient:
         )
         return _response.data
 
-    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteMediaResponse:
         """
         Delete a media object and remove its files from storage. Fails with a conflict when the media is attached to any post — remove it from those posts (or delete them) first.
 
@@ -724,7 +723,7 @@ class AsyncMediaClient:
 
         Returns
         -------
-        typing.Any
+        DeleteMediaResponse
             OK
 
         Examples
@@ -753,7 +752,7 @@ class AsyncMediaClient:
         self,
         *,
         page: typing.Optional[int] = None,
-        limit: typing.Optional[float] = None,
+        limit: typing.Optional[int] = None,
         q: typing.Optional[str] = None,
         type: typing.Optional[ListMediaRequestType] = None,
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -767,7 +766,7 @@ class AsyncMediaClient:
         ----------
         page : typing.Optional[int]
 
-        limit : typing.Optional[float]
+        limit : typing.Optional[int]
 
         q : typing.Optional[str]
 
@@ -809,7 +808,7 @@ class AsyncMediaClient:
 
     async def set_tags(
         self, media_id: str, *, tag_ids: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Any:
+    ) -> SetTagsMediaResponse:
         """
         Replace the set of tags attached to a media item with the provided tag IDs
 
@@ -824,7 +823,7 @@ class AsyncMediaClient:
 
         Returns
         -------
-        typing.Any
+        SetTagsMediaResponse
             OK
 
         Examples

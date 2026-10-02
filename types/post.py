@@ -50,6 +50,13 @@ class Post(UniversalBaseModel):
         str, FieldMetadata(alias="socialAccountId"), pydantic.Field(alias="socialAccountId")
     ]
     url: typing.Optional[str] = None
+    title: typing.Optional[str] = None
+    posted_at: typing_extensions.Annotated[
+        typing.Optional[dt.datetime], FieldMetadata(alias="postedAt"), pydantic.Field(alias="postedAt")
+    ] = None
+    error_message: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="errorMessage"), pydantic.Field(alias="errorMessage")
+    ] = None
     created_at: typing_extensions.Annotated[
         dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
     ]

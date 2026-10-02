@@ -4,11 +4,12 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .error_response_data import ErrorResponseData
 
 
 class ErrorResponse(UniversalBaseModel):
     """
-    Error envelope. The machine-readable `code` and HTTP `status` are always present; the human-readable reason is in `data.message` (or `data.fieldErrors` for 422 validation errors).
+    Error envelope. The machine-readable `code` and HTTP `status` are always present; the human-readable reason is in `message` / `data.message`.
     """
 
     code: str = pydantic.Field()
@@ -18,7 +19,8 @@ class ErrorResponse(UniversalBaseModel):
 
     status: int
     message: typing.Optional[str] = None
-    data: typing.Optional[typing.Dict[str, typing.Any]] = None
+    defined: typing.Optional[bool] = None
+    data: typing.Optional[ErrorResponseData] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

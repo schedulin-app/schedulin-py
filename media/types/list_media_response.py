@@ -11,11 +11,9 @@ from ...types.media import Media
 
 class ListMediaResponse(UniversalBaseModel):
     items: typing.List[Media]
-    page: float
-    total: float
-    total_pages: typing_extensions.Annotated[
-        float, FieldMetadata(alias="totalPages"), pydantic.Field(alias="totalPages")
-    ]
+    page: int
+    total: int
+    total_pages: typing_extensions.Annotated[int, FieldMetadata(alias="totalPages"), pydantic.Field(alias="totalPages")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

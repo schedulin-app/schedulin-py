@@ -10,17 +10,23 @@ if typing.TYPE_CHECKING:
         CountByTagMediaResponse,
         CountByTagMediaResponseDataItem,
         CreatePresignedPostIntent,
+        CreateUploadLinkMediaResponse,
+        DeleteMediaResponse,
         ListMediaRequestTagMode,
         ListMediaRequestType,
         ListMediaResponse,
+        SetTagsMediaResponse,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "CountByTagMediaResponse": ".types",
     "CountByTagMediaResponseDataItem": ".types",
     "CreatePresignedPostIntent": ".types",
+    "CreateUploadLinkMediaResponse": ".types",
+    "DeleteMediaResponse": ".types",
     "ListMediaRequestTagMode": ".types",
     "ListMediaRequestType": ".types",
     "ListMediaResponse": ".types",
+    "SetTagsMediaResponse": ".types",
 }
 
 
@@ -49,7 +55,10 @@ __all__ = [
     "CountByTagMediaResponse",
     "CountByTagMediaResponseDataItem",
     "CreatePresignedPostIntent",
+    "CreateUploadLinkMediaResponse",
+    "DeleteMediaResponse",
     "ListMediaRequestTagMode",
     "ListMediaRequestType",
     "ListMediaResponse",
+    "SetTagsMediaResponse",
 ]

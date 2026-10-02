@@ -15,8 +15,8 @@ from .list_platforms_response_data_item_media_rules_allowed_types_item import (
 
 
 class ListPlatformsResponseDataItemMediaRules(UniversalBaseModel):
-    min: typing.Optional[float] = None
-    max: float
+    min: typing.Optional[int] = None
+    max: int
     allowed_types: typing_extensions.Annotated[
         typing.Optional[typing.List[ListPlatformsResponseDataItemMediaRulesAllowedTypesItem]],
         FieldMetadata(alias="allowedTypes"),

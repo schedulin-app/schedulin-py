@@ -7,9 +7,17 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .create_webhooks_request_events_item import CreateWebhooksRequestEventsItem
+    from .delete_webhooks_response import DeleteWebhooksResponse
+    from .list_deliveries_webhooks_response import ListDeliveriesWebhooksResponse
+    from .list_webhooks_response import ListWebhooksResponse
+    from .test_webhooks_response import TestWebhooksResponse
     from .update_webhooks_request_events_item import UpdateWebhooksRequestEventsItem
 _dynamic_imports: typing.Dict[str, str] = {
     "CreateWebhooksRequestEventsItem": ".create_webhooks_request_events_item",
+    "DeleteWebhooksResponse": ".delete_webhooks_response",
+    "ListDeliveriesWebhooksResponse": ".list_deliveries_webhooks_response",
+    "ListWebhooksResponse": ".list_webhooks_response",
+    "TestWebhooksResponse": ".test_webhooks_response",
     "UpdateWebhooksRequestEventsItem": ".update_webhooks_request_events_item",
 }
 
@@ -35,4 +43,11 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["CreateWebhooksRequestEventsItem", "UpdateWebhooksRequestEventsItem"]
+__all__ = [
+    "CreateWebhooksRequestEventsItem",
+    "DeleteWebhooksResponse",
+    "ListDeliveriesWebhooksResponse",
+    "ListWebhooksResponse",
+    "TestWebhooksResponse",
+    "UpdateWebhooksRequestEventsItem",
+]

@@ -11,11 +11,9 @@ from ...types.post_with_relations import PostWithRelations
 
 class ListPostsResponse(UniversalBaseModel):
     posts: typing.List[PostWithRelations]
-    page: float
-    total_pages: typing_extensions.Annotated[
-        float, FieldMetadata(alias="totalPages"), pydantic.Field(alias="totalPages")
-    ]
-    total: float
+    page: int
+    total_pages: typing_extensions.Annotated[int, FieldMetadata(alias="totalPages"), pydantic.Field(alias="totalPages")]
+    total: int
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

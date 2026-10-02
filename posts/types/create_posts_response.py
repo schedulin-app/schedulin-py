@@ -28,6 +28,9 @@ class CreatePostsResponse(UniversalBaseModel):
         pydantic.Field(alias="platformConfiguration"),
     ] = None
     media: typing.List[CreatePostsResponseMediaItem]
+    social_account_id: typing_extensions.Annotated[
+        str, FieldMetadata(alias="socialAccountId"), pydantic.Field(alias="socialAccountId")
+    ]
     social_accounts: typing_extensions.Annotated[
         typing.List[SocialAccountPublic], FieldMetadata(alias="socialAccounts"), pydantic.Field(alias="socialAccounts")
     ]

@@ -31,7 +31,7 @@ class TagsClient:
         self,
         *,
         q: typing.Optional[str] = None,
-        limit: typing.Optional[float] = None,
+        limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListTagsResponse:
         """
@@ -41,7 +41,7 @@ class TagsClient:
         ----------
         q : typing.Optional[str]
 
-        limit : typing.Optional[float]
+        limit : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -187,7 +187,7 @@ class AsyncTagsClient:
         self,
         *,
         q: typing.Optional[str] = None,
-        limit: typing.Optional[float] = None,
+        limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListTagsResponse:
         """
@@ -197,7 +197,7 @@ class AsyncTagsClient:
         ----------
         q : typing.Optional[str]
 
-        limit : typing.Optional[float]
+        limit : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

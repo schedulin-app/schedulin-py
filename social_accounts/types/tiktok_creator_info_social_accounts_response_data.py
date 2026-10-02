@@ -14,7 +14,7 @@ class TiktokCreatorInfoSocialAccountsResponseData(UniversalBaseModel):
     comment_disabled: bool
     duet_disabled: bool
     stitch_disabled: bool
-    max_video_post_duration_sec: float
+    max_video_post_duration_sec: int
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

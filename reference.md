@@ -115,7 +115,7 @@ client.posts.list()
 <dl>
 <dd>
 
-**limit:** `typing.Optional[float]` 
+**limit:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -281,7 +281,7 @@ client.posts.create(
 </dl>
 </details>
 
-<details><summary><code>client.posts.<a href="src/schedulin/posts/client.py">count_by_tab</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.posts.<a href="src/schedulin/posts/client.py">count_by_tab</a>(...) -> CountByTabPostsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1834,7 +1834,7 @@ client.tags.list()
 <dl>
 <dd>
 
-**limit:** `typing.Optional[float]` 
+**limit:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -2099,7 +2099,7 @@ client.tags.delete(
 </details>
 
 ## Media
-<details><summary><code>client.media.<a href="src/schedulin/media/client.py">create_from_url</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.media.<a href="src/schedulin/media/client.py">create_from_url</a>(...) -> Media</code></summary>
 <dl>
 <dd>
 
@@ -2196,7 +2196,7 @@ client.media.create_from_url(
 </dl>
 </details>
 
-<details><summary><code>client.media.<a href="src/schedulin/media/client.py">create_upload_link</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.media.<a href="src/schedulin/media/client.py">create_upload_link</a>(...) -> CreateUploadLinkMediaResponse</code></summary>
 <dl>
 <dd>
 
@@ -2267,7 +2267,7 @@ client.media.create_upload_link()
 </dl>
 </details>
 
-<details><summary><code>client.media.<a href="src/schedulin/media/client.py">upload</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.media.<a href="src/schedulin/media/client.py">upload</a>(...) -> Media</code></summary>
 <dl>
 <dd>
 
@@ -2364,7 +2364,7 @@ client.media.upload(
 </dl>
 </details>
 
-<details><summary><code>client.media.<a href="src/schedulin/media/client.py">retrieve</a>(...) -> typing.Optional[Media]</code></summary>
+<details><summary><code>client.media.<a href="src/schedulin/media/client.py">retrieve</a>(...) -> Media</code></summary>
 <dl>
 <dd>
 
@@ -2474,7 +2474,6 @@ client = Schedulin(
 
 client.media.update(
     id="id",
-    url="url",
 )
 
 ```
@@ -2499,7 +2498,7 @@ client.media.update(
 <dl>
 <dd>
 
-**url:** `str` 
+**url:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -2559,7 +2558,7 @@ client.media.update(
 </dl>
 </details>
 
-<details><summary><code>client.media.<a href="src/schedulin/media/client.py">delete</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.media.<a href="src/schedulin/media/client.py">delete</a>(...) -> DeleteMediaResponse</code></summary>
 <dl>
 <dd>
 
@@ -2691,7 +2690,7 @@ client.media.list()
 <dl>
 <dd>
 
-**limit:** `typing.Optional[float]` 
+**limit:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -2743,7 +2742,7 @@ client.media.list()
 </dl>
 </details>
 
-<details><summary><code>client.media.<a href="src/schedulin/media/client.py">set_tags</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.media.<a href="src/schedulin/media/client.py">set_tags</a>(...) -> SetTagsMediaResponse</code></summary>
 <dl>
 <dd>
 
@@ -3053,7 +3052,7 @@ client.platforms.list()
 </details>
 
 ## Ai
-<details><summary><code>client.ai.<a href="src/schedulin/ai/client.py">generate_image</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.ai.<a href="src/schedulin/ai/client.py">generate_image</a>(...) -> GenerateImageAiResponse</code></summary>
 <dl>
 <dd>
 
@@ -3150,7 +3149,7 @@ client.ai.generate_image(
 </dl>
 </details>
 
-<details><summary><code>client.ai.<a href="src/schedulin/ai/client.py">get_generation</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.ai.<a href="src/schedulin/ai/client.py">get_generation</a>(...) -> AiGeneration</code></summary>
 <dl>
 <dd>
 
@@ -3224,7 +3223,7 @@ client.ai.get_generation(
 </details>
 
 ## Webhooks
-<details><summary><code>client.webhooks.<a href="src/schedulin/webhooks/client.py">list</a>() -> typing.Any</code></summary>
+<details><summary><code>client.webhooks.<a href="src/schedulin/webhooks/client.py">list</a>() -> ListWebhooksResponse</code></summary>
 <dl>
 <dd>
 
@@ -3287,7 +3286,7 @@ client.webhooks.list()
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/schedulin/webhooks/client.py">create</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.webhooks.<a href="src/schedulin/webhooks/client.py">create</a>(...) -> WebhookEndpoint</code></summary>
 <dl>
 <dd>
 
@@ -3379,7 +3378,7 @@ client.webhooks.create(
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/schedulin/webhooks/client.py">retrieve</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.webhooks.<a href="src/schedulin/webhooks/client.py">retrieve</a>(...) -> WebhookEndpoint</code></summary>
 <dl>
 <dd>
 
@@ -3452,7 +3451,7 @@ client.webhooks.retrieve(
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/schedulin/webhooks/client.py">delete</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.webhooks.<a href="src/schedulin/webhooks/client.py">delete</a>(...) -> DeleteWebhooksResponse</code></summary>
 <dl>
 <dd>
 
@@ -3525,7 +3524,7 @@ client.webhooks.delete(
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/schedulin/webhooks/client.py">update</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.webhooks.<a href="src/schedulin/webhooks/client.py">update</a>(...) -> WebhookEndpoint</code></summary>
 <dl>
 <dd>
 
@@ -3630,7 +3629,7 @@ client.webhooks.update(
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/schedulin/webhooks/client.py">rotate_secret</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.webhooks.<a href="src/schedulin/webhooks/client.py">rotate_secret</a>(...) -> WebhookEndpoint</code></summary>
 <dl>
 <dd>
 
@@ -3703,7 +3702,7 @@ client.webhooks.rotate_secret(
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/schedulin/webhooks/client.py">test</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.webhooks.<a href="src/schedulin/webhooks/client.py">test</a>(...) -> TestWebhooksResponse</code></summary>
 <dl>
 <dd>
 
@@ -3776,7 +3775,7 @@ client.webhooks.test(
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/schedulin/webhooks/client.py">list_deliveries</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.webhooks.<a href="src/schedulin/webhooks/client.py">list_deliveries</a>(...) -> ListDeliveriesWebhooksResponse</code></summary>
 <dl>
 <dd>
 

@@ -6,8 +6,11 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .ai_generation import AiGeneration
+    from .ai_generation_status import AiGenerationStatus
     from .analytics_status import AnalyticsStatus
     from .error_response import ErrorResponse
+    from .error_response_data import ErrorResponseData
     from .image_processing_status import ImageProcessingStatus
     from .list_posts_request_scheduled_at import ListPostsRequestScheduledAt
     from .media import Media
@@ -19,6 +22,7 @@ if typing.TYPE_CHECKING:
     from .oauth_scope import OauthScope
     from .post import Post
     from .post_approval_status import PostApprovalStatus
+    from .post_media import PostMedia
     from .post_publish_draft import PostPublishDraft
     from .post_search import PostSearch
     from .post_search_approval_status import PostSearchApprovalStatus
@@ -28,12 +32,10 @@ if typing.TYPE_CHECKING:
     from .post_search_tag_mode import PostSearchTagMode
     from .post_status import PostStatus
     from .post_with_relations import PostWithRelations
-    from .post_with_relations_media_item import PostWithRelationsMediaItem
-    from .post_with_relations_media_item_tags_item import PostWithRelationsMediaItemTagsItem
-    from .post_with_relations_media_item_tags_item_platform import PostWithRelationsMediaItemTagsItemPlatform
-    from .post_with_relations_media_item_tags_item_type import PostWithRelationsMediaItemTagsItemType
     from .presigned_post import PresignedPost
     from .presigned_post_method import PresignedPostMethod
+    from .rate_limit_error_response import RateLimitErrorResponse
+    from .rate_limit_error_response_error import RateLimitErrorResponseError
     from .social_account import SocialAccount
     from .social_account_disconnected_reason import SocialAccountDisconnectedReason
     from .social_account_public import SocialAccountPublic
@@ -45,9 +47,18 @@ if typing.TYPE_CHECKING:
     from .tag import Tag
     from .tag_search import TagSearch
     from .tag_upsert import TagUpsert
+    from .validation_error_response import ValidationErrorResponse
+    from .validation_error_response_data import ValidationErrorResponseData
+    from .webhook_delivery import WebhookDelivery
+    from .webhook_delivery_status import WebhookDeliveryStatus
+    from .webhook_endpoint import WebhookEndpoint
+    from .webhook_endpoint_events_item import WebhookEndpointEventsItem
 _dynamic_imports: typing.Dict[str, str] = {
+    "AiGeneration": ".ai_generation",
+    "AiGenerationStatus": ".ai_generation_status",
     "AnalyticsStatus": ".analytics_status",
     "ErrorResponse": ".error_response",
+    "ErrorResponseData": ".error_response_data",
     "ImageProcessingStatus": ".image_processing_status",
     "ListPostsRequestScheduledAt": ".list_posts_request_scheduled_at",
     "Media": ".media",
@@ -59,6 +70,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OauthScope": ".oauth_scope",
     "Post": ".post",
     "PostApprovalStatus": ".post_approval_status",
+    "PostMedia": ".post_media",
     "PostPublishDraft": ".post_publish_draft",
     "PostSearch": ".post_search",
     "PostSearchApprovalStatus": ".post_search_approval_status",
@@ -68,12 +80,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PostSearchTagMode": ".post_search_tag_mode",
     "PostStatus": ".post_status",
     "PostWithRelations": ".post_with_relations",
-    "PostWithRelationsMediaItem": ".post_with_relations_media_item",
-    "PostWithRelationsMediaItemTagsItem": ".post_with_relations_media_item_tags_item",
-    "PostWithRelationsMediaItemTagsItemPlatform": ".post_with_relations_media_item_tags_item_platform",
-    "PostWithRelationsMediaItemTagsItemType": ".post_with_relations_media_item_tags_item_type",
     "PresignedPost": ".presigned_post",
     "PresignedPostMethod": ".presigned_post_method",
+    "RateLimitErrorResponse": ".rate_limit_error_response",
+    "RateLimitErrorResponseError": ".rate_limit_error_response_error",
     "SocialAccount": ".social_account",
     "SocialAccountDisconnectedReason": ".social_account_disconnected_reason",
     "SocialAccountPublic": ".social_account_public",
@@ -85,6 +95,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Tag": ".tag",
     "TagSearch": ".tag_search",
     "TagUpsert": ".tag_upsert",
+    "ValidationErrorResponse": ".validation_error_response",
+    "ValidationErrorResponseData": ".validation_error_response_data",
+    "WebhookDelivery": ".webhook_delivery",
+    "WebhookDeliveryStatus": ".webhook_delivery_status",
+    "WebhookEndpoint": ".webhook_endpoint",
+    "WebhookEndpointEventsItem": ".webhook_endpoint_events_item",
 }
 
 
@@ -110,8 +126,11 @@ def __dir__():
 
 
 __all__ = [
+    "AiGeneration",
+    "AiGenerationStatus",
     "AnalyticsStatus",
     "ErrorResponse",
+    "ErrorResponseData",
     "ImageProcessingStatus",
     "ListPostsRequestScheduledAt",
     "Media",
@@ -123,6 +142,7 @@ __all__ = [
     "OauthScope",
     "Post",
     "PostApprovalStatus",
+    "PostMedia",
     "PostPublishDraft",
     "PostSearch",
     "PostSearchApprovalStatus",
@@ -132,12 +152,10 @@ __all__ = [
     "PostSearchTagMode",
     "PostStatus",
     "PostWithRelations",
-    "PostWithRelationsMediaItem",
-    "PostWithRelationsMediaItemTagsItem",
-    "PostWithRelationsMediaItemTagsItemPlatform",
-    "PostWithRelationsMediaItemTagsItemType",
     "PresignedPost",
     "PresignedPostMethod",
+    "RateLimitErrorResponse",
+    "RateLimitErrorResponseError",
     "SocialAccount",
     "SocialAccountDisconnectedReason",
     "SocialAccountPublic",
@@ -149,4 +167,10 @@ __all__ = [
     "Tag",
     "TagSearch",
     "TagUpsert",
+    "ValidationErrorResponse",
+    "ValidationErrorResponseData",
+    "WebhookDelivery",
+    "WebhookDeliveryStatus",
+    "WebhookEndpoint",
+    "WebhookEndpointEventsItem",
 ]

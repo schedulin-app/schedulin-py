@@ -10,7 +10,7 @@ from ..core.serialization import FieldMetadata
 
 class MediaUpdate(UniversalBaseModel):
     id: str
-    url: str
+    url: typing.Optional[str] = None
     mime_type: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="mimeType"), pydantic.Field(alias="mimeType")
     ] = None

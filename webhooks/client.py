@@ -4,8 +4,13 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.webhook_endpoint import WebhookEndpoint
 from .raw_client import AsyncRawWebhooksClient, RawWebhooksClient
 from .types.create_webhooks_request_events_item import CreateWebhooksRequestEventsItem
+from .types.delete_webhooks_response import DeleteWebhooksResponse
+from .types.list_deliveries_webhooks_response import ListDeliveriesWebhooksResponse
+from .types.list_webhooks_response import ListWebhooksResponse
+from .types.test_webhooks_response import TestWebhooksResponse
 from .types.update_webhooks_request_events_item import UpdateWebhooksRequestEventsItem
 
 # this is used as the default value for optional parameters
@@ -27,7 +32,7 @@ class WebhooksClient:
         """
         return self._raw_client
 
-    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> ListWebhooksResponse:
         """
         List the organization's webhook endpoints. Signing secrets are masked.
 
@@ -38,7 +43,7 @@ class WebhooksClient:
 
         Returns
         -------
-        typing.Any
+        ListWebhooksResponse
             OK
 
         Examples
@@ -60,7 +65,7 @@ class WebhooksClient:
         events: typing.Sequence[CreateWebhooksRequestEventsItem],
         description: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> WebhookEndpoint:
         """
         Register an HTTPS endpoint for event deliveries. The response includes the signing secret ONCE — store it; later reads return a masked value.
 
@@ -77,7 +82,7 @@ class WebhooksClient:
 
         Returns
         -------
-        typing.Any
+        WebhookEndpoint
             OK
 
         Examples
@@ -97,7 +102,7 @@ class WebhooksClient:
         )
         return _response.data
 
-    def retrieve(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    def retrieve(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> WebhookEndpoint:
         """
         Retrieve one webhook endpoint, including failure counters. The signing secret is masked.
 
@@ -110,7 +115,7 @@ class WebhooksClient:
 
         Returns
         -------
-        typing.Any
+        WebhookEndpoint
             OK
 
         Examples
@@ -127,7 +132,7 @@ class WebhooksClient:
         _response = self._raw_client.retrieve(id, request_options=request_options)
         return _response.data
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteWebhooksResponse:
         """
         Delete a webhook endpoint and its delivery history. Deliveries already in flight are dropped.
 
@@ -140,7 +145,7 @@ class WebhooksClient:
 
         Returns
         -------
-        typing.Any
+        DeleteWebhooksResponse
             OK
 
         Examples
@@ -166,7 +171,7 @@ class WebhooksClient:
         description: typing.Optional[str] = OMIT,
         enabled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> WebhookEndpoint:
         """
         Update URL, subscribed events, description, or enabled state. Re-enabling resets the failure streak.
 
@@ -187,7 +192,7 @@ class WebhooksClient:
 
         Returns
         -------
-        typing.Any
+        WebhookEndpoint
             OK
 
         Examples
@@ -206,7 +211,7 @@ class WebhooksClient:
         )
         return _response.data
 
-    def rotate_secret(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    def rotate_secret(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> WebhookEndpoint:
         """
         Generate a new signing secret for the endpoint and return it ONCE. The old secret stops signing immediately.
 
@@ -219,7 +224,7 @@ class WebhooksClient:
 
         Returns
         -------
-        typing.Any
+        WebhookEndpoint
             OK
 
         Examples
@@ -236,7 +241,7 @@ class WebhooksClient:
         _response = self._raw_client.rotate_secret(id, request_options=request_options)
         return _response.data
 
-    def test(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    def test(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> TestWebhooksResponse:
         """
         Send a signed `ping` event to the endpoint URL and record it in the delivery history.
 
@@ -249,7 +254,7 @@ class WebhooksClient:
 
         Returns
         -------
-        typing.Any
+        TestWebhooksResponse
             OK
 
         Examples
@@ -273,7 +278,7 @@ class WebhooksClient:
         limit: typing.Optional[int] = None,
         page: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> ListDeliveriesWebhooksResponse:
         """
         Delivery history for a webhook endpoint: event, status, attempts, last response code, and payload.
 
@@ -290,7 +295,7 @@ class WebhooksClient:
 
         Returns
         -------
-        typing.Any
+        ListDeliveriesWebhooksResponse
             OK
 
         Examples
@@ -323,7 +328,7 @@ class AsyncWebhooksClient:
         """
         return self._raw_client
 
-    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> ListWebhooksResponse:
         """
         List the organization's webhook endpoints. Signing secrets are masked.
 
@@ -334,7 +339,7 @@ class AsyncWebhooksClient:
 
         Returns
         -------
-        typing.Any
+        ListWebhooksResponse
             OK
 
         Examples
@@ -364,7 +369,7 @@ class AsyncWebhooksClient:
         events: typing.Sequence[CreateWebhooksRequestEventsItem],
         description: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> WebhookEndpoint:
         """
         Register an HTTPS endpoint for event deliveries. The response includes the signing secret ONCE — store it; later reads return a masked value.
 
@@ -381,7 +386,7 @@ class AsyncWebhooksClient:
 
         Returns
         -------
-        typing.Any
+        WebhookEndpoint
             OK
 
         Examples
@@ -409,7 +414,7 @@ class AsyncWebhooksClient:
         )
         return _response.data
 
-    async def retrieve(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    async def retrieve(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> WebhookEndpoint:
         """
         Retrieve one webhook endpoint, including failure counters. The signing secret is masked.
 
@@ -422,7 +427,7 @@ class AsyncWebhooksClient:
 
         Returns
         -------
-        typing.Any
+        WebhookEndpoint
             OK
 
         Examples
@@ -447,7 +452,9 @@ class AsyncWebhooksClient:
         _response = await self._raw_client.retrieve(id, request_options=request_options)
         return _response.data
 
-    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    async def delete(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DeleteWebhooksResponse:
         """
         Delete a webhook endpoint and its delivery history. Deliveries already in flight are dropped.
 
@@ -460,7 +467,7 @@ class AsyncWebhooksClient:
 
         Returns
         -------
-        typing.Any
+        DeleteWebhooksResponse
             OK
 
         Examples
@@ -494,7 +501,7 @@ class AsyncWebhooksClient:
         description: typing.Optional[str] = OMIT,
         enabled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> WebhookEndpoint:
         """
         Update URL, subscribed events, description, or enabled state. Re-enabling resets the failure streak.
 
@@ -515,7 +522,7 @@ class AsyncWebhooksClient:
 
         Returns
         -------
-        typing.Any
+        WebhookEndpoint
             OK
 
         Examples
@@ -542,7 +549,9 @@ class AsyncWebhooksClient:
         )
         return _response.data
 
-    async def rotate_secret(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    async def rotate_secret(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> WebhookEndpoint:
         """
         Generate a new signing secret for the endpoint and return it ONCE. The old secret stops signing immediately.
 
@@ -555,7 +564,7 @@ class AsyncWebhooksClient:
 
         Returns
         -------
-        typing.Any
+        WebhookEndpoint
             OK
 
         Examples
@@ -580,7 +589,7 @@ class AsyncWebhooksClient:
         _response = await self._raw_client.rotate_secret(id, request_options=request_options)
         return _response.data
 
-    async def test(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    async def test(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> TestWebhooksResponse:
         """
         Send a signed `ping` event to the endpoint URL and record it in the delivery history.
 
@@ -593,7 +602,7 @@ class AsyncWebhooksClient:
 
         Returns
         -------
-        typing.Any
+        TestWebhooksResponse
             OK
 
         Examples
@@ -625,7 +634,7 @@ class AsyncWebhooksClient:
         limit: typing.Optional[int] = None,
         page: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> ListDeliveriesWebhooksResponse:
         """
         Delivery history for a webhook endpoint: event, status, attempts, last response code, and payload.
 
@@ -642,7 +651,7 @@ class AsyncWebhooksClient:
 
         Returns
         -------
-        typing.Any
+        ListDeliveriesWebhooksResponse
             OK
 
         Examples

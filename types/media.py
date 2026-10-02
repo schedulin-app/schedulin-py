@@ -7,6 +7,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
+from .tag import Tag
 
 
 class Media(UniversalBaseModel):
@@ -14,9 +15,9 @@ class Media(UniversalBaseModel):
     url: str
     name: str
     mime_type: typing_extensions.Annotated[str, FieldMetadata(alias="mimeType"), pydantic.Field(alias="mimeType")]
-    width: typing.Optional[float] = None
-    height: typing.Optional[float] = None
-    duration: typing.Optional[float] = None
+    width: typing.Optional[int] = None
+    height: typing.Optional[int] = None
+    duration: typing.Optional[int] = None
     created_at: typing_extensions.Annotated[
         dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
     ]
@@ -25,7 +26,12 @@ class Media(UniversalBaseModel):
     ]
     bucket: str
     key: str
-    size: typing.Optional[float] = None
+    size: typing.Optional[int] = None
+    alt: typing.Optional[str] = None
+    thumbnail_url: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="thumbnailUrl"), pydantic.Field(alias="thumbnailUrl")
+    ] = None
+    tags: typing.Optional[typing.List[Tag]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -9,16 +9,22 @@ if typing.TYPE_CHECKING:
     from .count_by_tag_media_response import CountByTagMediaResponse
     from .count_by_tag_media_response_data_item import CountByTagMediaResponseDataItem
     from .create_presigned_post_intent import CreatePresignedPostIntent
+    from .create_upload_link_media_response import CreateUploadLinkMediaResponse
+    from .delete_media_response import DeleteMediaResponse
     from .list_media_request_tag_mode import ListMediaRequestTagMode
     from .list_media_request_type import ListMediaRequestType
     from .list_media_response import ListMediaResponse
+    from .set_tags_media_response import SetTagsMediaResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "CountByTagMediaResponse": ".count_by_tag_media_response",
     "CountByTagMediaResponseDataItem": ".count_by_tag_media_response_data_item",
     "CreatePresignedPostIntent": ".create_presigned_post_intent",
+    "CreateUploadLinkMediaResponse": ".create_upload_link_media_response",
+    "DeleteMediaResponse": ".delete_media_response",
     "ListMediaRequestTagMode": ".list_media_request_tag_mode",
     "ListMediaRequestType": ".list_media_request_type",
     "ListMediaResponse": ".list_media_response",
+    "SetTagsMediaResponse": ".set_tags_media_response",
 }
 
 
@@ -47,7 +53,10 @@ __all__ = [
     "CountByTagMediaResponse",
     "CountByTagMediaResponseDataItem",
     "CreatePresignedPostIntent",
+    "CreateUploadLinkMediaResponse",
+    "DeleteMediaResponse",
     "ListMediaRequestTagMode",
     "ListMediaRequestType",
     "ListMediaResponse",
+    "SetTagsMediaResponse",
 ]

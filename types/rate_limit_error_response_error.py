@@ -4,16 +4,11 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .post_with_relations_media_item_tags_item_platform import PostWithRelationsMediaItemTagsItemPlatform
-from .post_with_relations_media_item_tags_item_type import PostWithRelationsMediaItemTagsItemType
 
 
-class PostWithRelationsMediaItemTagsItem(UniversalBaseModel):
-    id: str
-    type: PostWithRelationsMediaItemTagsItemType
-    platform: PostWithRelationsMediaItemTagsItemPlatform
-    x: typing.Optional[float] = None
-    y: typing.Optional[float] = None
+class RateLimitErrorResponseError(UniversalBaseModel):
+    code: str
+    message: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

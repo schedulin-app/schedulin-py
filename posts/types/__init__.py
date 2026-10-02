@@ -9,6 +9,7 @@ if typing.TYPE_CHECKING:
     from .analytics_series_posts_response import AnalyticsSeriesPostsResponse
     from .analytics_series_posts_response_data_item import AnalyticsSeriesPostsResponseDataItem
     from .analytics_summary_posts_response import AnalyticsSummaryPostsResponse
+    from .count_by_tab_posts_response import CountByTabPostsResponse
     from .create_posts_response import CreatePostsResponse
     from .create_posts_response_media_item import CreatePostsResponseMediaItem
     from .create_posts_response_media_item_tags_item import CreatePostsResponseMediaItemTagsItem
@@ -39,6 +40,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AnalyticsSeriesPostsResponse": ".analytics_series_posts_response",
     "AnalyticsSeriesPostsResponseDataItem": ".analytics_series_posts_response_data_item",
     "AnalyticsSummaryPostsResponse": ".analytics_summary_posts_response",
+    "CountByTabPostsResponse": ".count_by_tab_posts_response",
     "CreatePostsResponse": ".create_posts_response",
     "CreatePostsResponseMediaItem": ".create_posts_response_media_item",
     "CreatePostsResponseMediaItemTagsItem": ".create_posts_response_media_item_tags_item",
@@ -93,6 +95,7 @@ __all__ = [
     "AnalyticsSeriesPostsResponse",
     "AnalyticsSeriesPostsResponseDataItem",
     "AnalyticsSummaryPostsResponse",
+    "CountByTabPostsResponse",
     "CreatePostsResponse",
     "CreatePostsResponseMediaItem",
     "CreatePostsResponseMediaItemTagsItem",

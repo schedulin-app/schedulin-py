@@ -10,7 +10,7 @@ from ...core.serialization import FieldMetadata
 
 class CountByTagMediaResponseDataItem(UniversalBaseModel):
     tag_id: typing_extensions.Annotated[str, FieldMetadata(alias="tagId"), pydantic.Field(alias="tagId")]
-    count: float
+    count: int
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

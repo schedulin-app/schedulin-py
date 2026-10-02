@@ -8,8 +8,8 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .post_approval_status import PostApprovalStatus
+from .post_media import PostMedia
 from .post_status import PostStatus
-from .post_with_relations_media_item import PostWithRelationsMediaItem
 from .social_account import SocialAccount
 from .tag import Tag
 
@@ -53,6 +53,13 @@ class PostWithRelations(UniversalBaseModel):
         str, FieldMetadata(alias="socialAccountId"), pydantic.Field(alias="socialAccountId")
     ]
     url: typing.Optional[str] = None
+    title: typing.Optional[str] = None
+    posted_at: typing_extensions.Annotated[
+        typing.Optional[dt.datetime], FieldMetadata(alias="postedAt"), pydantic.Field(alias="postedAt")
+    ] = None
+    error_message: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="errorMessage"), pydantic.Field(alias="errorMessage")
+    ] = None
     created_at: typing_extensions.Annotated[
         dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
     ]
@@ -62,7 +69,8 @@ class PostWithRelations(UniversalBaseModel):
     social_account: typing_extensions.Annotated[
         SocialAccount, FieldMetadata(alias="socialAccount"), pydantic.Field(alias="socialAccount")
     ]
-    media: typing.List[PostWithRelationsMediaItem]
+    media: typing.List[PostMedia]
+    thumbnail: typing.Optional[PostMedia] = None
     tags: typing.List[Tag]
 
     if IS_PYDANTIC_V2:

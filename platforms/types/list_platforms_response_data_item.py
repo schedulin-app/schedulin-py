@@ -18,7 +18,7 @@ class ListPlatformsResponseDataItem(UniversalBaseModel):
         typing.Optional[bool], FieldMetadata(alias="comingSoon"), pydantic.Field(alias="comingSoon")
     ] = None
     caption_max_length: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="captionMaxLength"), pydantic.Field(alias="captionMaxLength")
+        typing.Optional[int], FieldMetadata(alias="captionMaxLength"), pydantic.Field(alias="captionMaxLength")
     ] = None
     media_rules: typing_extensions.Annotated[
         typing.Optional[ListPlatformsResponseDataItemMediaRules],

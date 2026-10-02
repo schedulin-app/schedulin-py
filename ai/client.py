@@ -4,8 +4,10 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.ai_generation import AiGeneration
 from .raw_client import AsyncRawAiClient, RawAiClient
 from .types.generate_image_ai_request_model_key import GenerateImageAiRequestModelKey
+from .types.generate_image_ai_response import GenerateImageAiResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -34,7 +36,7 @@ class AiClient:
         width: typing.Optional[int] = OMIT,
         height: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> GenerateImageAiResponse:
         """
         Submit an AI image generation job
 
@@ -53,7 +55,7 @@ class AiClient:
 
         Returns
         -------
-        typing.Any
+        GenerateImageAiResponse
             OK
 
         Examples
@@ -72,7 +74,7 @@ class AiClient:
         )
         return _response.data
 
-    def get_generation(self, *, id: str, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    def get_generation(self, *, id: str, request_options: typing.Optional[RequestOptions] = None) -> AiGeneration:
         """
         Get the status and details of a generation job
 
@@ -85,7 +87,7 @@ class AiClient:
 
         Returns
         -------
-        typing.Any
+        AiGeneration
             OK
 
         Examples
@@ -126,7 +128,7 @@ class AsyncAiClient:
         width: typing.Optional[int] = OMIT,
         height: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> GenerateImageAiResponse:
         """
         Submit an AI image generation job
 
@@ -145,7 +147,7 @@ class AsyncAiClient:
 
         Returns
         -------
-        typing.Any
+        GenerateImageAiResponse
             OK
 
         Examples
@@ -172,7 +174,7 @@ class AsyncAiClient:
         )
         return _response.data
 
-    async def get_generation(self, *, id: str, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
+    async def get_generation(self, *, id: str, request_options: typing.Optional[RequestOptions] = None) -> AiGeneration:
         """
         Get the status and details of a generation job
 
@@ -185,7 +187,7 @@ class AsyncAiClient:
 
         Returns
         -------
-        typing.Any
+        AiGeneration
             OK
 
         Examples

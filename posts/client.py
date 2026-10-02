@@ -11,6 +11,7 @@ from ..types.post_with_relations import PostWithRelations
 from .raw_client import AsyncRawPostsClient, RawPostsClient
 from .types.analytics_series_posts_response import AnalyticsSeriesPostsResponse
 from .types.analytics_summary_posts_response import AnalyticsSummaryPostsResponse
+from .types.count_by_tab_posts_response import CountByTabPostsResponse
 from .types.create_posts_response import CreatePostsResponse
 from .types.list_posts_request_approval_status import ListPostsRequestApprovalStatus
 from .types.list_posts_request_status import ListPostsRequestStatus
@@ -56,7 +57,7 @@ class PostsClient:
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tag_mode: typing.Optional[ListPostsRequestTagMode] = None,
         social_account_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        limit: typing.Optional[float] = None,
+        limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListPostsResponse:
         """
@@ -80,7 +81,7 @@ class PostsClient:
 
         social_account_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
-        limit : typing.Optional[float]
+        limit : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -193,7 +194,7 @@ class PostsClient:
         *,
         social_account_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> CountByTabPostsResponse:
         """
         Returns counts of posts for the Queue, Drafts, Approvals, and Sent tabs
 
@@ -206,7 +207,7 @@ class PostsClient:
 
         Returns
         -------
-        typing.Any
+        CountByTabPostsResponse
             OK
 
         Examples
@@ -513,7 +514,7 @@ class AsyncPostsClient:
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tag_mode: typing.Optional[ListPostsRequestTagMode] = None,
         social_account_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        limit: typing.Optional[float] = None,
+        limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListPostsResponse:
         """
@@ -537,7 +538,7 @@ class AsyncPostsClient:
 
         social_account_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
-        limit : typing.Optional[float]
+        limit : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -666,7 +667,7 @@ class AsyncPostsClient:
         *,
         social_account_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Any:
+    ) -> CountByTabPostsResponse:
         """
         Returns counts of posts for the Queue, Drafts, Approvals, and Sent tabs
 
@@ -679,7 +680,7 @@ class AsyncPostsClient:
 
         Returns
         -------
-        typing.Any
+        CountByTabPostsResponse
             OK
 
         Examples

@@ -6,8 +6,11 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import GenerateImageAiRequestModelKey
-_dynamic_imports: typing.Dict[str, str] = {"GenerateImageAiRequestModelKey": ".types"}
+    from .types import GenerateImageAiRequestModelKey, GenerateImageAiResponse
+_dynamic_imports: typing.Dict[str, str] = {
+    "GenerateImageAiRequestModelKey": ".types",
+    "GenerateImageAiResponse": ".types",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +34,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["GenerateImageAiRequestModelKey"]
+__all__ = ["GenerateImageAiRequestModelKey", "GenerateImageAiResponse"]
