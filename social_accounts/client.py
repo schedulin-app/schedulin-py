@@ -236,7 +236,7 @@ class SocialAccountsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DeleteSocialAccountsResponse:
         """
-        Remove a connected social media account
+        Remove a connected social media account. This permanently deletes ALL of the account's posts (scheduled, drafts and published history) and cannot be undone. To keep history, reconnect the account instead of deleting it.
 
         Parameters
         ----------
@@ -667,7 +667,7 @@ class AsyncSocialAccountsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DeleteSocialAccountsResponse:
         """
-        Remove a connected social media account
+        Remove a connected social media account. This permanently deletes ALL of the account's posts (scheduled, drafts and published history) and cannot be undone. To keep history, reconnect the account instead of deleting it.
 
         Parameters
         ----------
