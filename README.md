@@ -9,6 +9,7 @@ The Schedulin Python library provides convenient access to the Schedulin APIs fr
 
 - [Installation](#installation)
 - [Reference](#reference)
+- [Handling Timeouts](#handling-timeouts)
 - [Usage](#usage)
 - [Environments](#environments)
 - [Async Client](#async-client)
@@ -29,6 +30,28 @@ pip install schedulin
 ## Reference
 
 A full reference for this library is available [here](./reference.md).
+
+## Handling timeouts
+
+A request that exceeds its timeout raises httpx's `TimeoutException`
+(e.g. `httpx.ReadTimeout`) — not `ApiError`, which is reserved for
+non-2xx responses. Catch both when you set a timeout:
+
+```python
+import httpx
+
+from schedulin import Schedulin
+from schedulin.core.api_error import ApiError
+
+client = Schedulin(api_key="YOUR_API_KEY", timeout=20.0)
+try:
+    client.posts.list()
+except httpx.TimeoutException:
+    ...  # timed out — safe to retry idempotent calls
+except ApiError as e:
+    print(e.status_code, e.body)
+```
+
 
 ## Usage
 
