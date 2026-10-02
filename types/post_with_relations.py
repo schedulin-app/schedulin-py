@@ -10,6 +10,7 @@ from ..core.serialization import FieldMetadata
 from .post_approval_status import PostApprovalStatus
 from .post_media import PostMedia
 from .post_status import PostStatus
+from .post_thread_part import PostThreadPart
 from .social_account import SocialAccount
 from .tag import Tag
 
@@ -72,6 +73,7 @@ class PostWithRelations(UniversalBaseModel):
     media: typing.List[PostMedia]
     thumbnail: typing.Optional[PostMedia] = None
     tags: typing.List[Tag]
+    parts: typing.List[PostThreadPart]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

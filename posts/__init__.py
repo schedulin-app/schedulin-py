@@ -36,6 +36,8 @@ if typing.TYPE_CHECKING:
         PostCreateThumbnailTagsItemPlatform,
         PostCreateThumbnailTagsItemType,
         UpdatePostsRequestMediaItem,
+        UpdatePostsRequestPartsItem,
+        UpdatePostsRequestPartsItemMediaItem,
         UpdatePostsRequestStatus,
     )
 _dynamic_imports: typing.Dict[str, str] = {
@@ -68,6 +70,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PostCreateThumbnailTagsItemPlatform": ".types",
     "PostCreateThumbnailTagsItemType": ".types",
     "UpdatePostsRequestMediaItem": ".types",
+    "UpdatePostsRequestPartsItem": ".types",
+    "UpdatePostsRequestPartsItemMediaItem": ".types",
     "UpdatePostsRequestStatus": ".types",
 }
 
@@ -123,5 +127,7 @@ __all__ = [
     "PostCreateThumbnailTagsItemPlatform",
     "PostCreateThumbnailTagsItemType",
     "UpdatePostsRequestMediaItem",
+    "UpdatePostsRequestPartsItem",
+    "UpdatePostsRequestPartsItemMediaItem",
     "UpdatePostsRequestStatus",
 ]

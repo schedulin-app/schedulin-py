@@ -31,6 +31,7 @@ if typing.TYPE_CHECKING:
     from .post_search_statuses_item import PostSearchStatusesItem
     from .post_search_tag_mode import PostSearchTagMode
     from .post_status import PostStatus
+    from .post_thread_part import PostThreadPart
     from .post_with_relations import PostWithRelations
     from .presigned_post import PresignedPost
     from .presigned_post_method import PresignedPostMethod
@@ -79,6 +80,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PostSearchStatusesItem": ".post_search_statuses_item",
     "PostSearchTagMode": ".post_search_tag_mode",
     "PostStatus": ".post_status",
+    "PostThreadPart": ".post_thread_part",
     "PostWithRelations": ".post_with_relations",
     "PresignedPost": ".presigned_post",
     "PresignedPostMethod": ".presigned_post_method",
@@ -151,6 +153,7 @@ __all__ = [
     "PostSearchStatusesItem",
     "PostSearchTagMode",
     "PostStatus",
+    "PostThreadPart",
     "PostWithRelations",
     "PresignedPost",
     "PresignedPostMethod",

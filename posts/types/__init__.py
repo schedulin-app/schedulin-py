@@ -35,6 +35,8 @@ if typing.TYPE_CHECKING:
     from .post_create_thumbnail_tags_item_platform import PostCreateThumbnailTagsItemPlatform
     from .post_create_thumbnail_tags_item_type import PostCreateThumbnailTagsItemType
     from .update_posts_request_media_item import UpdatePostsRequestMediaItem
+    from .update_posts_request_parts_item import UpdatePostsRequestPartsItem
+    from .update_posts_request_parts_item_media_item import UpdatePostsRequestPartsItemMediaItem
     from .update_posts_request_status import UpdatePostsRequestStatus
 _dynamic_imports: typing.Dict[str, str] = {
     "AnalyticsSeriesPostsResponse": ".analytics_series_posts_response",
@@ -66,6 +68,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PostCreateThumbnailTagsItemPlatform": ".post_create_thumbnail_tags_item_platform",
     "PostCreateThumbnailTagsItemType": ".post_create_thumbnail_tags_item_type",
     "UpdatePostsRequestMediaItem": ".update_posts_request_media_item",
+    "UpdatePostsRequestPartsItem": ".update_posts_request_parts_item",
+    "UpdatePostsRequestPartsItemMediaItem": ".update_posts_request_parts_item_media_item",
     "UpdatePostsRequestStatus": ".update_posts_request_status",
 }
 
@@ -121,5 +125,7 @@ __all__ = [
     "PostCreateThumbnailTagsItemPlatform",
     "PostCreateThumbnailTagsItemType",
     "UpdatePostsRequestMediaItem",
+    "UpdatePostsRequestPartsItem",
+    "UpdatePostsRequestPartsItemMediaItem",
     "UpdatePostsRequestStatus",
 ]

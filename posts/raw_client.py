@@ -41,6 +41,7 @@ from .types.post_create_media_item import PostCreateMediaItem
 from .types.post_create_parts_item import PostCreatePartsItem
 from .types.post_create_thumbnail import PostCreateThumbnail
 from .types.update_posts_request_media_item import UpdatePostsRequestMediaItem
+from .types.update_posts_request_parts_item import UpdatePostsRequestPartsItem
 from .types.update_posts_request_status import UpdatePostsRequestStatus
 from pydantic import ValidationError
 
@@ -638,10 +639,11 @@ class RawPostsClient:
         platform_configuration: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         status: typing.Optional[UpdatePostsRequestStatus] = OMIT,
         tag_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        parts: typing.Optional[typing.Sequence[UpdatePostsRequestPartsItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Post]:
         """
-        Update an existing draft or scheduled post by its ID. `status` may be DRAFT, SCHEDULED (requires a future `scheduledAt`, either in this request or already on the post), or PROCESSING (publish now). COMPLETED and FAILED are set only by the publisher. A new `scheduledAt` must not be in the past, whatever the status (422). `media` replaces the post's media and accepts the same items as create — a stored or public URL (`{ url }`) or a media library id (`{ id }`), so the `media` array from `GET /v0/posts/{id}` can be sent back as-is. Posts that are already publishing, published, or failed can't be edited (409).
+        Update an existing draft or scheduled post by its ID. `status` may be DRAFT, SCHEDULED (requires a future `scheduledAt`, either in this request or already on the post), or PROCESSING (publish now). COMPLETED and FAILED are set only by the publisher. A new `scheduledAt` must not be in the past, whatever the status (422). `media` replaces the post's media and accepts the same items as create — a stored or public URL (`{ url }`) or a media library id (`{ id }`), so the `media` array from `GET /v0/posts/{id}` can be sent back as-is. `parts` (X and Mastodon only) replaces the post's thread with the same items create accepts — part media may also be a library `{ id }`, so the `parts` array from `GET /v0/posts/{id}` round-trips — and an empty array removes the thread. On X, parts[0] is the opening tweet: sending `parts` without `caption` sets the caption to parts[0], and changing `caption` without `parts` updates parts[0] when it matched the old caption. Posts that are already publishing, published, or failed can't be edited (409).
 
         Parameters
         ----------
@@ -658,6 +660,8 @@ class RawPostsClient:
         status : typing.Optional[UpdatePostsRequestStatus]
 
         tag_ids : typing.Optional[typing.Sequence[str]]
+
+        parts : typing.Optional[typing.Sequence[UpdatePostsRequestPartsItem]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -679,6 +683,9 @@ class RawPostsClient:
                 "platformConfiguration": platform_configuration,
                 "status": status,
                 "tagIds": tag_ids,
+                "parts": convert_and_respect_annotation_metadata(
+                    object_=parts, annotation=typing.Sequence[UpdatePostsRequestPartsItem], direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -2064,10 +2071,11 @@ class AsyncRawPostsClient:
         platform_configuration: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         status: typing.Optional[UpdatePostsRequestStatus] = OMIT,
         tag_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        parts: typing.Optional[typing.Sequence[UpdatePostsRequestPartsItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Post]:
         """
-        Update an existing draft or scheduled post by its ID. `status` may be DRAFT, SCHEDULED (requires a future `scheduledAt`, either in this request or already on the post), or PROCESSING (publish now). COMPLETED and FAILED are set only by the publisher. A new `scheduledAt` must not be in the past, whatever the status (422). `media` replaces the post's media and accepts the same items as create — a stored or public URL (`{ url }`) or a media library id (`{ id }`), so the `media` array from `GET /v0/posts/{id}` can be sent back as-is. Posts that are already publishing, published, or failed can't be edited (409).
+        Update an existing draft or scheduled post by its ID. `status` may be DRAFT, SCHEDULED (requires a future `scheduledAt`, either in this request or already on the post), or PROCESSING (publish now). COMPLETED and FAILED are set only by the publisher. A new `scheduledAt` must not be in the past, whatever the status (422). `media` replaces the post's media and accepts the same items as create — a stored or public URL (`{ url }`) or a media library id (`{ id }`), so the `media` array from `GET /v0/posts/{id}` can be sent back as-is. `parts` (X and Mastodon only) replaces the post's thread with the same items create accepts — part media may also be a library `{ id }`, so the `parts` array from `GET /v0/posts/{id}` round-trips — and an empty array removes the thread. On X, parts[0] is the opening tweet: sending `parts` without `caption` sets the caption to parts[0], and changing `caption` without `parts` updates parts[0] when it matched the old caption. Posts that are already publishing, published, or failed can't be edited (409).
 
         Parameters
         ----------
@@ -2084,6 +2092,8 @@ class AsyncRawPostsClient:
         status : typing.Optional[UpdatePostsRequestStatus]
 
         tag_ids : typing.Optional[typing.Sequence[str]]
+
+        parts : typing.Optional[typing.Sequence[UpdatePostsRequestPartsItem]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -2105,6 +2115,9 @@ class AsyncRawPostsClient:
                 "platformConfiguration": platform_configuration,
                 "status": status,
                 "tagIds": tag_ids,
+                "parts": convert_and_respect_annotation_metadata(
+                    object_=parts, annotation=typing.Sequence[UpdatePostsRequestPartsItem], direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
