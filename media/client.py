@@ -82,6 +82,48 @@ class MediaClient:
         )
         return _response.data
 
+    def register(
+        self,
+        *,
+        key: str,
+        name: typing.Optional[str] = OMIT,
+        alt: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Media:
+        """
+        Adds a file you uploaded with POST /v0/media/presign (intent `post`) + HTTP PUT to the media library in place — no second copy is stored — and returns the media record. Pass the presign `key`. The object's type and size are read from storage and must be an allowed image/video/audio type within the post upload limit (250 MB). Idempotent: registering the same key again returns the existing record. Returns 404 when no uploaded object exists for the key in your workspace.
+
+        Parameters
+        ----------
+        key : str
+            The `key` returned by POST /v0/media/presign, after the bytes were PUT to its `url`. The stored media URL for that key is also accepted.
+
+        name : typing.Optional[str]
+
+        alt : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Media
+            OK
+
+        Examples
+        --------
+        from schedulin import Schedulin
+
+        client = Schedulin(
+            api_key="YOUR_API_KEY",
+        )
+        client.media.register(
+            key="key",
+        )
+        """
+        _response = self._raw_client.register(key=key, name=name, alt=alt, request_options=request_options)
+        return _response.data
+
     def create_upload_link(
         self, *, expires_in_hours: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> CreateUploadLinkMediaResponse:
@@ -507,6 +549,56 @@ class AsyncMediaClient:
         _response = await self._raw_client.create_from_url(
             url=url, name=name, alt=alt, content_type=content_type, request_options=request_options
         )
+        return _response.data
+
+    async def register(
+        self,
+        *,
+        key: str,
+        name: typing.Optional[str] = OMIT,
+        alt: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Media:
+        """
+        Adds a file you uploaded with POST /v0/media/presign (intent `post`) + HTTP PUT to the media library in place — no second copy is stored — and returns the media record. Pass the presign `key`. The object's type and size are read from storage and must be an allowed image/video/audio type within the post upload limit (250 MB). Idempotent: registering the same key again returns the existing record. Returns 404 when no uploaded object exists for the key in your workspace.
+
+        Parameters
+        ----------
+        key : str
+            The `key` returned by POST /v0/media/presign, after the bytes were PUT to its `url`. The stored media URL for that key is also accepted.
+
+        name : typing.Optional[str]
+
+        alt : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Media
+            OK
+
+        Examples
+        --------
+        import asyncio
+
+        from schedulin import AsyncSchedulin
+
+        client = AsyncSchedulin(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.media.register(
+                key="key",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.register(key=key, name=name, alt=alt, request_options=request_options)
         return _response.data
 
     async def create_upload_link(
