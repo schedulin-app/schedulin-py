@@ -6,6 +6,7 @@ import pydantic
 import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...core.serialization import FieldMetadata
+from .update_posts_request_media_item_tags_item import UpdatePostsRequestMediaItemTagsItem
 
 
 class UpdatePostsRequestMediaItem(UniversalBaseModel):
@@ -20,6 +21,7 @@ class UpdatePostsRequestMediaItem(UniversalBaseModel):
     size: typing.Optional[float] = None
     duration: typing.Optional[float] = None
     alt: typing.Optional[str] = None
+    tags: typing.Optional[typing.List[UpdatePostsRequestMediaItemTagsItem]] = None
     bucket: typing.Optional[str] = None
     key: typing.Optional[str] = None
 

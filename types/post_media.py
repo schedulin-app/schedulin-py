@@ -7,6 +7,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
+from .post_media_tags_item import PostMediaTagsItem
 
 
 class PostMedia(UniversalBaseModel):
@@ -22,6 +23,7 @@ class PostMedia(UniversalBaseModel):
     thumbnail_url: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="thumbnailUrl"), pydantic.Field(alias="thumbnailUrl")
     ] = None
+    tags: typing.Optional[typing.List[PostMediaTagsItem]] = None
     created_at: typing_extensions.Annotated[
         dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
     ]

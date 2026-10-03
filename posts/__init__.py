@@ -36,8 +36,14 @@ if typing.TYPE_CHECKING:
         PostCreateThumbnailTagsItemPlatform,
         PostCreateThumbnailTagsItemType,
         UpdatePostsRequestMediaItem,
+        UpdatePostsRequestMediaItemTagsItem,
+        UpdatePostsRequestMediaItemTagsItemPlatform,
+        UpdatePostsRequestMediaItemTagsItemType,
         UpdatePostsRequestPartsItem,
         UpdatePostsRequestPartsItemMediaItem,
+        UpdatePostsRequestPartsItemMediaItemTagsItem,
+        UpdatePostsRequestPartsItemMediaItemTagsItemPlatform,
+        UpdatePostsRequestPartsItemMediaItemTagsItemType,
         UpdatePostsRequestStatus,
     )
 _dynamic_imports: typing.Dict[str, str] = {
@@ -70,8 +76,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PostCreateThumbnailTagsItemPlatform": ".types",
     "PostCreateThumbnailTagsItemType": ".types",
     "UpdatePostsRequestMediaItem": ".types",
+    "UpdatePostsRequestMediaItemTagsItem": ".types",
+    "UpdatePostsRequestMediaItemTagsItemPlatform": ".types",
+    "UpdatePostsRequestMediaItemTagsItemType": ".types",
     "UpdatePostsRequestPartsItem": ".types",
     "UpdatePostsRequestPartsItemMediaItem": ".types",
+    "UpdatePostsRequestPartsItemMediaItemTagsItem": ".types",
+    "UpdatePostsRequestPartsItemMediaItemTagsItemPlatform": ".types",
+    "UpdatePostsRequestPartsItemMediaItemTagsItemType": ".types",
     "UpdatePostsRequestStatus": ".types",
 }
 
@@ -127,7 +139,13 @@ __all__ = [
     "PostCreateThumbnailTagsItemPlatform",
     "PostCreateThumbnailTagsItemType",
     "UpdatePostsRequestMediaItem",
+    "UpdatePostsRequestMediaItemTagsItem",
+    "UpdatePostsRequestMediaItemTagsItemPlatform",
+    "UpdatePostsRequestMediaItemTagsItemType",
     "UpdatePostsRequestPartsItem",
     "UpdatePostsRequestPartsItemMediaItem",
+    "UpdatePostsRequestPartsItemMediaItemTagsItem",
+    "UpdatePostsRequestPartsItemMediaItemTagsItemPlatform",
+    "UpdatePostsRequestPartsItemMediaItemTagsItemType",
     "UpdatePostsRequestStatus",
 ]

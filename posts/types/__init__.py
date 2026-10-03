@@ -35,8 +35,18 @@ if typing.TYPE_CHECKING:
     from .post_create_thumbnail_tags_item_platform import PostCreateThumbnailTagsItemPlatform
     from .post_create_thumbnail_tags_item_type import PostCreateThumbnailTagsItemType
     from .update_posts_request_media_item import UpdatePostsRequestMediaItem
+    from .update_posts_request_media_item_tags_item import UpdatePostsRequestMediaItemTagsItem
+    from .update_posts_request_media_item_tags_item_platform import UpdatePostsRequestMediaItemTagsItemPlatform
+    from .update_posts_request_media_item_tags_item_type import UpdatePostsRequestMediaItemTagsItemType
     from .update_posts_request_parts_item import UpdatePostsRequestPartsItem
     from .update_posts_request_parts_item_media_item import UpdatePostsRequestPartsItemMediaItem
+    from .update_posts_request_parts_item_media_item_tags_item import UpdatePostsRequestPartsItemMediaItemTagsItem
+    from .update_posts_request_parts_item_media_item_tags_item_platform import (
+        UpdatePostsRequestPartsItemMediaItemTagsItemPlatform,
+    )
+    from .update_posts_request_parts_item_media_item_tags_item_type import (
+        UpdatePostsRequestPartsItemMediaItemTagsItemType,
+    )
     from .update_posts_request_status import UpdatePostsRequestStatus
 _dynamic_imports: typing.Dict[str, str] = {
     "AnalyticsSeriesPostsResponse": ".analytics_series_posts_response",
@@ -68,8 +78,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PostCreateThumbnailTagsItemPlatform": ".post_create_thumbnail_tags_item_platform",
     "PostCreateThumbnailTagsItemType": ".post_create_thumbnail_tags_item_type",
     "UpdatePostsRequestMediaItem": ".update_posts_request_media_item",
+    "UpdatePostsRequestMediaItemTagsItem": ".update_posts_request_media_item_tags_item",
+    "UpdatePostsRequestMediaItemTagsItemPlatform": ".update_posts_request_media_item_tags_item_platform",
+    "UpdatePostsRequestMediaItemTagsItemType": ".update_posts_request_media_item_tags_item_type",
     "UpdatePostsRequestPartsItem": ".update_posts_request_parts_item",
     "UpdatePostsRequestPartsItemMediaItem": ".update_posts_request_parts_item_media_item",
+    "UpdatePostsRequestPartsItemMediaItemTagsItem": ".update_posts_request_parts_item_media_item_tags_item",
+    "UpdatePostsRequestPartsItemMediaItemTagsItemPlatform": ".update_posts_request_parts_item_media_item_tags_item_platform",
+    "UpdatePostsRequestPartsItemMediaItemTagsItemType": ".update_posts_request_parts_item_media_item_tags_item_type",
     "UpdatePostsRequestStatus": ".update_posts_request_status",
 }
 
@@ -125,7 +141,13 @@ __all__ = [
     "PostCreateThumbnailTagsItemPlatform",
     "PostCreateThumbnailTagsItemType",
     "UpdatePostsRequestMediaItem",
+    "UpdatePostsRequestMediaItemTagsItem",
+    "UpdatePostsRequestMediaItemTagsItemPlatform",
+    "UpdatePostsRequestMediaItemTagsItemType",
     "UpdatePostsRequestPartsItem",
     "UpdatePostsRequestPartsItemMediaItem",
+    "UpdatePostsRequestPartsItemMediaItemTagsItem",
+    "UpdatePostsRequestPartsItemMediaItemTagsItemPlatform",
+    "UpdatePostsRequestPartsItemMediaItemTagsItemType",
     "UpdatePostsRequestStatus",
 ]

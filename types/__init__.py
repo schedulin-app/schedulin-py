@@ -23,6 +23,9 @@ if typing.TYPE_CHECKING:
     from .post import Post
     from .post_approval_status import PostApprovalStatus
     from .post_media import PostMedia
+    from .post_media_tags_item import PostMediaTagsItem
+    from .post_media_tags_item_platform import PostMediaTagsItemPlatform
+    from .post_media_tags_item_type import PostMediaTagsItemType
     from .post_publish_draft import PostPublishDraft
     from .post_search import PostSearch
     from .post_search_approval_status import PostSearchApprovalStatus
@@ -72,6 +75,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Post": ".post",
     "PostApprovalStatus": ".post_approval_status",
     "PostMedia": ".post_media",
+    "PostMediaTagsItem": ".post_media_tags_item",
+    "PostMediaTagsItemPlatform": ".post_media_tags_item_platform",
+    "PostMediaTagsItemType": ".post_media_tags_item_type",
     "PostPublishDraft": ".post_publish_draft",
     "PostSearch": ".post_search",
     "PostSearchApprovalStatus": ".post_search_approval_status",
@@ -145,6 +151,9 @@ __all__ = [
     "Post",
     "PostApprovalStatus",
     "PostMedia",
+    "PostMediaTagsItem",
+    "PostMediaTagsItemPlatform",
+    "PostMediaTagsItemType",
     "PostPublishDraft",
     "PostSearch",
     "PostSearchApprovalStatus",
