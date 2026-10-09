@@ -6,6 +6,7 @@ import pydantic
 import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...core.serialization import FieldMetadata
+from .list_platforms_response_data_item_caption_length_unit import ListPlatformsResponseDataItemCaptionLengthUnit
 from .list_platforms_response_data_item_helper_endpoints_item import ListPlatformsResponseDataItemHelperEndpointsItem
 from .list_platforms_response_data_item_media_rules import ListPlatformsResponseDataItemMediaRules
 from .list_platforms_response_data_item_platform_configuration import ListPlatformsResponseDataItemPlatformConfiguration
@@ -19,6 +20,16 @@ class ListPlatformsResponseDataItem(UniversalBaseModel):
     ] = None
     caption_max_length: typing_extensions.Annotated[
         typing.Optional[int], FieldMetadata(alias="captionMaxLength"), pydantic.Field(alias="captionMaxLength")
+    ] = None
+    caption_length_unit: typing_extensions.Annotated[
+        typing.Optional[ListPlatformsResponseDataItemCaptionLengthUnit],
+        FieldMetadata(alias="captionLengthUnit"),
+        pydantic.Field(alias="captionLengthUnit"),
+    ] = None
+    caption_max_length_with_media: typing_extensions.Annotated[
+        typing.Optional[int],
+        FieldMetadata(alias="captionMaxLengthWithMedia"),
+        pydantic.Field(alias="captionMaxLengthWithMedia"),
     ] = None
     media_rules: typing_extensions.Annotated[
         typing.Optional[ListPlatformsResponseDataItemMediaRules],
