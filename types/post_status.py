@@ -2,4 +2,6 @@
 
 import typing
 
-PostStatus = typing.Union[typing.Literal["SCHEDULED", "PROCESSING", "COMPLETED", "DRAFT", "FAILED"], typing.Any]
+PostStatus = typing.Union[
+    typing.Literal["SCHEDULED", "PROCESSING", "COMPLETED", "DRAFT", "FAILED", "DELETED"], typing.Any
+]
