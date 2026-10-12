@@ -9,6 +9,10 @@ if typing.TYPE_CHECKING:
     from .ai_generation import AiGeneration
     from .ai_generation_status import AiGenerationStatus
     from .analytics_status import AnalyticsStatus
+    from .client_profile import ClientProfile
+    from .client_profile_social_accounts_item import ClientProfileSocialAccountsItem
+    from .client_profile_social_accounts_item_platform import ClientProfileSocialAccountsItemPlatform
+    from .client_profile_social_accounts_item_status import ClientProfileSocialAccountsItemStatus
     from .error_response import ErrorResponse
     from .error_response_data import ErrorResponseData
     from .image_processing_status import ImageProcessingStatus
@@ -62,6 +66,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AiGeneration": ".ai_generation",
     "AiGenerationStatus": ".ai_generation_status",
     "AnalyticsStatus": ".analytics_status",
+    "ClientProfile": ".client_profile",
+    "ClientProfileSocialAccountsItem": ".client_profile_social_accounts_item",
+    "ClientProfileSocialAccountsItemPlatform": ".client_profile_social_accounts_item_platform",
+    "ClientProfileSocialAccountsItemStatus": ".client_profile_social_accounts_item_status",
     "ErrorResponse": ".error_response",
     "ErrorResponseData": ".error_response_data",
     "ImageProcessingStatus": ".image_processing_status",
@@ -139,6 +147,10 @@ __all__ = [
     "AiGeneration",
     "AiGenerationStatus",
     "AnalyticsStatus",
+    "ClientProfile",
+    "ClientProfileSocialAccountsItem",
+    "ClientProfileSocialAccountsItemPlatform",
+    "ClientProfileSocialAccountsItemStatus",
     "ErrorResponse",
     "ErrorResponseData",
     "ImageProcessingStatus",

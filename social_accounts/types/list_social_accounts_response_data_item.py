@@ -41,6 +41,9 @@ class ListSocialAccountsResponseDataItem(UniversalBaseModel):
         FieldMetadata(alias="webhookSubscriptionFailedAt"),
         pydantic.Field(alias="webhookSubscriptionFailedAt"),
     ] = None
+    profile_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="profileId"), pydantic.Field(alias="profileId")
+    ] = None
     created_at: typing_extensions.Annotated[
         dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
     ]

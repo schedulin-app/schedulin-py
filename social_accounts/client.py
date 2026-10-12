@@ -37,12 +37,16 @@ class SocialAccountsClient:
         """
         return self._raw_client
 
-    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> ListSocialAccountsResponse:
+    def list(
+        self, *, profile_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> ListSocialAccountsResponse:
         """
         Retrieve all connected social media accounts for the authenticated user
 
         Parameters
         ----------
+        profile_id : typing.Optional[str]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -60,7 +64,7 @@ class SocialAccountsClient:
         )
         client.social_accounts.list()
         """
-        _response = self._raw_client.list(request_options=request_options)
+        _response = self._raw_client.list(profile_id=profile_id, request_options=request_options)
         return _response.data
 
     def list_whop_companies(
@@ -199,6 +203,7 @@ class SocialAccountsClient:
         id: str,
         *,
         status: typing.Optional[UpdateSocialAccountsRequestStatus] = OMIT,
+        profile_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UpdateSocialAccountsResponse:
         """
@@ -209,6 +214,9 @@ class SocialAccountsClient:
         id : str
 
         status : typing.Optional[UpdateSocialAccountsRequestStatus]
+
+        profile_id : typing.Optional[str]
+            Move the account into a client profile (profile id or externalId), or null to remove it from its profile. Pro plan.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -229,7 +237,7 @@ class SocialAccountsClient:
             id="id",
         )
         """
-        _response = self._raw_client.update(id, status=status, request_options=request_options)
+        _response = self._raw_client.update(id, status=status, profile_id=profile_id, request_options=request_options)
         return _response.data
 
     def delete(
@@ -426,12 +434,16 @@ class AsyncSocialAccountsClient:
         """
         return self._raw_client
 
-    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> ListSocialAccountsResponse:
+    async def list(
+        self, *, profile_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> ListSocialAccountsResponse:
         """
         Retrieve all connected social media accounts for the authenticated user
 
         Parameters
         ----------
+        profile_id : typing.Optional[str]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -457,7 +469,7 @@ class AsyncSocialAccountsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(request_options=request_options)
+        _response = await self._raw_client.list(profile_id=profile_id, request_options=request_options)
         return _response.data
 
     async def list_whop_companies(
@@ -628,6 +640,7 @@ class AsyncSocialAccountsClient:
         id: str,
         *,
         status: typing.Optional[UpdateSocialAccountsRequestStatus] = OMIT,
+        profile_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UpdateSocialAccountsResponse:
         """
@@ -638,6 +651,9 @@ class AsyncSocialAccountsClient:
         id : str
 
         status : typing.Optional[UpdateSocialAccountsRequestStatus]
+
+        profile_id : typing.Optional[str]
+            Move the account into a client profile (profile id or externalId), or null to remove it from its profile. Pro plan.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -666,7 +682,9 @@ class AsyncSocialAccountsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.update(id, status=status, request_options=request_options)
+        _response = await self._raw_client.update(
+            id, status=status, profile_id=profile_id, request_options=request_options
+        )
         return _response.data
 
     async def delete(

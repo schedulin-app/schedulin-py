@@ -10,6 +10,10 @@ if typing.TYPE_CHECKING:
         AiGeneration,
         AiGenerationStatus,
         AnalyticsStatus,
+        ClientProfile,
+        ClientProfileSocialAccountsItem,
+        ClientProfileSocialAccountsItemPlatform,
+        ClientProfileSocialAccountsItemStatus,
         ErrorResponse,
         ErrorResponseData,
         ImageProcessingStatus,
@@ -71,7 +75,7 @@ if typing.TYPE_CHECKING:
         UnauthorizedError,
         UnprocessableEntityError,
     )
-    from . import ai, media, platforms, posts, social_accounts, tags, webhooks
+    from . import ai, media, platforms, posts, profiles, social_accounts, tags, webhooks
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .ai import GenerateImageAiRequestModelKey, GenerateImageAiResponse
     from .client import AsyncSchedulin, Schedulin
@@ -137,6 +141,7 @@ if typing.TYPE_CHECKING:
         UpdatePostsRequestPartsItemMediaItemTagsItemType,
         UpdatePostsRequestStatus,
     )
+    from .profiles import CreateConnectLinkProfilesResponse, DeleteProfilesResponse
     from .social_accounts import (
         DeleteSocialAccountsResponse,
         ListDiscordChannelsSocialAccountsResponse,
@@ -180,10 +185,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AnalyticsSummaryPostsResponse": ".posts",
     "AsyncSchedulin": ".client",
     "BadRequestError": ".errors",
+    "ClientProfile": ".types",
+    "ClientProfileSocialAccountsItem": ".types",
+    "ClientProfileSocialAccountsItemPlatform": ".types",
+    "ClientProfileSocialAccountsItemStatus": ".types",
     "ConflictError": ".errors",
     "CountByTabPostsResponse": ".posts",
     "CountByTagMediaResponse": ".media",
     "CountByTagMediaResponseDataItem": ".media",
+    "CreateConnectLinkProfilesResponse": ".profiles",
     "CreatePostsResponse": ".posts",
     "CreatePostsResponseMediaItem": ".posts",
     "CreatePostsResponseMediaItemTagsItem": ".posts",
@@ -195,6 +205,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
     "DeleteMediaResponse": ".media",
+    "DeleteProfilesResponse": ".profiles",
     "DeleteSocialAccountsResponse": ".social_accounts",
     "DeleteWebhooksResponse": ".webhooks",
     "ErrorResponse": ".types",
@@ -329,6 +340,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "media": ".media",
     "platforms": ".platforms",
     "posts": ".posts",
+    "profiles": ".profiles",
     "social_accounts": ".social_accounts",
     "tags": ".tags",
     "webhooks": ".webhooks",
@@ -365,10 +377,15 @@ __all__ = [
     "AnalyticsSummaryPostsResponse",
     "AsyncSchedulin",
     "BadRequestError",
+    "ClientProfile",
+    "ClientProfileSocialAccountsItem",
+    "ClientProfileSocialAccountsItemPlatform",
+    "ClientProfileSocialAccountsItemStatus",
     "ConflictError",
     "CountByTabPostsResponse",
     "CountByTagMediaResponse",
     "CountByTagMediaResponseDataItem",
+    "CreateConnectLinkProfilesResponse",
     "CreatePostsResponse",
     "CreatePostsResponseMediaItem",
     "CreatePostsResponseMediaItemTagsItem",
@@ -380,6 +397,7 @@ __all__ = [
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "DeleteMediaResponse",
+    "DeleteProfilesResponse",
     "DeleteSocialAccountsResponse",
     "DeleteWebhooksResponse",
     "ErrorResponse",
@@ -514,6 +532,7 @@ __all__ = [
     "media",
     "platforms",
     "posts",
+    "profiles",
     "social_accounts",
     "tags",
     "webhooks",

@@ -14,6 +14,7 @@ if typing.TYPE_CHECKING:
     from .media.client import AsyncMediaClient, MediaClient
     from .platforms.client import AsyncPlatformsClient, PlatformsClient
     from .posts.client import AsyncPostsClient, PostsClient
+    from .profiles.client import AsyncProfilesClient, ProfilesClient
     from .social_accounts.client import AsyncSocialAccountsClient, SocialAccountsClient
     from .tags.client import AsyncTagsClient, TagsClient
     from .webhooks.client import AsyncWebhooksClient, WebhooksClient
@@ -110,6 +111,7 @@ class Schedulin:
         self._platforms: typing.Optional[PlatformsClient] = None
         self._ai: typing.Optional[AiClient] = None
         self._webhooks: typing.Optional[WebhooksClient] = None
+        self._profiles: typing.Optional[ProfilesClient] = None
 
     @property
     def posts(self):
@@ -166,6 +168,14 @@ class Schedulin:
 
             self._webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
         return self._webhooks
+
+    @property
+    def profiles(self):
+        if self._profiles is None:
+            from .profiles.client import ProfilesClient  # noqa: E402
+
+            self._profiles = ProfilesClient(client_wrapper=self._client_wrapper)
+        return self._profiles
 
 
 def _make_default_async_client(
@@ -275,6 +285,7 @@ class AsyncSchedulin:
         self._platforms: typing.Optional[AsyncPlatformsClient] = None
         self._ai: typing.Optional[AsyncAiClient] = None
         self._webhooks: typing.Optional[AsyncWebhooksClient] = None
+        self._profiles: typing.Optional[AsyncProfilesClient] = None
 
     @property
     def posts(self):
@@ -331,6 +342,14 @@ class AsyncSchedulin:
 
             self._webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
         return self._webhooks
+
+    @property
+    def profiles(self):
+        if self._profiles is None:
+            from .profiles.client import AsyncProfilesClient  # noqa: E402
+
+            self._profiles = AsyncProfilesClient(client_wrapper=self._client_wrapper)
+        return self._profiles
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: SchedulinEnvironment) -> str:

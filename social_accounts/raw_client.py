@@ -44,13 +44,15 @@ class RawSocialAccountsClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self, *, profile_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[ListSocialAccountsResponse]:
         """
         Retrieve all connected social media accounts for the authenticated user
 
         Parameters
         ----------
+        profile_id : typing.Optional[str]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -62,6 +64,9 @@ class RawSocialAccountsClient:
         _response = self._client_wrapper.httpx_client.request(
             "v0/social-accounts",
             method="GET",
+            params={
+                "profileId": profile_id,
+            },
             request_options=request_options,
         )
         try:
@@ -635,6 +640,7 @@ class RawSocialAccountsClient:
         id: str,
         *,
         status: typing.Optional[UpdateSocialAccountsRequestStatus] = OMIT,
+        profile_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[UpdateSocialAccountsResponse]:
         """
@@ -645,6 +651,9 @@ class RawSocialAccountsClient:
         id : str
 
         status : typing.Optional[UpdateSocialAccountsRequestStatus]
+
+        profile_id : typing.Optional[str]
+            Move the account into a client profile (profile id or externalId), or null to remove it from its profile. Pro plan.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -659,6 +668,7 @@ class RawSocialAccountsClient:
             method="PUT",
             json={
                 "status": status,
+                "profileId": profile_id,
             },
             headers={
                 "content-type": "application/json",
@@ -1432,13 +1442,15 @@ class AsyncRawSocialAccountsClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self, *, profile_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[ListSocialAccountsResponse]:
         """
         Retrieve all connected social media accounts for the authenticated user
 
         Parameters
         ----------
+        profile_id : typing.Optional[str]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1450,6 +1462,9 @@ class AsyncRawSocialAccountsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "v0/social-accounts",
             method="GET",
+            params={
+                "profileId": profile_id,
+            },
             request_options=request_options,
         )
         try:
@@ -2023,6 +2038,7 @@ class AsyncRawSocialAccountsClient:
         id: str,
         *,
         status: typing.Optional[UpdateSocialAccountsRequestStatus] = OMIT,
+        profile_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[UpdateSocialAccountsResponse]:
         """
@@ -2033,6 +2049,9 @@ class AsyncRawSocialAccountsClient:
         id : str
 
         status : typing.Optional[UpdateSocialAccountsRequestStatus]
+
+        profile_id : typing.Optional[str]
+            Move the account into a client profile (profile id or externalId), or null to remove it from its profile. Pro plan.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -2047,6 +2066,7 @@ class AsyncRawSocialAccountsClient:
             method="PUT",
             json={
                 "status": status,
+                "profileId": profile_id,
             },
             headers={
                 "content-type": "application/json",
