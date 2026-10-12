@@ -3,5 +3,8 @@
 import typing
 
 UpdateWebhooksRequestEventsItem = typing.Union[
-    typing.Literal["post.published", "post.failed", "generation.completed", "generation.failed"], typing.Any
+    typing.Literal[
+        "post.published", "post.failed", "generation.completed", "generation.failed", "social_account.connected"
+    ],
+    typing.Any,
 ]
