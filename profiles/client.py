@@ -62,7 +62,7 @@ class ProfilesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ClientProfile:
         """
-        Create a profile for one of your clients. Their social accounts are grouped under it so you can post on their behalf. Requires the Pro plan.
+        Create a profile for one of your clients. Their social accounts are grouped under it so you can post on their behalf.
 
         Parameters
         ----------
@@ -162,7 +162,7 @@ class ProfilesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ClientProfile:
         """
-        Rename a client profile or change its externalId. Requires the Pro plan.
+        Rename a client profile or change its externalId.
 
         Parameters
         ----------
@@ -205,7 +205,7 @@ class ProfilesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateConnectLinkProfilesResponse:
         """
-        Returns a hosted link to send your client. They open it, sign in to their social platforms (no Schedulin account needed), and the accounts connect to your organization under this profile, ready to post to via the API. Links expire; create a new one any time. Requires the Pro plan.
+        Returns a hosted link to send your client. They open it, sign in to their social platforms (no Schedulin account needed), and the accounts connect to your organization under this profile, ready to post to via the API. Links expire; create a new one any time. Accounts your client connects count toward your plan's channel limit.
 
         Parameters
         ----------
@@ -306,7 +306,7 @@ class AsyncProfilesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ClientProfile:
         """
-        Create a profile for one of your clients. Their social accounts are grouped under it so you can post on their behalf. Requires the Pro plan.
+        Create a profile for one of your clients. Their social accounts are grouped under it so you can post on their behalf.
 
         Parameters
         ----------
@@ -432,7 +432,7 @@ class AsyncProfilesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ClientProfile:
         """
-        Rename a client profile or change its externalId. Requires the Pro plan.
+        Rename a client profile or change its externalId.
 
         Parameters
         ----------
@@ -485,7 +485,7 @@ class AsyncProfilesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateConnectLinkProfilesResponse:
         """
-        Returns a hosted link to send your client. They open it, sign in to their social platforms (no Schedulin account needed), and the accounts connect to your organization under this profile, ready to post to via the API. Links expire; create a new one any time. Requires the Pro plan.
+        Returns a hosted link to send your client. They open it, sign in to their social platforms (no Schedulin account needed), and the accounts connect to your organization under this profile, ready to post to via the API. Links expire; create a new one any time. Accounts your client connects count toward your plan's channel limit.
 
         Parameters
         ----------

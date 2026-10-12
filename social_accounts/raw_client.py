@@ -653,7 +653,7 @@ class RawSocialAccountsClient:
         status : typing.Optional[UpdateSocialAccountsRequestStatus]
 
         profile_id : typing.Optional[str]
-            Move the account into a client profile (profile id or externalId), or null to remove it from its profile. Pro plan.
+            Move the account into a client profile (profile id or externalId), or null to remove it from its profile.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -2051,7 +2051,7 @@ class AsyncRawSocialAccountsClient:
         status : typing.Optional[UpdateSocialAccountsRequestStatus]
 
         profile_id : typing.Optional[str]
-            Move the account into a client profile (profile id or externalId), or null to remove it from its profile. Pro plan.
+            Move the account into a client profile (profile id or externalId), or null to remove it from its profile.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

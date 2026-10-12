@@ -17,11 +17,11 @@ class SocialAccountUpdate(UniversalBaseModel):
         FieldMetadata(alias="profileId"),
         pydantic.Field(
             alias="profileId",
-            description="Move the account into a client profile (profile id or externalId), or null to remove it from its profile. Pro plan.",
+            description="Move the account into a client profile (profile id or externalId), or null to remove it from its profile.",
         ),
     ] = None
     """
-    Move the account into a client profile (profile id or externalId), or null to remove it from its profile. Pro plan.
+    Move the account into a client profile (profile id or externalId), or null to remove it from its profile.
     """
 
     if IS_PYDANTIC_V2:
