@@ -459,6 +459,49 @@ class PostsClient:
         _response = self._raw_client.publish_draft(id, scheduled_at=scheduled_at, request_options=request_options)
         return _response.data
 
+    def retry(
+        self,
+        id: str,
+        *,
+        force: typing.Optional[bool] = OMIT,
+        scheduled_at: typing.Optional[dt.datetime] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Post:
+        """
+        Re-queue a FAILED post for publishing, immediately or at a future scheduledAt. Refuses posts that were already published. If the last attempt's outcome is unknown (it may have posted), responds 412 until called again with force: true — check the platform first.
+
+        Parameters
+        ----------
+        id : str
+
+        force : typing.Optional[bool]
+            Confirm the retry after a publish attempt whose outcome is unknown. Check the platform first — the post may already be live.
+
+        scheduled_at : typing.Optional[dt.datetime]
+            Future time to re-schedule the post for; omit to publish immediately.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Post
+            OK
+
+        Examples
+        --------
+        from schedulin import Schedulin
+
+        client = Schedulin(
+            api_key="YOUR_API_KEY",
+        )
+        client.posts.retry(
+            id="id",
+        )
+        """
+        _response = self._raw_client.retry(id, force=force, scheduled_at=scheduled_at, request_options=request_options)
+        return _response.data
+
     def update_tags(
         self, id: str, *, tag_ids: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
     ) -> Post:
@@ -994,6 +1037,59 @@ class AsyncPostsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.publish_draft(id, scheduled_at=scheduled_at, request_options=request_options)
+        return _response.data
+
+    async def retry(
+        self,
+        id: str,
+        *,
+        force: typing.Optional[bool] = OMIT,
+        scheduled_at: typing.Optional[dt.datetime] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Post:
+        """
+        Re-queue a FAILED post for publishing, immediately or at a future scheduledAt. Refuses posts that were already published. If the last attempt's outcome is unknown (it may have posted), responds 412 until called again with force: true — check the platform first.
+
+        Parameters
+        ----------
+        id : str
+
+        force : typing.Optional[bool]
+            Confirm the retry after a publish attempt whose outcome is unknown. Check the platform first — the post may already be live.
+
+        scheduled_at : typing.Optional[dt.datetime]
+            Future time to re-schedule the post for; omit to publish immediately.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Post
+            OK
+
+        Examples
+        --------
+        import asyncio
+
+        from schedulin import AsyncSchedulin
+
+        client = AsyncSchedulin(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.posts.retry(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.retry(
+            id, force=force, scheduled_at=scheduled_at, request_options=request_options
+        )
         return _response.data
 
     async def update_tags(
