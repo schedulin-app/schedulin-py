@@ -8,6 +8,8 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import (
         DeleteSocialAccountsResponse,
+        GetQueueScheduleSocialAccountsResponse,
+        GetQueueScheduleSocialAccountsResponseTimesItem,
         ListDiscordChannelsSocialAccountsResponse,
         ListDiscordChannelsSocialAccountsResponseItemsItem,
         ListSlackChannelsSocialAccountsResponse,
@@ -24,6 +26,9 @@ if typing.TYPE_CHECKING:
         PinterestBoardsSocialAccountsResponse,
         PinterestBoardsSocialAccountsResponseDataItem,
         PinterestBoardsSocialAccountsResponseDataItemPrivacy,
+        ReplaceQueueScheduleSocialAccountsRequestTimesItem,
+        ReplaceQueueScheduleSocialAccountsResponse,
+        ReplaceQueueScheduleSocialAccountsResponseTimesItem,
         TiktokCreatorInfoSocialAccountsResponse,
         TiktokCreatorInfoSocialAccountsResponseData,
         TiktokCreatorInfoSocialAccountsResponseError,
@@ -33,6 +38,8 @@ if typing.TYPE_CHECKING:
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "DeleteSocialAccountsResponse": ".types",
+    "GetQueueScheduleSocialAccountsResponse": ".types",
+    "GetQueueScheduleSocialAccountsResponseTimesItem": ".types",
     "ListDiscordChannelsSocialAccountsResponse": ".types",
     "ListDiscordChannelsSocialAccountsResponseItemsItem": ".types",
     "ListSlackChannelsSocialAccountsResponse": ".types",
@@ -49,6 +56,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PinterestBoardsSocialAccountsResponse": ".types",
     "PinterestBoardsSocialAccountsResponseDataItem": ".types",
     "PinterestBoardsSocialAccountsResponseDataItemPrivacy": ".types",
+    "ReplaceQueueScheduleSocialAccountsRequestTimesItem": ".types",
+    "ReplaceQueueScheduleSocialAccountsResponse": ".types",
+    "ReplaceQueueScheduleSocialAccountsResponseTimesItem": ".types",
     "TiktokCreatorInfoSocialAccountsResponse": ".types",
     "TiktokCreatorInfoSocialAccountsResponseData": ".types",
     "TiktokCreatorInfoSocialAccountsResponseError": ".types",
@@ -81,6 +91,8 @@ def __dir__():
 
 __all__ = [
     "DeleteSocialAccountsResponse",
+    "GetQueueScheduleSocialAccountsResponse",
+    "GetQueueScheduleSocialAccountsResponseTimesItem",
     "ListDiscordChannelsSocialAccountsResponse",
     "ListDiscordChannelsSocialAccountsResponseItemsItem",
     "ListSlackChannelsSocialAccountsResponse",
@@ -97,6 +109,9 @@ __all__ = [
     "PinterestBoardsSocialAccountsResponse",
     "PinterestBoardsSocialAccountsResponseDataItem",
     "PinterestBoardsSocialAccountsResponseDataItemPrivacy",
+    "ReplaceQueueScheduleSocialAccountsRequestTimesItem",
+    "ReplaceQueueScheduleSocialAccountsResponse",
+    "ReplaceQueueScheduleSocialAccountsResponseTimesItem",
     "TiktokCreatorInfoSocialAccountsResponse",
     "TiktokCreatorInfoSocialAccountsResponseData",
     "TiktokCreatorInfoSocialAccountsResponseError",

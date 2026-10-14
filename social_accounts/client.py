@@ -6,6 +6,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawSocialAccountsClient, RawSocialAccountsClient
 from .types.delete_social_accounts_response import DeleteSocialAccountsResponse
+from .types.get_queue_schedule_social_accounts_response import GetQueueScheduleSocialAccountsResponse
 from .types.list_discord_channels_social_accounts_response import ListDiscordChannelsSocialAccountsResponse
 from .types.list_slack_channels_social_accounts_response import ListSlackChannelsSocialAccountsResponse
 from .types.list_social_accounts_response import ListSocialAccountsResponse
@@ -13,6 +14,10 @@ from .types.list_whop_companies_social_accounts_response import ListWhopCompanie
 from .types.list_whop_forums_social_accounts_response import ListWhopForumsSocialAccountsResponse
 from .types.next_slots_social_accounts_response import NextSlotsSocialAccountsResponse
 from .types.pinterest_boards_social_accounts_response import PinterestBoardsSocialAccountsResponse
+from .types.replace_queue_schedule_social_accounts_request_times_item import (
+    ReplaceQueueScheduleSocialAccountsRequestTimesItem,
+)
+from .types.replace_queue_schedule_social_accounts_response import ReplaceQueueScheduleSocialAccountsResponse
 from .types.tiktok_creator_info_social_accounts_response import TiktokCreatorInfoSocialAccountsResponse
 from .types.update_social_accounts_request_status import UpdateSocialAccountsRequestStatus
 from .types.update_social_accounts_response import UpdateSocialAccountsResponse
@@ -352,6 +357,85 @@ class SocialAccountsClient:
         )
         """
         _response = self._raw_client.next_slots(id, limit=limit, after=after, request_options=request_options)
+        return _response.data
+
+    def get_queue_schedule(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetQueueScheduleSocialAccountsResponse:
+        """
+        Return the weekly posting schedule that `action: "queue"` fills: each slot's weekday (0 = Sunday), wall-clock `time` (HH:MM) and `capacity`, interpreted in the account's `timezone`. Empty `times` means the account has no queue configured.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetQueueScheduleSocialAccountsResponse
+            OK
+
+        Examples
+        --------
+        from schedulin import Schedulin
+
+        client = Schedulin(
+            api_key="YOUR_API_KEY",
+        )
+        client.social_accounts.get_queue_schedule(
+            id="id",
+        )
+        """
+        _response = self._raw_client.get_queue_schedule(id, request_options=request_options)
+        return _response.data
+
+    def replace_queue_schedule(
+        self,
+        id: str,
+        *,
+        times: typing.Sequence[ReplaceQueueScheduleSocialAccountsRequestTimesItem],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ReplaceQueueScheduleSocialAccountsResponse:
+        """
+        Replace the account's whole weekly posting schedule with `times` (send an empty array to clear it). Times are wall-clock HH:MM in the account's timezone — change that with `PUT /v0/social-accounts/{id}/timezone`. Posts already scheduled keep their times; only future `action: "queue"` placements use the new schedule. Returns the saved schedule.
+
+        Parameters
+        ----------
+        id : str
+
+        times : typing.Sequence[ReplaceQueueScheduleSocialAccountsRequestTimesItem]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ReplaceQueueScheduleSocialAccountsResponse
+            OK
+
+        Examples
+        --------
+        from schedulin import Schedulin
+        from schedulin.social_accounts import (
+            ReplaceQueueScheduleSocialAccountsRequestTimesItem,
+        )
+
+        client = Schedulin(
+            api_key="YOUR_API_KEY",
+        )
+        client.social_accounts.replace_queue_schedule(
+            id="id",
+            times=[
+                ReplaceQueueScheduleSocialAccountsRequestTimesItem(
+                    weekday=1,
+                    time="time",
+                )
+            ],
+        )
+        """
+        _response = self._raw_client.replace_queue_schedule(id, times=times, request_options=request_options)
         return _response.data
 
     def pinterest_boards(
@@ -823,6 +907,101 @@ class AsyncSocialAccountsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.next_slots(id, limit=limit, after=after, request_options=request_options)
+        return _response.data
+
+    async def get_queue_schedule(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetQueueScheduleSocialAccountsResponse:
+        """
+        Return the weekly posting schedule that `action: "queue"` fills: each slot's weekday (0 = Sunday), wall-clock `time` (HH:MM) and `capacity`, interpreted in the account's `timezone`. Empty `times` means the account has no queue configured.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetQueueScheduleSocialAccountsResponse
+            OK
+
+        Examples
+        --------
+        import asyncio
+
+        from schedulin import AsyncSchedulin
+
+        client = AsyncSchedulin(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.social_accounts.get_queue_schedule(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_queue_schedule(id, request_options=request_options)
+        return _response.data
+
+    async def replace_queue_schedule(
+        self,
+        id: str,
+        *,
+        times: typing.Sequence[ReplaceQueueScheduleSocialAccountsRequestTimesItem],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ReplaceQueueScheduleSocialAccountsResponse:
+        """
+        Replace the account's whole weekly posting schedule with `times` (send an empty array to clear it). Times are wall-clock HH:MM in the account's timezone — change that with `PUT /v0/social-accounts/{id}/timezone`. Posts already scheduled keep their times; only future `action: "queue"` placements use the new schedule. Returns the saved schedule.
+
+        Parameters
+        ----------
+        id : str
+
+        times : typing.Sequence[ReplaceQueueScheduleSocialAccountsRequestTimesItem]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ReplaceQueueScheduleSocialAccountsResponse
+            OK
+
+        Examples
+        --------
+        import asyncio
+
+        from schedulin import AsyncSchedulin
+        from schedulin.social_accounts import (
+            ReplaceQueueScheduleSocialAccountsRequestTimesItem,
+        )
+
+        client = AsyncSchedulin(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.social_accounts.replace_queue_schedule(
+                id="id",
+                times=[
+                    ReplaceQueueScheduleSocialAccountsRequestTimesItem(
+                        weekday=1,
+                        time="time",
+                    )
+                ],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.replace_queue_schedule(id, times=times, request_options=request_options)
         return _response.data
 
     async def pinterest_boards(

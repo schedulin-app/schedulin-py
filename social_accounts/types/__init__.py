@@ -7,6 +7,8 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .delete_social_accounts_response import DeleteSocialAccountsResponse
+    from .get_queue_schedule_social_accounts_response import GetQueueScheduleSocialAccountsResponse
+    from .get_queue_schedule_social_accounts_response_times_item import GetQueueScheduleSocialAccountsResponseTimesItem
     from .list_discord_channels_social_accounts_response import ListDiscordChannelsSocialAccountsResponse
     from .list_discord_channels_social_accounts_response_items_item import (
         ListDiscordChannelsSocialAccountsResponseItemsItem,
@@ -31,6 +33,13 @@ if typing.TYPE_CHECKING:
     from .pinterest_boards_social_accounts_response_data_item_privacy import (
         PinterestBoardsSocialAccountsResponseDataItemPrivacy,
     )
+    from .replace_queue_schedule_social_accounts_request_times_item import (
+        ReplaceQueueScheduleSocialAccountsRequestTimesItem,
+    )
+    from .replace_queue_schedule_social_accounts_response import ReplaceQueueScheduleSocialAccountsResponse
+    from .replace_queue_schedule_social_accounts_response_times_item import (
+        ReplaceQueueScheduleSocialAccountsResponseTimesItem,
+    )
     from .tiktok_creator_info_social_accounts_response import TiktokCreatorInfoSocialAccountsResponse
     from .tiktok_creator_info_social_accounts_response_data import TiktokCreatorInfoSocialAccountsResponseData
     from .tiktok_creator_info_social_accounts_response_error import TiktokCreatorInfoSocialAccountsResponseError
@@ -39,6 +48,8 @@ if typing.TYPE_CHECKING:
     from .update_timezone_social_accounts_response import UpdateTimezoneSocialAccountsResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "DeleteSocialAccountsResponse": ".delete_social_accounts_response",
+    "GetQueueScheduleSocialAccountsResponse": ".get_queue_schedule_social_accounts_response",
+    "GetQueueScheduleSocialAccountsResponseTimesItem": ".get_queue_schedule_social_accounts_response_times_item",
     "ListDiscordChannelsSocialAccountsResponse": ".list_discord_channels_social_accounts_response",
     "ListDiscordChannelsSocialAccountsResponseItemsItem": ".list_discord_channels_social_accounts_response_items_item",
     "ListSlackChannelsSocialAccountsResponse": ".list_slack_channels_social_accounts_response",
@@ -55,6 +66,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PinterestBoardsSocialAccountsResponse": ".pinterest_boards_social_accounts_response",
     "PinterestBoardsSocialAccountsResponseDataItem": ".pinterest_boards_social_accounts_response_data_item",
     "PinterestBoardsSocialAccountsResponseDataItemPrivacy": ".pinterest_boards_social_accounts_response_data_item_privacy",
+    "ReplaceQueueScheduleSocialAccountsRequestTimesItem": ".replace_queue_schedule_social_accounts_request_times_item",
+    "ReplaceQueueScheduleSocialAccountsResponse": ".replace_queue_schedule_social_accounts_response",
+    "ReplaceQueueScheduleSocialAccountsResponseTimesItem": ".replace_queue_schedule_social_accounts_response_times_item",
     "TiktokCreatorInfoSocialAccountsResponse": ".tiktok_creator_info_social_accounts_response",
     "TiktokCreatorInfoSocialAccountsResponseData": ".tiktok_creator_info_social_accounts_response_data",
     "TiktokCreatorInfoSocialAccountsResponseError": ".tiktok_creator_info_social_accounts_response_error",
@@ -87,6 +101,8 @@ def __dir__():
 
 __all__ = [
     "DeleteSocialAccountsResponse",
+    "GetQueueScheduleSocialAccountsResponse",
+    "GetQueueScheduleSocialAccountsResponseTimesItem",
     "ListDiscordChannelsSocialAccountsResponse",
     "ListDiscordChannelsSocialAccountsResponseItemsItem",
     "ListSlackChannelsSocialAccountsResponse",
@@ -103,6 +119,9 @@ __all__ = [
     "PinterestBoardsSocialAccountsResponse",
     "PinterestBoardsSocialAccountsResponseDataItem",
     "PinterestBoardsSocialAccountsResponseDataItemPrivacy",
+    "ReplaceQueueScheduleSocialAccountsRequestTimesItem",
+    "ReplaceQueueScheduleSocialAccountsResponse",
+    "ReplaceQueueScheduleSocialAccountsResponseTimesItem",
     "TiktokCreatorInfoSocialAccountsResponse",
     "TiktokCreatorInfoSocialAccountsResponseData",
     "TiktokCreatorInfoSocialAccountsResponseError",
