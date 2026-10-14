@@ -4559,3 +4559,314 @@ client.profiles.create_connect_link(
 </dl>
 </details>
 
+## Analytics
+<details><summary><code>client.analytics.<a href="src/schedulin/analytics/client.py">overview</a>(...) -> OverviewAnalyticsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Aggregate engagement totals (impressions, reach, likes, comments, shares, saves, video views, clicks, engagement), follower audience and posts published for the window, plus percent change vs the previous window of the same length. Covers posts published from the workspace's connected accounts. Filter with `platforms` and `socialAccountIds`; `from`/`to` may span up to 400 days. Metrics are collected periodically per post, so the most recent hours may still be filling in.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from schedulin import Schedulin
+from schedulin.environment import SchedulinEnvironment
+
+client = Schedulin(
+    api_key="<value>",
+    environment=SchedulinEnvironment.DEFAULT,
+)
+
+client.analytics.overview(
+    from_="from",
+    to="to",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**from:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**to:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**platforms:** `typing.Optional[typing.Union[OverviewAnalyticsRequestPlatformsItem, typing.Sequence[OverviewAnalyticsRequestPlatformsItem]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**social_account_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.analytics.<a href="src/schedulin/analytics/client.py">platform_breakdown</a>(...) -> PlatformBreakdownAnalyticsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Engagement totals for the window grouped by platform, highest engagement first. Covers posts published from the workspace's connected accounts. Filter with `platforms` and `socialAccountIds`; `from`/`to` may span up to 400 days. Metrics are collected periodically per post, so the most recent hours may still be filling in.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from schedulin import Schedulin
+from schedulin.environment import SchedulinEnvironment
+
+client = Schedulin(
+    api_key="<value>",
+    environment=SchedulinEnvironment.DEFAULT,
+)
+
+client.analytics.platform_breakdown(
+    from_="from",
+    to="to",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**from:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**to:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**platforms:** `typing.Optional[typing.Union[PlatformBreakdownAnalyticsRequestPlatformsItem, typing.Sequence[PlatformBreakdownAnalyticsRequestPlatformsItem]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**social_account_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.analytics.<a href="src/schedulin/analytics/client.py">top_posts</a>(...) -> TopPostsAnalyticsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Posts ranked by `metric` (default `engagementTotal`) accumulated within the window. Covers posts published from the workspace's connected accounts. Filter with `platforms` and `socialAccountIds`; `from`/`to` may span up to 400 days. Metrics are collected periodically per post, so the most recent hours may still be filling in.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from schedulin import Schedulin
+from schedulin.environment import SchedulinEnvironment
+
+client = Schedulin(
+    api_key="<value>",
+    environment=SchedulinEnvironment.DEFAULT,
+)
+
+client.analytics.top_posts(
+    from_="from",
+    to="to",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**from:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**to:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**platforms:** `typing.Optional[typing.Union[TopPostsAnalyticsRequestPlatformsItem, typing.Sequence[TopPostsAnalyticsRequestPlatformsItem]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**social_account_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**metric:** `typing.Optional[TopPostsAnalyticsRequestMetric]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

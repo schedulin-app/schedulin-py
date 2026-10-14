@@ -11,6 +11,7 @@ from .environment import SchedulinEnvironment
 
 if typing.TYPE_CHECKING:
     from .ai.client import AiClient, AsyncAiClient
+    from .analytics.client import AnalyticsClient, AsyncAnalyticsClient
     from .media.client import AsyncMediaClient, MediaClient
     from .platforms.client import AsyncPlatformsClient, PlatformsClient
     from .posts.client import AsyncPostsClient, PostsClient
@@ -112,6 +113,7 @@ class Schedulin:
         self._ai: typing.Optional[AiClient] = None
         self._webhooks: typing.Optional[WebhooksClient] = None
         self._profiles: typing.Optional[ProfilesClient] = None
+        self._analytics: typing.Optional[AnalyticsClient] = None
 
     @property
     def posts(self):
@@ -176,6 +178,14 @@ class Schedulin:
 
             self._profiles = ProfilesClient(client_wrapper=self._client_wrapper)
         return self._profiles
+
+    @property
+    def analytics(self):
+        if self._analytics is None:
+            from .analytics.client import AnalyticsClient  # noqa: E402
+
+            self._analytics = AnalyticsClient(client_wrapper=self._client_wrapper)
+        return self._analytics
 
 
 def _make_default_async_client(
@@ -286,6 +296,7 @@ class AsyncSchedulin:
         self._ai: typing.Optional[AsyncAiClient] = None
         self._webhooks: typing.Optional[AsyncWebhooksClient] = None
         self._profiles: typing.Optional[AsyncProfilesClient] = None
+        self._analytics: typing.Optional[AsyncAnalyticsClient] = None
 
     @property
     def posts(self):
@@ -350,6 +361,14 @@ class AsyncSchedulin:
 
             self._profiles = AsyncProfilesClient(client_wrapper=self._client_wrapper)
         return self._profiles
+
+    @property
+    def analytics(self):
+        if self._analytics is None:
+            from .analytics.client import AsyncAnalyticsClient  # noqa: E402
+
+            self._analytics = AsyncAnalyticsClient(client_wrapper=self._client_wrapper)
+        return self._analytics
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: SchedulinEnvironment) -> str:
