@@ -75,7 +75,7 @@ if typing.TYPE_CHECKING:
         UnauthorizedError,
         UnprocessableEntityError,
     )
-    from . import ai, analytics, media, platforms, posts, profiles, social_accounts, tags, webhooks, workspace
+    from . import ai, analytics, ideas, media, platforms, posts, profiles, social_accounts, tags, webhooks, workspace
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .ai import GenerateImageAiRequestModelKey, GenerateImageAiResponse
     from .analytics import (
@@ -93,6 +93,14 @@ if typing.TYPE_CHECKING:
     )
     from .client import AsyncSchedulin, Schedulin
     from .environment import SchedulinEnvironment
+    from .ideas import (
+        CreateIdeasResponse,
+        DeleteIdeasResponse,
+        ListIdeasResponse,
+        ListIdeasResponseColumnsItem,
+        ListIdeasResponseIdeasItem,
+        UpdateIdeasResponse,
+    )
     from .media import (
         CountByTagMediaResponse,
         CountByTagMediaResponseDataItem,
@@ -219,6 +227,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CountByTagMediaResponse": ".media",
     "CountByTagMediaResponseDataItem": ".media",
     "CreateConnectLinkProfilesResponse": ".profiles",
+    "CreateIdeasResponse": ".ideas",
     "CreatePostsResponse": ".posts",
     "CreatePostsResponseMediaItem": ".posts",
     "CreatePostsResponseMediaItemTagsItem": ".posts",
@@ -229,6 +238,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateWebhooksRequestEventsItem": ".webhooks",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
+    "DeleteIdeasResponse": ".ideas",
     "DeleteMediaResponse": ".media",
     "DeleteProfilesResponse": ".profiles",
     "DeleteSocialAccountsResponse": ".social_accounts",
@@ -245,6 +255,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListDeliveriesWebhooksResponse": ".webhooks",
     "ListDiscordChannelsSocialAccountsResponse": ".social_accounts",
     "ListDiscordChannelsSocialAccountsResponseItemsItem": ".social_accounts",
+    "ListIdeasResponse": ".ideas",
+    "ListIdeasResponseColumnsItem": ".ideas",
+    "ListIdeasResponseIdeasItem": ".ideas",
     "ListMediaRequestTagMode": ".media",
     "ListMediaRequestType": ".media",
     "ListMediaResponse": ".media",
@@ -362,6 +375,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TopPostsAnalyticsResponsePostsItem": ".analytics",
     "UnauthorizedError": ".errors",
     "UnprocessableEntityError": ".errors",
+    "UpdateIdeasResponse": ".ideas",
     "UpdatePostsRequestMediaItem": ".posts",
     "UpdatePostsRequestMediaItemTagsItem": ".posts",
     "UpdatePostsRequestMediaItemTagsItemPlatform": ".posts",
@@ -384,6 +398,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WebhookEndpointEventsItem": ".types",
     "ai": ".ai",
     "analytics": ".analytics",
+    "ideas": ".ideas",
     "media": ".media",
     "platforms": ".platforms",
     "posts": ".posts",
@@ -434,6 +449,7 @@ __all__ = [
     "CountByTagMediaResponse",
     "CountByTagMediaResponseDataItem",
     "CreateConnectLinkProfilesResponse",
+    "CreateIdeasResponse",
     "CreatePostsResponse",
     "CreatePostsResponseMediaItem",
     "CreatePostsResponseMediaItemTagsItem",
@@ -444,6 +460,7 @@ __all__ = [
     "CreateWebhooksRequestEventsItem",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
+    "DeleteIdeasResponse",
     "DeleteMediaResponse",
     "DeleteProfilesResponse",
     "DeleteSocialAccountsResponse",
@@ -460,6 +477,9 @@ __all__ = [
     "ListDeliveriesWebhooksResponse",
     "ListDiscordChannelsSocialAccountsResponse",
     "ListDiscordChannelsSocialAccountsResponseItemsItem",
+    "ListIdeasResponse",
+    "ListIdeasResponseColumnsItem",
+    "ListIdeasResponseIdeasItem",
     "ListMediaRequestTagMode",
     "ListMediaRequestType",
     "ListMediaResponse",
@@ -577,6 +597,7 @@ __all__ = [
     "TopPostsAnalyticsResponsePostsItem",
     "UnauthorizedError",
     "UnprocessableEntityError",
+    "UpdateIdeasResponse",
     "UpdatePostsRequestMediaItem",
     "UpdatePostsRequestMediaItemTagsItem",
     "UpdatePostsRequestMediaItemTagsItemPlatform",
@@ -599,6 +620,7 @@ __all__ = [
     "WebhookEndpointEventsItem",
     "ai",
     "analytics",
+    "ideas",
     "media",
     "platforms",
     "posts",

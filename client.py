@@ -12,6 +12,7 @@ from .environment import SchedulinEnvironment
 if typing.TYPE_CHECKING:
     from .ai.client import AiClient, AsyncAiClient
     from .analytics.client import AnalyticsClient, AsyncAnalyticsClient
+    from .ideas.client import AsyncIdeasClient, IdeasClient
     from .media.client import AsyncMediaClient, MediaClient
     from .platforms.client import AsyncPlatformsClient, PlatformsClient
     from .posts.client import AsyncPostsClient, PostsClient
@@ -114,6 +115,7 @@ class Schedulin:
         self._ai: typing.Optional[AiClient] = None
         self._webhooks: typing.Optional[WebhooksClient] = None
         self._profiles: typing.Optional[ProfilesClient] = None
+        self._ideas: typing.Optional[IdeasClient] = None
         self._workspace: typing.Optional[WorkspaceClient] = None
         self._analytics: typing.Optional[AnalyticsClient] = None
 
@@ -180,6 +182,14 @@ class Schedulin:
 
             self._profiles = ProfilesClient(client_wrapper=self._client_wrapper)
         return self._profiles
+
+    @property
+    def ideas(self):
+        if self._ideas is None:
+            from .ideas.client import IdeasClient  # noqa: E402
+
+            self._ideas = IdeasClient(client_wrapper=self._client_wrapper)
+        return self._ideas
 
     @property
     def workspace(self):
@@ -306,6 +316,7 @@ class AsyncSchedulin:
         self._ai: typing.Optional[AsyncAiClient] = None
         self._webhooks: typing.Optional[AsyncWebhooksClient] = None
         self._profiles: typing.Optional[AsyncProfilesClient] = None
+        self._ideas: typing.Optional[AsyncIdeasClient] = None
         self._workspace: typing.Optional[AsyncWorkspaceClient] = None
         self._analytics: typing.Optional[AsyncAnalyticsClient] = None
 
@@ -372,6 +383,14 @@ class AsyncSchedulin:
 
             self._profiles = AsyncProfilesClient(client_wrapper=self._client_wrapper)
         return self._profiles
+
+    @property
+    def ideas(self):
+        if self._ideas is None:
+            from .ideas.client import AsyncIdeasClient  # noqa: E402
+
+            self._ideas = AsyncIdeasClient(client_wrapper=self._client_wrapper)
+        return self._ideas
 
     @property
     def workspace(self):

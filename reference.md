@@ -4720,6 +4720,329 @@ client.profiles.create_connect_link(
 </dl>
 </details>
 
+## Ideas
+<details><summary><code>client.ideas.<a href="src/schedulin/ideas/client.py">list</a>() -> ListIdeasResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+The workspace's Ideas board: its columns in order (the last column is Done) and every idea that isn't archived, ordered by column position.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from schedulin import Schedulin
+from schedulin.environment import SchedulinEnvironment
+
+client = Schedulin(
+    api_key="<value>",
+    environment=SchedulinEnvironment.DEFAULT,
+)
+
+client.ideas.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.ideas.<a href="src/schedulin/ideas/client.py">create</a>(...) -> CreateIdeasResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add an idea to the bottom of a column (the first column when `columnId` is omitted). Creates the workspace's Ideas board if it doesn't exist yet.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from schedulin import Schedulin
+from schedulin.environment import SchedulinEnvironment
+
+client = Schedulin(
+    api_key="<value>",
+    environment=SchedulinEnvironment.DEFAULT,
+)
+
+client.ideas.create(
+    title="title",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**title:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**column_id:** `typing.Optional[str]` — Column to add the idea to; defaults to the first column
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.ideas.<a href="src/schedulin/ideas/client.py">delete</a>(...) -> DeleteIdeasResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Permanently delete an idea from the Ideas board.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from schedulin import Schedulin
+from schedulin.environment import SchedulinEnvironment
+
+client = Schedulin(
+    api_key="<value>",
+    environment=SchedulinEnvironment.DEFAULT,
+)
+
+client.ideas.delete(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.ideas.<a href="src/schedulin/ideas/client.py">update</a>(...) -> UpdateIdeasResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Change an idea's title or description, or move it to the bottom of another column with `columnId`. Moving into the last (Done) column marks it completed; moving out clears that.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from schedulin import Schedulin
+from schedulin.environment import SchedulinEnvironment
+
+client = Schedulin(
+    api_key="<value>",
+    environment=SchedulinEnvironment.DEFAULT,
+)
+
+client.ideas.update(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**column_id:** `typing.Optional[str]` — Move the idea to the bottom of this column
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Workspace
 <details><summary><code>client.workspace.<a href="src/schedulin/workspace/client.py">retrieve</a>() -> RetrieveWorkspaceResponse</code></summary>
 <dl>
