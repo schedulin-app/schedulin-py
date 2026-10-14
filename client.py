@@ -19,6 +19,7 @@ if typing.TYPE_CHECKING:
     from .social_accounts.client import AsyncSocialAccountsClient, SocialAccountsClient
     from .tags.client import AsyncTagsClient, TagsClient
     from .webhooks.client import AsyncWebhooksClient, WebhooksClient
+    from .workspace.client import AsyncWorkspaceClient, WorkspaceClient
 
 
 class Schedulin:
@@ -113,6 +114,7 @@ class Schedulin:
         self._ai: typing.Optional[AiClient] = None
         self._webhooks: typing.Optional[WebhooksClient] = None
         self._profiles: typing.Optional[ProfilesClient] = None
+        self._workspace: typing.Optional[WorkspaceClient] = None
         self._analytics: typing.Optional[AnalyticsClient] = None
 
     @property
@@ -178,6 +180,14 @@ class Schedulin:
 
             self._profiles = ProfilesClient(client_wrapper=self._client_wrapper)
         return self._profiles
+
+    @property
+    def workspace(self):
+        if self._workspace is None:
+            from .workspace.client import WorkspaceClient  # noqa: E402
+
+            self._workspace = WorkspaceClient(client_wrapper=self._client_wrapper)
+        return self._workspace
 
     @property
     def analytics(self):
@@ -296,6 +306,7 @@ class AsyncSchedulin:
         self._ai: typing.Optional[AsyncAiClient] = None
         self._webhooks: typing.Optional[AsyncWebhooksClient] = None
         self._profiles: typing.Optional[AsyncProfilesClient] = None
+        self._workspace: typing.Optional[AsyncWorkspaceClient] = None
         self._analytics: typing.Optional[AsyncAnalyticsClient] = None
 
     @property
@@ -361,6 +372,14 @@ class AsyncSchedulin:
 
             self._profiles = AsyncProfilesClient(client_wrapper=self._client_wrapper)
         return self._profiles
+
+    @property
+    def workspace(self):
+        if self._workspace is None:
+            from .workspace.client import AsyncWorkspaceClient  # noqa: E402
+
+            self._workspace = AsyncWorkspaceClient(client_wrapper=self._client_wrapper)
+        return self._workspace
 
     @property
     def analytics(self):

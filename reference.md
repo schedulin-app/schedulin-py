@@ -4720,6 +4720,70 @@ client.profiles.create_connect_link(
 </dl>
 </details>
 
+## Workspace
+<details><summary><code>client.workspace.<a href="src/schedulin/workspace/client.py">retrieve</a>() -> RetrieveWorkspaceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+The workspace the API key or OAuth token is scoped to: its name, the caller's role, whether posts need approval, the active plan, and usage against plan limits (connected channels, and posts used during a free trial). Check `plan.active` and `limits` before bulk scheduling to avoid `402` responses.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from schedulin import Schedulin
+from schedulin.environment import SchedulinEnvironment
+
+client = Schedulin(
+    api_key="<value>",
+    environment=SchedulinEnvironment.DEFAULT,
+)
+
+client.workspace.retrieve()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Analytics
 <details><summary><code>client.analytics.<a href="src/schedulin/analytics/client.py">overview</a>(...) -> OverviewAnalyticsResponse</code></summary>
 <dl>

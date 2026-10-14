@@ -75,7 +75,7 @@ if typing.TYPE_CHECKING:
         UnauthorizedError,
         UnprocessableEntityError,
     )
-    from . import ai, analytics, media, platforms, posts, profiles, social_accounts, tags, webhooks
+    from . import ai, analytics, media, platforms, posts, profiles, social_accounts, tags, webhooks, workspace
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .ai import GenerateImageAiRequestModelKey, GenerateImageAiResponse
     from .analytics import (
@@ -193,6 +193,13 @@ if typing.TYPE_CHECKING:
         ListWebhooksResponse,
         TestWebhooksResponse,
         UpdateWebhooksRequestEventsItem,
+    )
+    from .workspace import (
+        RetrieveWorkspaceResponse,
+        RetrieveWorkspaceResponseLimits,
+        RetrieveWorkspaceResponseLimitsChannels,
+        RetrieveWorkspaceResponseLimitsTrialPosts,
+        RetrieveWorkspaceResponsePlan,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "AiGeneration": ".types",
@@ -325,6 +332,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ReplaceQueueScheduleSocialAccountsRequestTimesItem": ".social_accounts",
     "ReplaceQueueScheduleSocialAccountsResponse": ".social_accounts",
     "ReplaceQueueScheduleSocialAccountsResponseTimesItem": ".social_accounts",
+    "RetrieveWorkspaceResponse": ".workspace",
+    "RetrieveWorkspaceResponseLimits": ".workspace",
+    "RetrieveWorkspaceResponseLimitsChannels": ".workspace",
+    "RetrieveWorkspaceResponseLimitsTrialPosts": ".workspace",
+    "RetrieveWorkspaceResponsePlan": ".workspace",
     "Schedulin": ".client",
     "SchedulinEnvironment": ".environment",
     "SetTagsMediaResponse": ".media",
@@ -379,6 +391,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "social_accounts": ".social_accounts",
     "tags": ".tags",
     "webhooks": ".webhooks",
+    "workspace": ".workspace",
 }
 
 
@@ -534,6 +547,11 @@ __all__ = [
     "ReplaceQueueScheduleSocialAccountsRequestTimesItem",
     "ReplaceQueueScheduleSocialAccountsResponse",
     "ReplaceQueueScheduleSocialAccountsResponseTimesItem",
+    "RetrieveWorkspaceResponse",
+    "RetrieveWorkspaceResponseLimits",
+    "RetrieveWorkspaceResponseLimitsChannels",
+    "RetrieveWorkspaceResponseLimitsTrialPosts",
+    "RetrieveWorkspaceResponsePlan",
     "Schedulin",
     "SchedulinEnvironment",
     "SetTagsMediaResponse",
@@ -588,4 +606,5 @@ __all__ = [
     "social_accounts",
     "tags",
     "webhooks",
+    "workspace",
 ]
