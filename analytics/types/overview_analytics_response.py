@@ -12,7 +12,7 @@ class OverviewAnalyticsResponse(UniversalBaseModel):
     totals: OverviewAnalyticsResponseTotals
     trend: OverviewAnalyticsResponseTrend = pydantic.Field()
     """
-    Percent change vs the previous window of the same length; null when the previous window was zero
+    Percent change vs the previous window of the same length: 0 when both windows are zero, null when only the previous window is zero
     """
 
     if IS_PYDANTIC_V2:

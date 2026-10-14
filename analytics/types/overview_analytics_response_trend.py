@@ -8,7 +8,7 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class OverviewAnalyticsResponseTrend(UniversalBaseModel):
     """
-    Percent change vs the previous window of the same length; null when the previous window was zero
+    Percent change vs the previous window of the same length: 0 when both windows are zero, null when only the previous window is zero
     """
 
     impressions: typing.Optional[float] = None
