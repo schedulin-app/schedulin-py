@@ -189,79 +189,7 @@ client.posts.create(
 <dl>
 <dd>
 
-**caption:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**social_account_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scheduled_at:** `typing.Optional[datetime.datetime]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**media:** `typing.Optional[typing.List[PostCreateMediaItem]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**thumbnail:** `typing.Optional[PostCreateThumbnail]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**platform_configuration:** `typing.Optional[typing.Dict[str, typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tag_ids:** `typing.Optional[typing.List[str]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**action:** `typing.Optional[PostCreateAction]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**parts:** `typing.Optional[typing.List[PostCreatePartsItem]]` 
+**request:** `PostCreate` 
     
 </dd>
 </dl>
@@ -1024,6 +952,93 @@ client.posts.update_tags(
 <dd>
 
 **tag_ids:** `typing.List[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## PostGroups
+<details><summary><code>client.post_groups.<a href="src/schedulin/post_groups/client.py">create</a>(...) -> CreatePostGroupsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create posts for several social accounts in one request — for example the same caption and image sent to Instagram, Threads and Facebook. Each post is validated exactly like `POST /v0/posts` (including per-platform rules), and media may reference stored library URLs or publicly reachable URLs; an external URL shared by several posts is imported once. The request is atomic: if any post is invalid, nothing is created. Posts with `action: "queue"` on the same account take consecutive queue slots. Up to 50 posts per request.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from schedulin import Schedulin, PostCreate
+from schedulin.environment import SchedulinEnvironment
+
+client = Schedulin(
+    api_key="<value>",
+    environment=SchedulinEnvironment.DEFAULT,
+)
+
+client.post_groups.create(
+    posts=[
+        PostCreate(
+            caption="caption",
+            social_account_id="socialAccountId",
+        )
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**posts:** `typing.List[PostCreate]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` 
     
 </dd>
 </dl>

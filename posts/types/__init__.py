@@ -20,20 +20,6 @@ if typing.TYPE_CHECKING:
     from .list_posts_request_statuses_item import ListPostsRequestStatusesItem
     from .list_posts_request_tag_mode import ListPostsRequestTagMode
     from .list_posts_response import ListPostsResponse
-    from .post_create_action import PostCreateAction
-    from .post_create_media_item import PostCreateMediaItem
-    from .post_create_media_item_tags_item import PostCreateMediaItemTagsItem
-    from .post_create_media_item_tags_item_platform import PostCreateMediaItemTagsItemPlatform
-    from .post_create_media_item_tags_item_type import PostCreateMediaItemTagsItemType
-    from .post_create_parts_item import PostCreatePartsItem
-    from .post_create_parts_item_media_item import PostCreatePartsItemMediaItem
-    from .post_create_parts_item_media_item_tags_item import PostCreatePartsItemMediaItemTagsItem
-    from .post_create_parts_item_media_item_tags_item_platform import PostCreatePartsItemMediaItemTagsItemPlatform
-    from .post_create_parts_item_media_item_tags_item_type import PostCreatePartsItemMediaItemTagsItemType
-    from .post_create_thumbnail import PostCreateThumbnail
-    from .post_create_thumbnail_tags_item import PostCreateThumbnailTagsItem
-    from .post_create_thumbnail_tags_item_platform import PostCreateThumbnailTagsItemPlatform
-    from .post_create_thumbnail_tags_item_type import PostCreateThumbnailTagsItemType
     from .update_posts_request_media_item import UpdatePostsRequestMediaItem
     from .update_posts_request_media_item_tags_item import UpdatePostsRequestMediaItemTagsItem
     from .update_posts_request_media_item_tags_item_platform import UpdatePostsRequestMediaItemTagsItemPlatform
@@ -63,20 +49,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListPostsRequestStatusesItem": ".list_posts_request_statuses_item",
     "ListPostsRequestTagMode": ".list_posts_request_tag_mode",
     "ListPostsResponse": ".list_posts_response",
-    "PostCreateAction": ".post_create_action",
-    "PostCreateMediaItem": ".post_create_media_item",
-    "PostCreateMediaItemTagsItem": ".post_create_media_item_tags_item",
-    "PostCreateMediaItemTagsItemPlatform": ".post_create_media_item_tags_item_platform",
-    "PostCreateMediaItemTagsItemType": ".post_create_media_item_tags_item_type",
-    "PostCreatePartsItem": ".post_create_parts_item",
-    "PostCreatePartsItemMediaItem": ".post_create_parts_item_media_item",
-    "PostCreatePartsItemMediaItemTagsItem": ".post_create_parts_item_media_item_tags_item",
-    "PostCreatePartsItemMediaItemTagsItemPlatform": ".post_create_parts_item_media_item_tags_item_platform",
-    "PostCreatePartsItemMediaItemTagsItemType": ".post_create_parts_item_media_item_tags_item_type",
-    "PostCreateThumbnail": ".post_create_thumbnail",
-    "PostCreateThumbnailTagsItem": ".post_create_thumbnail_tags_item",
-    "PostCreateThumbnailTagsItemPlatform": ".post_create_thumbnail_tags_item_platform",
-    "PostCreateThumbnailTagsItemType": ".post_create_thumbnail_tags_item_type",
     "UpdatePostsRequestMediaItem": ".update_posts_request_media_item",
     "UpdatePostsRequestMediaItemTagsItem": ".update_posts_request_media_item_tags_item",
     "UpdatePostsRequestMediaItemTagsItemPlatform": ".update_posts_request_media_item_tags_item_platform",
@@ -126,20 +98,6 @@ __all__ = [
     "ListPostsRequestStatusesItem",
     "ListPostsRequestTagMode",
     "ListPostsResponse",
-    "PostCreateAction",
-    "PostCreateMediaItem",
-    "PostCreateMediaItemTagsItem",
-    "PostCreateMediaItemTagsItemPlatform",
-    "PostCreateMediaItemTagsItemType",
-    "PostCreatePartsItem",
-    "PostCreatePartsItemMediaItem",
-    "PostCreatePartsItemMediaItemTagsItem",
-    "PostCreatePartsItemMediaItemTagsItemPlatform",
-    "PostCreatePartsItemMediaItemTagsItemType",
-    "PostCreateThumbnail",
-    "PostCreateThumbnailTagsItem",
-    "PostCreateThumbnailTagsItemPlatform",
-    "PostCreateThumbnailTagsItemType",
     "UpdatePostsRequestMediaItem",
     "UpdatePostsRequestMediaItemTagsItem",
     "UpdatePostsRequestMediaItemTagsItemPlatform",

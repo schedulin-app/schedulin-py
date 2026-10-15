@@ -15,6 +15,7 @@ if typing.TYPE_CHECKING:
     from .ideas.client import AsyncIdeasClient, IdeasClient
     from .media.client import AsyncMediaClient, MediaClient
     from .platforms.client import AsyncPlatformsClient, PlatformsClient
+    from .post_groups.client import AsyncPostGroupsClient, PostGroupsClient
     from .posts.client import AsyncPostsClient, PostsClient
     from .profiles.client import AsyncProfilesClient, ProfilesClient
     from .social_accounts.client import AsyncSocialAccountsClient, SocialAccountsClient
@@ -108,6 +109,7 @@ class Schedulin:
             logging=logging,
         )
         self._posts: typing.Optional[PostsClient] = None
+        self._post_groups: typing.Optional[PostGroupsClient] = None
         self._social_accounts: typing.Optional[SocialAccountsClient] = None
         self._tags: typing.Optional[TagsClient] = None
         self._media: typing.Optional[MediaClient] = None
@@ -126,6 +128,14 @@ class Schedulin:
 
             self._posts = PostsClient(client_wrapper=self._client_wrapper)
         return self._posts
+
+    @property
+    def post_groups(self):
+        if self._post_groups is None:
+            from .post_groups.client import PostGroupsClient  # noqa: E402
+
+            self._post_groups = PostGroupsClient(client_wrapper=self._client_wrapper)
+        return self._post_groups
 
     @property
     def social_accounts(self):
@@ -309,6 +319,7 @@ class AsyncSchedulin:
             logging=logging,
         )
         self._posts: typing.Optional[AsyncPostsClient] = None
+        self._post_groups: typing.Optional[AsyncPostGroupsClient] = None
         self._social_accounts: typing.Optional[AsyncSocialAccountsClient] = None
         self._tags: typing.Optional[AsyncTagsClient] = None
         self._media: typing.Optional[AsyncMediaClient] = None
@@ -327,6 +338,14 @@ class AsyncSchedulin:
 
             self._posts = AsyncPostsClient(client_wrapper=self._client_wrapper)
         return self._posts
+
+    @property
+    def post_groups(self):
+        if self._post_groups is None:
+            from .post_groups.client import AsyncPostGroupsClient  # noqa: E402
+
+            self._post_groups = AsyncPostGroupsClient(client_wrapper=self._client_wrapper)
+        return self._post_groups
 
     @property
     def social_accounts(self):

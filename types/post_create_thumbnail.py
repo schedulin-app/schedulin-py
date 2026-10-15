@@ -4,16 +4,16 @@ import typing
 
 import pydantic
 import typing_extensions
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from ...core.serialization import FieldMetadata
-from .post_create_parts_item_media_item_tags_item import PostCreatePartsItemMediaItemTagsItem
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
+from .post_create_thumbnail_tags_item import PostCreateThumbnailTagsItem
 
 
-class PostCreatePartsItemMediaItem(UniversalBaseModel):
+class PostCreateThumbnail(UniversalBaseModel):
     url: str
     thumbnail_url: typing.Optional[str] = None
     thumbnail_timestamp_ms: typing.Optional[float] = None
-    tags: typing.Optional[typing.List[PostCreatePartsItemMediaItemTagsItem]] = None
+    tags: typing.Optional[typing.List[PostCreateThumbnailTagsItem]] = None
     alt: typing.Optional[str] = None
     skip_processing: typing.Optional[bool] = None
     name: typing.Optional[str] = None

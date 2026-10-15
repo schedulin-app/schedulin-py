@@ -19,6 +19,7 @@ if typing.TYPE_CHECKING:
     )
     from .list_social_accounts_response import ListSocialAccountsResponse
     from .list_social_accounts_response_data_item import ListSocialAccountsResponseDataItem
+    from .list_social_accounts_response_data_item_connected_via import ListSocialAccountsResponseDataItemConnectedVia
     from .list_social_accounts_response_data_item_platform import ListSocialAccountsResponseDataItemPlatform
     from .list_social_accounts_response_data_item_status import ListSocialAccountsResponseDataItemStatus
     from .list_whop_companies_social_accounts_response import ListWhopCompaniesSocialAccountsResponse
@@ -56,6 +57,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListSlackChannelsSocialAccountsResponseItemsItem": ".list_slack_channels_social_accounts_response_items_item",
     "ListSocialAccountsResponse": ".list_social_accounts_response",
     "ListSocialAccountsResponseDataItem": ".list_social_accounts_response_data_item",
+    "ListSocialAccountsResponseDataItemConnectedVia": ".list_social_accounts_response_data_item_connected_via",
     "ListSocialAccountsResponseDataItemPlatform": ".list_social_accounts_response_data_item_platform",
     "ListSocialAccountsResponseDataItemStatus": ".list_social_accounts_response_data_item_status",
     "ListWhopCompaniesSocialAccountsResponse": ".list_whop_companies_social_accounts_response",
@@ -109,6 +111,7 @@ __all__ = [
     "ListSlackChannelsSocialAccountsResponseItemsItem",
     "ListSocialAccountsResponse",
     "ListSocialAccountsResponseDataItem",
+    "ListSocialAccountsResponseDataItemConnectedVia",
     "ListSocialAccountsResponseDataItemPlatform",
     "ListSocialAccountsResponseDataItemStatus",
     "ListWhopCompaniesSocialAccountsResponse",

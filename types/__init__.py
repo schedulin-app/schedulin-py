@@ -11,6 +11,7 @@ if typing.TYPE_CHECKING:
     from .analytics_status import AnalyticsStatus
     from .client_profile import ClientProfile
     from .client_profile_social_accounts_item import ClientProfileSocialAccountsItem
+    from .client_profile_social_accounts_item_connected_via import ClientProfileSocialAccountsItemConnectedVia
     from .client_profile_social_accounts_item_platform import ClientProfileSocialAccountsItemPlatform
     from .client_profile_social_accounts_item_status import ClientProfileSocialAccountsItemStatus
     from .error_response import ErrorResponse
@@ -26,6 +27,21 @@ if typing.TYPE_CHECKING:
     from .oauth_scope import OauthScope
     from .post import Post
     from .post_approval_status import PostApprovalStatus
+    from .post_create import PostCreate
+    from .post_create_action import PostCreateAction
+    from .post_create_media_item import PostCreateMediaItem
+    from .post_create_media_item_tags_item import PostCreateMediaItemTagsItem
+    from .post_create_media_item_tags_item_platform import PostCreateMediaItemTagsItemPlatform
+    from .post_create_media_item_tags_item_type import PostCreateMediaItemTagsItemType
+    from .post_create_parts_item import PostCreatePartsItem
+    from .post_create_parts_item_media_item import PostCreatePartsItemMediaItem
+    from .post_create_parts_item_media_item_tags_item import PostCreatePartsItemMediaItemTagsItem
+    from .post_create_parts_item_media_item_tags_item_platform import PostCreatePartsItemMediaItemTagsItemPlatform
+    from .post_create_parts_item_media_item_tags_item_type import PostCreatePartsItemMediaItemTagsItemType
+    from .post_create_thumbnail import PostCreateThumbnail
+    from .post_create_thumbnail_tags_item import PostCreateThumbnailTagsItem
+    from .post_create_thumbnail_tags_item_platform import PostCreateThumbnailTagsItemPlatform
+    from .post_create_thumbnail_tags_item_type import PostCreateThumbnailTagsItemType
     from .post_media import PostMedia
     from .post_media_tags_item import PostMediaTagsItem
     from .post_media_tags_item_platform import PostMediaTagsItemPlatform
@@ -68,6 +84,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AnalyticsStatus": ".analytics_status",
     "ClientProfile": ".client_profile",
     "ClientProfileSocialAccountsItem": ".client_profile_social_accounts_item",
+    "ClientProfileSocialAccountsItemConnectedVia": ".client_profile_social_accounts_item_connected_via",
     "ClientProfileSocialAccountsItemPlatform": ".client_profile_social_accounts_item_platform",
     "ClientProfileSocialAccountsItemStatus": ".client_profile_social_accounts_item_status",
     "ErrorResponse": ".error_response",
@@ -83,6 +100,21 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OauthScope": ".oauth_scope",
     "Post": ".post",
     "PostApprovalStatus": ".post_approval_status",
+    "PostCreate": ".post_create",
+    "PostCreateAction": ".post_create_action",
+    "PostCreateMediaItem": ".post_create_media_item",
+    "PostCreateMediaItemTagsItem": ".post_create_media_item_tags_item",
+    "PostCreateMediaItemTagsItemPlatform": ".post_create_media_item_tags_item_platform",
+    "PostCreateMediaItemTagsItemType": ".post_create_media_item_tags_item_type",
+    "PostCreatePartsItem": ".post_create_parts_item",
+    "PostCreatePartsItemMediaItem": ".post_create_parts_item_media_item",
+    "PostCreatePartsItemMediaItemTagsItem": ".post_create_parts_item_media_item_tags_item",
+    "PostCreatePartsItemMediaItemTagsItemPlatform": ".post_create_parts_item_media_item_tags_item_platform",
+    "PostCreatePartsItemMediaItemTagsItemType": ".post_create_parts_item_media_item_tags_item_type",
+    "PostCreateThumbnail": ".post_create_thumbnail",
+    "PostCreateThumbnailTagsItem": ".post_create_thumbnail_tags_item",
+    "PostCreateThumbnailTagsItemPlatform": ".post_create_thumbnail_tags_item_platform",
+    "PostCreateThumbnailTagsItemType": ".post_create_thumbnail_tags_item_type",
     "PostMedia": ".post_media",
     "PostMediaTagsItem": ".post_media_tags_item",
     "PostMediaTagsItemPlatform": ".post_media_tags_item_platform",
@@ -149,6 +181,7 @@ __all__ = [
     "AnalyticsStatus",
     "ClientProfile",
     "ClientProfileSocialAccountsItem",
+    "ClientProfileSocialAccountsItemConnectedVia",
     "ClientProfileSocialAccountsItemPlatform",
     "ClientProfileSocialAccountsItemStatus",
     "ErrorResponse",
@@ -164,6 +197,21 @@ __all__ = [
     "OauthScope",
     "Post",
     "PostApprovalStatus",
+    "PostCreate",
+    "PostCreateAction",
+    "PostCreateMediaItem",
+    "PostCreateMediaItemTagsItem",
+    "PostCreateMediaItemTagsItemPlatform",
+    "PostCreateMediaItemTagsItemType",
+    "PostCreatePartsItem",
+    "PostCreatePartsItemMediaItem",
+    "PostCreatePartsItemMediaItemTagsItem",
+    "PostCreatePartsItemMediaItemTagsItemPlatform",
+    "PostCreatePartsItemMediaItemTagsItemType",
+    "PostCreateThumbnail",
+    "PostCreateThumbnailTagsItem",
+    "PostCreateThumbnailTagsItemPlatform",
+    "PostCreateThumbnailTagsItemType",
     "PostMedia",
     "PostMediaTagsItem",
     "PostMediaTagsItemPlatform",

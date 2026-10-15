@@ -24,6 +24,10 @@ from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.error_response import ErrorResponse
 from ..types.list_posts_request_scheduled_at import ListPostsRequestScheduledAt
 from ..types.post import Post
+from ..types.post_create_action import PostCreateAction
+from ..types.post_create_media_item import PostCreateMediaItem
+from ..types.post_create_parts_item import PostCreatePartsItem
+from ..types.post_create_thumbnail import PostCreateThumbnail
 from ..types.post_with_relations import PostWithRelations
 from ..types.rate_limit_error_response import RateLimitErrorResponse
 from ..types.validation_error_response import ValidationErrorResponse
@@ -36,10 +40,6 @@ from .types.list_posts_request_status import ListPostsRequestStatus
 from .types.list_posts_request_statuses_item import ListPostsRequestStatusesItem
 from .types.list_posts_request_tag_mode import ListPostsRequestTagMode
 from .types.list_posts_response import ListPostsResponse
-from .types.post_create_action import PostCreateAction
-from .types.post_create_media_item import PostCreateMediaItem
-from .types.post_create_parts_item import PostCreatePartsItem
-from .types.post_create_thumbnail import PostCreateThumbnail
 from .types.update_posts_request_media_item import UpdatePostsRequestMediaItem
 from .types.update_posts_request_parts_item import UpdatePostsRequestPartsItem
 from .types.update_posts_request_status import UpdatePostsRequestStatus
@@ -271,9 +271,6 @@ class RawPostsClient:
                 "parts": convert_and_respect_annotation_metadata(
                     object_=parts, annotation=typing.Sequence[PostCreatePartsItem], direction="write"
                 ),
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -1856,9 +1853,6 @@ class AsyncRawPostsClient:
                 "parts": convert_and_respect_annotation_metadata(
                     object_=parts, annotation=typing.Sequence[PostCreatePartsItem], direction="write"
                 ),
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

@@ -3,15 +3,15 @@
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .post_create_media_item_tags_item_platform import PostCreateMediaItemTagsItemPlatform
-from .post_create_media_item_tags_item_type import PostCreateMediaItemTagsItemType
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .post_create_thumbnail_tags_item_platform import PostCreateThumbnailTagsItemPlatform
+from .post_create_thumbnail_tags_item_type import PostCreateThumbnailTagsItemType
 
 
-class PostCreateMediaItemTagsItem(UniversalBaseModel):
+class PostCreateThumbnailTagsItem(UniversalBaseModel):
     id: str
-    type: PostCreateMediaItemTagsItemType
-    platform: PostCreateMediaItemTagsItemPlatform
+    type: PostCreateThumbnailTagsItemType
+    platform: PostCreateThumbnailTagsItemPlatform
     x: typing.Optional[float] = None
     y: typing.Optional[float] = None
 

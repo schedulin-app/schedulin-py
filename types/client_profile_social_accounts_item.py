@@ -7,6 +7,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
+from .client_profile_social_accounts_item_connected_via import ClientProfileSocialAccountsItemConnectedVia
 from .client_profile_social_accounts_item_platform import ClientProfileSocialAccountsItemPlatform
 from .client_profile_social_accounts_item_status import ClientProfileSocialAccountsItemStatus
 from .social_account_disconnected_reason import SocialAccountDisconnectedReason
@@ -44,6 +45,18 @@ class ClientProfileSocialAccountsItem(UniversalBaseModel):
     profile_id: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="profileId"), pydantic.Field(alias="profileId")
     ] = None
+    connected_via: typing_extensions.Annotated[
+        typing.Optional[ClientProfileSocialAccountsItemConnectedVia],
+        FieldMetadata(alias="connectedVia"),
+        pydantic.Field(
+            alias="connectedVia",
+            description="The platform profile whose login connected this account (e.g. the Facebook user a Page was connected through). Null when unknown.",
+        ),
+    ] = None
+    """
+    The platform profile whose login connected this account (e.g. the Facebook user a Page was connected through). Null when unknown.
+    """
+
     created_at: typing_extensions.Annotated[
         dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
     ]
