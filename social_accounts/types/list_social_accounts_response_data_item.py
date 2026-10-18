@@ -26,6 +26,11 @@ class ListSocialAccountsResponseDataItem(UniversalBaseModel):
     display_name: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="displayName"), pydantic.Field(alias="displayName")
     ] = None
+    handle: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The account's platform @handle when known (e.g. TikTok username), without the @. Null when unknown.
+    """
+
     profile_image_url: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="profileImageUrl"), pydantic.Field(alias="profileImageUrl")
     ] = None
