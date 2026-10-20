@@ -14,6 +14,7 @@ ListSocialAccountsResponseDataItemPlatform = typing.Union[
         "snapchat",
         "threads",
         "tiktok",
+        "tiktok_business",
         "twitter",
         "youtube",
         "mastodon",
