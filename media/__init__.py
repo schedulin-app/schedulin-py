@@ -9,6 +9,7 @@ if typing.TYPE_CHECKING:
     from .types import (
         CountByTagMediaResponse,
         CountByTagMediaResponseDataItem,
+        CreateFromUrlMediaRequestFitToPlatformsItem,
         CreatePresignedPostIntent,
         CreateUploadLinkMediaResponse,
         DeleteMediaResponse,
@@ -20,6 +21,7 @@ if typing.TYPE_CHECKING:
 _dynamic_imports: typing.Dict[str, str] = {
     "CountByTagMediaResponse": ".types",
     "CountByTagMediaResponseDataItem": ".types",
+    "CreateFromUrlMediaRequestFitToPlatformsItem": ".types",
     "CreatePresignedPostIntent": ".types",
     "CreateUploadLinkMediaResponse": ".types",
     "DeleteMediaResponse": ".types",
@@ -54,6 +56,7 @@ def __dir__():
 __all__ = [
     "CountByTagMediaResponse",
     "CountByTagMediaResponseDataItem",
+    "CreateFromUrlMediaRequestFitToPlatformsItem",
     "CreatePresignedPostIntent",
     "CreateUploadLinkMediaResponse",
     "DeleteMediaResponse",

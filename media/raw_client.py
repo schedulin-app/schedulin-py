@@ -25,6 +25,7 @@ from ..types.presigned_post import PresignedPost
 from ..types.rate_limit_error_response import RateLimitErrorResponse
 from ..types.validation_error_response import ValidationErrorResponse
 from .types.count_by_tag_media_response import CountByTagMediaResponse
+from .types.create_from_url_media_request_fit_to_platforms_item import CreateFromUrlMediaRequestFitToPlatformsItem
 from .types.create_presigned_post_intent import CreatePresignedPostIntent
 from .types.create_upload_link_media_response import CreateUploadLinkMediaResponse
 from .types.delete_media_response import DeleteMediaResponse
@@ -49,6 +50,7 @@ class RawMediaClient:
         name: typing.Optional[str] = OMIT,
         alt: typing.Optional[str] = OMIT,
         content_type: typing.Optional[str] = OMIT,
+        fit_to_platforms: typing.Optional[typing.Sequence[CreateFromUrlMediaRequestFitToPlatformsItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Media]:
         """
@@ -63,6 +65,9 @@ class RawMediaClient:
         alt : typing.Optional[str]
 
         content_type : typing.Optional[str]
+
+        fit_to_platforms : typing.Optional[typing.Sequence[CreateFromUrlMediaRequestFitToPlatformsItem]]
+            Opt-in. Platforms the image will be posted to (e.g. ["instagram", "tiktok"]). The image is scaled down and/or re-encoded to fit the strictest of their size, dimension and format limits before it is stored. The original bytes are kept when the image already fits, or when none of the listed platforms has known image limits, so this is not a guaranteed conversion. Images only: videos and animated GIFs are stored as-is. Images over 50 MB or 100 megapixels are rejected when a listed platform has known image limits; import them without fitToPlatforms or shrink them first. Omit to store the file unchanged.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -80,6 +85,7 @@ class RawMediaClient:
                 "name": name,
                 "alt": alt,
                 "contentType": content_type,
+                "fitToPlatforms": fit_to_platforms,
             },
             headers={
                 "content-type": "application/json",
@@ -1547,6 +1553,7 @@ class AsyncRawMediaClient:
         name: typing.Optional[str] = OMIT,
         alt: typing.Optional[str] = OMIT,
         content_type: typing.Optional[str] = OMIT,
+        fit_to_platforms: typing.Optional[typing.Sequence[CreateFromUrlMediaRequestFitToPlatformsItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Media]:
         """
@@ -1561,6 +1568,9 @@ class AsyncRawMediaClient:
         alt : typing.Optional[str]
 
         content_type : typing.Optional[str]
+
+        fit_to_platforms : typing.Optional[typing.Sequence[CreateFromUrlMediaRequestFitToPlatformsItem]]
+            Opt-in. Platforms the image will be posted to (e.g. ["instagram", "tiktok"]). The image is scaled down and/or re-encoded to fit the strictest of their size, dimension and format limits before it is stored. The original bytes are kept when the image already fits, or when none of the listed platforms has known image limits, so this is not a guaranteed conversion. Images only: videos and animated GIFs are stored as-is. Images over 50 MB or 100 megapixels are rejected when a listed platform has known image limits; import them without fitToPlatforms or shrink them first. Omit to store the file unchanged.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1578,6 +1588,7 @@ class AsyncRawMediaClient:
                 "name": name,
                 "alt": alt,
                 "contentType": content_type,
+                "fitToPlatforms": fit_to_platforms,
             },
             headers={
                 "content-type": "application/json",

@@ -8,6 +8,7 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .count_by_tag_media_response import CountByTagMediaResponse
     from .count_by_tag_media_response_data_item import CountByTagMediaResponseDataItem
+    from .create_from_url_media_request_fit_to_platforms_item import CreateFromUrlMediaRequestFitToPlatformsItem
     from .create_presigned_post_intent import CreatePresignedPostIntent
     from .create_upload_link_media_response import CreateUploadLinkMediaResponse
     from .delete_media_response import DeleteMediaResponse
@@ -18,6 +19,7 @@ if typing.TYPE_CHECKING:
 _dynamic_imports: typing.Dict[str, str] = {
     "CountByTagMediaResponse": ".count_by_tag_media_response",
     "CountByTagMediaResponseDataItem": ".count_by_tag_media_response_data_item",
+    "CreateFromUrlMediaRequestFitToPlatformsItem": ".create_from_url_media_request_fit_to_platforms_item",
     "CreatePresignedPostIntent": ".create_presigned_post_intent",
     "CreateUploadLinkMediaResponse": ".create_upload_link_media_response",
     "DeleteMediaResponse": ".delete_media_response",
@@ -52,6 +54,7 @@ def __dir__():
 __all__ = [
     "CountByTagMediaResponse",
     "CountByTagMediaResponseDataItem",
+    "CreateFromUrlMediaRequestFitToPlatformsItem",
     "CreatePresignedPostIntent",
     "CreateUploadLinkMediaResponse",
     "DeleteMediaResponse",

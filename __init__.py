@@ -133,6 +133,7 @@ if typing.TYPE_CHECKING:
     from .media import (
         CountByTagMediaResponse,
         CountByTagMediaResponseDataItem,
+        CreateFromUrlMediaRequestFitToPlatformsItem,
         CreatePresignedPostIntent,
         CreateUploadLinkMediaResponse,
         DeleteMediaResponse,
@@ -252,6 +253,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CountByTagMediaResponse": ".media",
     "CountByTagMediaResponseDataItem": ".media",
     "CreateConnectLinkProfilesResponse": ".profiles",
+    "CreateFromUrlMediaRequestFitToPlatformsItem": ".media",
     "CreateIdeasResponse": ".ideas",
     "CreatePostGroupsResponse": ".post_groups",
     "CreatePostGroupsResponsePostsItem": ".post_groups",
@@ -484,6 +486,7 @@ __all__ = [
     "CountByTagMediaResponse",
     "CountByTagMediaResponseDataItem",
     "CreateConnectLinkProfilesResponse",
+    "CreateFromUrlMediaRequestFitToPlatformsItem",
     "CreateIdeasResponse",
     "CreatePostGroupsResponse",
     "CreatePostGroupsResponsePostsItem",

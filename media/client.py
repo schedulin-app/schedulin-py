@@ -9,6 +9,7 @@ from ..types.media import Media
 from ..types.presigned_post import PresignedPost
 from .raw_client import AsyncRawMediaClient, RawMediaClient
 from .types.count_by_tag_media_response import CountByTagMediaResponse
+from .types.create_from_url_media_request_fit_to_platforms_item import CreateFromUrlMediaRequestFitToPlatformsItem
 from .types.create_presigned_post_intent import CreatePresignedPostIntent
 from .types.create_upload_link_media_response import CreateUploadLinkMediaResponse
 from .types.delete_media_response import DeleteMediaResponse
@@ -43,6 +44,7 @@ class MediaClient:
         name: typing.Optional[str] = OMIT,
         alt: typing.Optional[str] = OMIT,
         content_type: typing.Optional[str] = OMIT,
+        fit_to_platforms: typing.Optional[typing.Sequence[CreateFromUrlMediaRequestFitToPlatformsItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Media:
         """
@@ -57,6 +59,9 @@ class MediaClient:
         alt : typing.Optional[str]
 
         content_type : typing.Optional[str]
+
+        fit_to_platforms : typing.Optional[typing.Sequence[CreateFromUrlMediaRequestFitToPlatformsItem]]
+            Opt-in. Platforms the image will be posted to (e.g. ["instagram", "tiktok"]). The image is scaled down and/or re-encoded to fit the strictest of their size, dimension and format limits before it is stored. The original bytes are kept when the image already fits, or when none of the listed platforms has known image limits, so this is not a guaranteed conversion. Images only: videos and animated GIFs are stored as-is. Images over 50 MB or 100 megapixels are rejected when a listed platform has known image limits; import them without fitToPlatforms or shrink them first. Omit to store the file unchanged.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -78,7 +83,12 @@ class MediaClient:
         )
         """
         _response = self._raw_client.create_from_url(
-            url=url, name=name, alt=alt, content_type=content_type, request_options=request_options
+            url=url,
+            name=name,
+            alt=alt,
+            content_type=content_type,
+            fit_to_platforms=fit_to_platforms,
+            request_options=request_options,
         )
         return _response.data
 
@@ -504,6 +514,7 @@ class AsyncMediaClient:
         name: typing.Optional[str] = OMIT,
         alt: typing.Optional[str] = OMIT,
         content_type: typing.Optional[str] = OMIT,
+        fit_to_platforms: typing.Optional[typing.Sequence[CreateFromUrlMediaRequestFitToPlatformsItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Media:
         """
@@ -518,6 +529,9 @@ class AsyncMediaClient:
         alt : typing.Optional[str]
 
         content_type : typing.Optional[str]
+
+        fit_to_platforms : typing.Optional[typing.Sequence[CreateFromUrlMediaRequestFitToPlatformsItem]]
+            Opt-in. Platforms the image will be posted to (e.g. ["instagram", "tiktok"]). The image is scaled down and/or re-encoded to fit the strictest of their size, dimension and format limits before it is stored. The original bytes are kept when the image already fits, or when none of the listed platforms has known image limits, so this is not a guaranteed conversion. Images only: videos and animated GIFs are stored as-is. Images over 50 MB or 100 megapixels are rejected when a listed platform has known image limits; import them without fitToPlatforms or shrink them first. Omit to store the file unchanged.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -547,7 +561,12 @@ class AsyncMediaClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create_from_url(
-            url=url, name=name, alt=alt, content_type=content_type, request_options=request_options
+            url=url,
+            name=name,
+            alt=alt,
+            content_type=content_type,
+            fit_to_platforms=fit_to_platforms,
+            request_options=request_options,
         )
         return _response.data
 
