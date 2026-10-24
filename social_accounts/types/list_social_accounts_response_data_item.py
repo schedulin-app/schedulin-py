@@ -26,6 +26,18 @@ class ListSocialAccountsResponseDataItem(UniversalBaseModel):
     display_name: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="displayName"), pydantic.Field(alias="displayName")
     ] = None
+    custom_name: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="customName"),
+        pydantic.Field(
+            alias="customName",
+            description="Nickname the workspace gave this account in Schedulin. Null when not renamed; `displayName` / `username` always hold the platform's own name.",
+        ),
+    ] = None
+    """
+    Nickname the workspace gave this account in Schedulin. Null when not renamed; `displayName` / `username` always hold the platform's own name.
+    """
+
     handle: typing.Optional[str] = pydantic.Field(default=None)
     """
     The account's platform @handle when known (e.g. TikTok username), without the @. Null when unknown.
