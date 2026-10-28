@@ -1410,7 +1410,7 @@ class RawMediaClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PresignedPost]:
         """
-        Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type` header matching `contentType`, then reference the returned `key` when creating a post.
+        Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type` header matching `contentType`, then reference the returned `key` when creating a post. Pass `size` (bytes): the URL then only accepts an upload of exactly that size, and sizes over the upload limit are rejected up front.
 
         Parameters
         ----------
@@ -1419,6 +1419,7 @@ class RawMediaClient:
         key : str
 
         size : typing.Optional[int]
+            File size in bytes. When set, the presigned URL only accepts an upload of exactly this many bytes.
 
         intent : typing.Optional[CreatePresignedPostIntent]
 
@@ -2915,7 +2916,7 @@ class AsyncRawMediaClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PresignedPost]:
         """
-        Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type` header matching `contentType`, then reference the returned `key` when creating a post.
+        Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type` header matching `contentType`, then reference the returned `key` when creating a post. Pass `size` (bytes): the URL then only accepts an upload of exactly that size, and sizes over the upload limit are rejected up front.
 
         Parameters
         ----------
@@ -2924,6 +2925,7 @@ class AsyncRawMediaClient:
         key : str
 
         size : typing.Optional[int]
+            File size in bytes. When set, the presigned URL only accepts an upload of exactly this many bytes.
 
         intent : typing.Optional[CreatePresignedPostIntent]
 

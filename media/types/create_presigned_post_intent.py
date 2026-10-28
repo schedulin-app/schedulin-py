@@ -2,4 +2,4 @@
 
 import typing
 
-CreatePresignedPostIntent = typing.Union[typing.Literal["post", "clip-source", "public-asset"], typing.Any]
+CreatePresignedPostIntent = typing.Union[typing.Literal["post", "public-asset"], typing.Any]

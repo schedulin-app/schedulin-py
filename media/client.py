@@ -454,7 +454,7 @@ class MediaClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PresignedPost:
         """
-        Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type` header matching `contentType`, then reference the returned `key` when creating a post.
+        Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type` header matching `contentType`, then reference the returned `key` when creating a post. Pass `size` (bytes): the URL then only accepts an upload of exactly that size, and sizes over the upload limit are rejected up front.
 
         Parameters
         ----------
@@ -463,6 +463,7 @@ class MediaClient:
         key : str
 
         size : typing.Optional[int]
+            File size in bytes. When set, the presigned URL only accepts an upload of exactly this many bytes.
 
         intent : typing.Optional[CreatePresignedPostIntent]
 
@@ -1004,7 +1005,7 @@ class AsyncMediaClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PresignedPost:
         """
-        Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type` header matching `contentType`, then reference the returned `key` when creating a post.
+        Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type` header matching `contentType`, then reference the returned `key` when creating a post. Pass `size` (bytes): the URL then only accepts an upload of exactly that size, and sizes over the upload limit are rejected up front.
 
         Parameters
         ----------
@@ -1013,6 +1014,7 @@ class AsyncMediaClient:
         key : str
 
         size : typing.Optional[int]
+            File size in bytes. When set, the presigned URL only accepts an upload of exactly this many bytes.
 
         intent : typing.Optional[CreatePresignedPostIntent]
 
