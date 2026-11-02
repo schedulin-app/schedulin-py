@@ -24,6 +24,10 @@ class PostCreateThumbnail(UniversalBaseModel):
     height: typing.Optional[float] = None
     size: typing.Optional[float] = None
     duration: typing.Optional[float] = None
+    caption: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    This photo's own caption in this post. Facebook photo posts show it when the photo is opened; Pinterest carousel Pins show it on that slide (up to 800 characters); Reddit galleries show it under that image (up to 180). Other platforms ignore it.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

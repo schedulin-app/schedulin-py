@@ -21,6 +21,7 @@ class UpdatePostsRequestMediaItem(UniversalBaseModel):
     size: typing.Optional[float] = None
     duration: typing.Optional[float] = None
     alt: typing.Optional[str] = None
+    caption: typing.Optional[str] = None
     tags: typing.Optional[typing.List[UpdatePostsRequestMediaItemTagsItem]] = None
     bucket: typing.Optional[str] = None
     key: typing.Optional[str] = None
