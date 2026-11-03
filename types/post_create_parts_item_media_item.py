@@ -15,7 +15,11 @@ class PostCreatePartsItemMediaItem(UniversalBaseModel):
     thumbnail_timestamp_ms: typing.Optional[float] = None
     tags: typing.Optional[typing.List[PostCreatePartsItemMediaItemTagsItem]] = None
     alt: typing.Optional[str] = None
-    skip_processing: typing.Optional[bool] = None
+    skip_processing: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Publish this file exactly as uploaded: no conversion, remux or re-encode before publishing. Use only for files you know the platform accepts (e.g. a web-ready H.264/AAC MP4 or a JPEG/PNG); an unsupported format will be rejected by the platform at publish.
+    """
+
     name: typing.Optional[str] = None
     mime_type: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="mimeType"), pydantic.Field(alias="mimeType")
