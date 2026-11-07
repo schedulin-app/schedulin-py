@@ -20,6 +20,7 @@ if typing.TYPE_CHECKING:
     from .profiles.client import AsyncProfilesClient, ProfilesClient
     from .social_accounts.client import AsyncSocialAccountsClient, SocialAccountsClient
     from .tags.client import AsyncTagsClient, TagsClient
+    from .ugc.client import AsyncUgcClient, UgcClient
     from .webhooks.client import AsyncWebhooksClient, WebhooksClient
     from .workspace.client import AsyncWorkspaceClient, WorkspaceClient
 
@@ -115,6 +116,7 @@ class Schedulin:
         self._media: typing.Optional[MediaClient] = None
         self._platforms: typing.Optional[PlatformsClient] = None
         self._ai: typing.Optional[AiClient] = None
+        self._ugc: typing.Optional[UgcClient] = None
         self._webhooks: typing.Optional[WebhooksClient] = None
         self._profiles: typing.Optional[ProfilesClient] = None
         self._ideas: typing.Optional[IdeasClient] = None
@@ -176,6 +178,14 @@ class Schedulin:
 
             self._ai = AiClient(client_wrapper=self._client_wrapper)
         return self._ai
+
+    @property
+    def ugc(self):
+        if self._ugc is None:
+            from .ugc.client import UgcClient  # noqa: E402
+
+            self._ugc = UgcClient(client_wrapper=self._client_wrapper)
+        return self._ugc
 
     @property
     def webhooks(self):
@@ -325,6 +335,7 @@ class AsyncSchedulin:
         self._media: typing.Optional[AsyncMediaClient] = None
         self._platforms: typing.Optional[AsyncPlatformsClient] = None
         self._ai: typing.Optional[AsyncAiClient] = None
+        self._ugc: typing.Optional[AsyncUgcClient] = None
         self._webhooks: typing.Optional[AsyncWebhooksClient] = None
         self._profiles: typing.Optional[AsyncProfilesClient] = None
         self._ideas: typing.Optional[AsyncIdeasClient] = None
@@ -386,6 +397,14 @@ class AsyncSchedulin:
 
             self._ai = AsyncAiClient(client_wrapper=self._client_wrapper)
         return self._ai
+
+    @property
+    def ugc(self):
+        if self._ugc is None:
+            from .ugc.client import AsyncUgcClient  # noqa: E402
+
+            self._ugc = AsyncUgcClient(client_wrapper=self._client_wrapper)
+        return self._ugc
 
     @property
     def webhooks(self):

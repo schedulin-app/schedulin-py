@@ -102,6 +102,7 @@ if typing.TYPE_CHECKING:
         profiles,
         social_accounts,
         tags,
+        ugc,
         webhooks,
         workspace,
     )
@@ -219,6 +220,20 @@ if typing.TYPE_CHECKING:
         UpdateTimezoneSocialAccountsResponse,
     )
     from .tags import ListTagsResponse
+    from .ugc import (
+        AddToMediaLibraryUgcResponse,
+        CreateVideoUgcRequestProductScreenshot,
+        CreateVideoUgcRequestResolution,
+        CreateVideoUgcRequestVoiceId,
+        CreateVideoUgcRequestWebsiteUrl,
+        CreateVideoUgcRequestWebsiteUrlOne,
+        CreateVideoUgcResponse,
+        GetVideoUgcResponse,
+        ListAvatarsUgcRequestSortItem,
+        ListAvatarsUgcRequestSortItemId,
+        ListAvatarsUgcResponse,
+        ListAvatarsUgcResponseItemsItem,
+    )
     from .webhooks import (
         CreateWebhooksRequestEventsItem,
         DeleteWebhooksResponse,
@@ -235,6 +250,7 @@ if typing.TYPE_CHECKING:
         RetrieveWorkspaceResponsePlan,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "AddToMediaLibraryUgcResponse": ".ugc",
     "AiGeneration": ".types",
     "AiGenerationStatus": ".types",
     "AnalyticsSeriesPostsResponse": ".posts",
@@ -268,6 +284,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreatePostsResponseMediaItemTagsItemType": ".posts",
     "CreatePresignedPostIntent": ".media",
     "CreateUploadLinkMediaResponse": ".media",
+    "CreateVideoUgcRequestProductScreenshot": ".ugc",
+    "CreateVideoUgcRequestResolution": ".ugc",
+    "CreateVideoUgcRequestVoiceId": ".ugc",
+    "CreateVideoUgcRequestWebsiteUrl": ".ugc",
+    "CreateVideoUgcRequestWebsiteUrlOne": ".ugc",
+    "CreateVideoUgcResponse": ".ugc",
     "CreateWebhooksRequestEventsItem": ".webhooks",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
@@ -283,8 +305,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GenerateImageAiResponse": ".ai",
     "GetQueueScheduleSocialAccountsResponse": ".social_accounts",
     "GetQueueScheduleSocialAccountsResponseTimesItem": ".social_accounts",
+    "GetVideoUgcResponse": ".ugc",
     "ImageProcessingStatus": ".types",
     "InternalServerError": ".errors",
+    "ListAvatarsUgcRequestSortItem": ".ugc",
+    "ListAvatarsUgcRequestSortItemId": ".ugc",
+    "ListAvatarsUgcResponse": ".ugc",
+    "ListAvatarsUgcResponseItemsItem": ".ugc",
     "ListDeliveriesWebhooksResponse": ".webhooks",
     "ListDiscordChannelsSocialAccountsResponse": ".social_accounts",
     "ListDiscordChannelsSocialAccountsResponseItemsItem": ".social_accounts",
@@ -441,6 +468,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "profiles": ".profiles",
     "social_accounts": ".social_accounts",
     "tags": ".tags",
+    "ugc": ".ugc",
     "webhooks": ".webhooks",
     "workspace": ".workspace",
 }
@@ -468,6 +496,7 @@ def __dir__():
 
 
 __all__ = [
+    "AddToMediaLibraryUgcResponse",
     "AiGeneration",
     "AiGenerationStatus",
     "AnalyticsSeriesPostsResponse",
@@ -501,6 +530,12 @@ __all__ = [
     "CreatePostsResponseMediaItemTagsItemType",
     "CreatePresignedPostIntent",
     "CreateUploadLinkMediaResponse",
+    "CreateVideoUgcRequestProductScreenshot",
+    "CreateVideoUgcRequestResolution",
+    "CreateVideoUgcRequestVoiceId",
+    "CreateVideoUgcRequestWebsiteUrl",
+    "CreateVideoUgcRequestWebsiteUrlOne",
+    "CreateVideoUgcResponse",
     "CreateWebhooksRequestEventsItem",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
@@ -516,8 +551,13 @@ __all__ = [
     "GenerateImageAiResponse",
     "GetQueueScheduleSocialAccountsResponse",
     "GetQueueScheduleSocialAccountsResponseTimesItem",
+    "GetVideoUgcResponse",
     "ImageProcessingStatus",
     "InternalServerError",
+    "ListAvatarsUgcRequestSortItem",
+    "ListAvatarsUgcRequestSortItemId",
+    "ListAvatarsUgcResponse",
+    "ListAvatarsUgcResponseItemsItem",
     "ListDeliveriesWebhooksResponse",
     "ListDiscordChannelsSocialAccountsResponse",
     "ListDiscordChannelsSocialAccountsResponseItemsItem",
@@ -674,6 +714,7 @@ __all__ = [
     "profiles",
     "social_accounts",
     "tags",
+    "ugc",
     "webhooks",
     "workspace",
 ]
