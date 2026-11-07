@@ -2,4 +2,4 @@
 
 import typing
 
-CreateVideoUgcRequestResolution = typing.Union[typing.Literal["720p", "1080p"], typing.Any]
+CreateVideoUgcRequestResolution = typing.Union[typing.Literal["720p"], typing.Any]
