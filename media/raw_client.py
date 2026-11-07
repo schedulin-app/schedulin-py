@@ -1417,6 +1417,7 @@ class RawMediaClient:
         content_type : str
 
         key : str
+            Object name, e.g. the file name. Stored under your workspace with accents dropped and characters outside A-Z, a-z, 0-9, `_`, `.`, `-` replaced by `-`; use the `key` the response returns.
 
         size : typing.Optional[int]
             File size in bytes. When set, the presigned URL only accepts an upload of exactly this many bytes.
@@ -2923,6 +2924,7 @@ class AsyncRawMediaClient:
         content_type : str
 
         key : str
+            Object name, e.g. the file name. Stored under your workspace with accents dropped and characters outside A-Z, a-z, 0-9, `_`, `.`, `-` replaced by `-`; use the `key` the response returns.
 
         size : typing.Optional[int]
             File size in bytes. When set, the presigned URL only accepts an upload of exactly this many bytes.

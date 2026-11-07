@@ -3353,7 +3353,7 @@ client.media.create_presigned_post(
 <dl>
 <dd>
 
-**key:** `str` 
+**key:** `str` — Object name, e.g. the file name. Stored under your workspace with accents dropped and characters outside A-Z, a-z, 0-9, `_`, `.`, `-` replaced by `-`; use the `key` the response returns.
     
 </dd>
 </dl>
