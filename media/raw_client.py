@@ -1404,20 +1404,20 @@ class RawMediaClient:
         self,
         *,
         content_type: str,
-        key: str,
+        key: typing.Optional[str] = OMIT,
         size: typing.Optional[int] = OMIT,
         intent: typing.Optional[CreatePresignedPostIntent] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PresignedPost]:
         """
-        Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type` header matching `contentType`, then reference the returned `key` when creating a post. Pass `size` (bytes): the URL then only accepts an upload of exactly that size, and sizes over the upload limit are rejected up front.
+        Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type` header matching `contentType`, then reference the returned `key` when creating a post. The server picks the `key` (a unique id under your workspace), so always use the one this returns. Pass `size` (bytes): the URL then only accepts an upload of exactly that size, and sizes over the upload limit are rejected up front.
 
         Parameters
         ----------
         content_type : str
 
-        key : str
-            Object name, e.g. the file name. Stored under your workspace with accents dropped and characters outside A-Z, a-z, 0-9, `_`, `.`, `-` replaced by `-`; use the `key` the response returns.
+        key : typing.Optional[str]
+            Optional file name. Only its extension is used, when `contentType` doesn't settle one: the server names the stored object itself. Use the `key` the response returns.
 
         size : typing.Optional[int]
             File size in bytes. When set, the presigned URL only accepts an upload of exactly this many bytes.
@@ -2911,20 +2911,20 @@ class AsyncRawMediaClient:
         self,
         *,
         content_type: str,
-        key: str,
+        key: typing.Optional[str] = OMIT,
         size: typing.Optional[int] = OMIT,
         intent: typing.Optional[CreatePresignedPostIntent] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PresignedPost]:
         """
-        Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type` header matching `contentType`, then reference the returned `key` when creating a post. Pass `size` (bytes): the URL then only accepts an upload of exactly that size, and sizes over the upload limit are rejected up front.
+        Returns a presigned PUT URL. Upload by issuing an HTTP PUT of the raw file bytes to `url` with a `Content-Type` header matching `contentType`, then reference the returned `key` when creating a post. The server picks the `key` (a unique id under your workspace), so always use the one this returns. Pass `size` (bytes): the URL then only accepts an upload of exactly that size, and sizes over the upload limit are rejected up front.
 
         Parameters
         ----------
         content_type : str
 
-        key : str
-            Object name, e.g. the file name. Stored under your workspace with accents dropped and characters outside A-Z, a-z, 0-9, `_`, `.`, `-` replaced by `-`; use the `key` the response returns.
+        key : typing.Optional[str]
+            Optional file name. Only its extension is used, when `contentType` doesn't settle one: the server names the stored object itself. Use the `key` the response returns.
 
         size : typing.Optional[int]
             File size in bytes. When set, the presigned URL only accepts an upload of exactly this many bytes.
