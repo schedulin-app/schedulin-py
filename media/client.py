@@ -48,7 +48,7 @@ class MediaClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Media:
         """
-        Downloads a publicly reachable image or video into the media library and returns the media record. Use the returned `url` in `media[].url` when creating a post. Prefer this over the presign flow whenever your client cannot issue a raw HTTP PUT (e.g. an AI agent). The source URL must be public (no auth), http(s), and at most the post upload limit (250 MB); SVG and other active content is rejected.
+        Downloads a publicly reachable image or video into the media library and returns the media record. Use the returned `url` in `media[].url` when creating a post. Prefer this over the presign flow whenever your client cannot issue a raw HTTP PUT (e.g. an AI agent). The source URL must be public (no auth), http(s), and at most the post upload limit (250 MB). The file type is read from the file's own bytes (JPEG, PNG, GIF, WebP, HEIC, AVIF, MP4, MOV, WebM); anything else, including a sign-in or share page from a private link, is rejected.
 
         Parameters
         ----------
@@ -59,6 +59,7 @@ class MediaClient:
         alt : typing.Optional[str]
 
         content_type : typing.Optional[str]
+            Ignored: the type is read from the file's own bytes. Accepted so older clients don't break.
 
         fit_to_platforms : typing.Optional[typing.Sequence[CreateFromUrlMediaRequestFitToPlatformsItem]]
             Opt-in. Platforms the image will be posted to (e.g. ["instagram", "tiktok"]). The image is scaled down and/or re-encoded to fit the strictest of their size, dimension and format limits before it is stored. The original bytes are kept when the image already fits, or when none of the listed platforms has known image limits, so this is not a guaranteed conversion. Images only: videos and animated GIFs are stored as-is. Images over 50 MB or 100 megapixels are rejected when a listed platform has known image limits; import them without fitToPlatforms or shrink them first. Omit to store the file unchanged.
@@ -519,7 +520,7 @@ class AsyncMediaClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Media:
         """
-        Downloads a publicly reachable image or video into the media library and returns the media record. Use the returned `url` in `media[].url` when creating a post. Prefer this over the presign flow whenever your client cannot issue a raw HTTP PUT (e.g. an AI agent). The source URL must be public (no auth), http(s), and at most the post upload limit (250 MB); SVG and other active content is rejected.
+        Downloads a publicly reachable image or video into the media library and returns the media record. Use the returned `url` in `media[].url` when creating a post. Prefer this over the presign flow whenever your client cannot issue a raw HTTP PUT (e.g. an AI agent). The source URL must be public (no auth), http(s), and at most the post upload limit (250 MB). The file type is read from the file's own bytes (JPEG, PNG, GIF, WebP, HEIC, AVIF, MP4, MOV, WebM); anything else, including a sign-in or share page from a private link, is rejected.
 
         Parameters
         ----------
@@ -530,6 +531,7 @@ class AsyncMediaClient:
         alt : typing.Optional[str]
 
         content_type : typing.Optional[str]
+            Ignored: the type is read from the file's own bytes. Accepted so older clients don't break.
 
         fit_to_platforms : typing.Optional[typing.Sequence[CreateFromUrlMediaRequestFitToPlatformsItem]]
             Opt-in. Platforms the image will be posted to (e.g. ["instagram", "tiktok"]). The image is scaled down and/or re-encoded to fit the strictest of their size, dimension and format limits before it is stored. The original bytes are kept when the image already fits, or when none of the listed platforms has known image limits, so this is not a guaranteed conversion. Images only: videos and animated GIFs are stored as-is. Images over 50 MB or 100 megapixels are rejected when a listed platform has known image limits; import them without fitToPlatforms or shrink them first. Omit to store the file unchanged.
